@@ -2,7 +2,7 @@ package Model;
 
 
 /**
- * <h1>Range les {@link Taches} dans des Categories</h1>
+ * <h1>Range les {@link Tache} dans des Categories</h1>
  * Comporte le Titre et une Abreviation de la Categorie
  *
  * @author  Vincent THOMAS
