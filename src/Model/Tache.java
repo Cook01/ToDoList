@@ -12,17 +12,17 @@ public abstract class Tache {
     /**
      * Titre de la Tache
      */
-    private String title;
+    protected String title;
 
     /**
      * Boolean permettant de savoir si la tache est termine ou pas
      */
-    private Boolean achieve;
+    protected Boolean achieve;
 
     /**
      * Fin de la Tache
      */
-    private Date end;
+    protected Date end;
 
 
 
