@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -22,7 +23,7 @@ public abstract class Tache {
     /**
      * Fin de la Tache
      */
-    protected Date end;
+    protected Calendar end;
 
 
 
@@ -32,7 +33,7 @@ public abstract class Tache {
      * @param title titre de la Tache
      * @param end   fin de la Tache
      */
-    public Tache(String title, Date end){
+    public Tache(String title, Calendar end){
 
         this.title      = title;
         this.achieve    = false;
@@ -63,7 +64,7 @@ public abstract class Tache {
      *
      * @param end date de fin de la tache
      */
-    public void setEnd(Date end) {
+    public void setEnd(Calendar end) {
         this.end = end;
     }
 
@@ -91,9 +92,9 @@ public abstract class Tache {
     /**
      * Getter de l'attribut end
      *
-     * @return {@link Date} end
+     * @return {@link Calendar} end
      */
-    public Date getEnd() {
+    public Calendar getEnd() {
         return end;
     }
 

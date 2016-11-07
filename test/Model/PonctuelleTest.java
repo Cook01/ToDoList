@@ -2,6 +2,7 @@ package Model;
 
 import org.junit.Test;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.Assert.*;
@@ -23,14 +24,20 @@ public class PonctuelleTest {
     @Test
     public void isLate() throws InterruptedException {
 
-        Date end = new Date(System.currentTimeMillis() + (2 * 1000));
+        Calendar end    = Calendar.getInstance();
+
+        end.setTime(new Date(System.currentTimeMillis() + (5 * 24 * 60 * 60 * 1000)));
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.set(Calendar.MILLISECOND, 0);
+
 
         final Ponctuelle testTache = new Ponctuelle("Tache de test" , end);
 
-        //pause for 5,1s
-        Thread.sleep(2100);
+        Date endTest = new Date(System.currentTimeMillis() + (6 * 24 * 60 * 60 * 1000));//6 jours
 
-        Boolean islate = testTache.isLate();
+        Boolean islate = testTache.isLate(endTest);
 
         assertTrue( islate );
 
@@ -46,12 +53,19 @@ public class PonctuelleTest {
     @Test
     public void isNotLate() throws InterruptedException {
 
-        Date end = new Date(System.currentTimeMillis() + (10 * 60 * 1000));
+        Calendar end    = Calendar.getInstance();
+
+        end.setTime(new Date(System.currentTimeMillis() + (5 * 24 * 60 * 60 * 1000)));
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.set(Calendar.MILLISECOND, 0);
 
         final Ponctuelle testTache = new Ponctuelle("Tache de test" , end);
 
+        Date endTest = new Date(System.currentTimeMillis() + (4 * 24 * 60 * 60 * 1000));//6 jours
 
-        Boolean islate = testTache.isLate();
+        Boolean islate = testTache.isLate(endTest);
 
         assertFalse( islate );
 

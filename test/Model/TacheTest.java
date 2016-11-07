@@ -3,6 +3,7 @@ package Model;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -23,7 +24,13 @@ public class TacheTest {
      */
     @Test
     public void setTitle() throws Exception {
-        Date end = new GregorianCalendar(2050,0,31).getTime();
+        Calendar end    = Calendar.getInstance();
+
+        end.setTime(new Date(System.currentTimeMillis() ));
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.set(Calendar.MILLISECOND, 0);
 
         final Ponctuelle testTache = new Ponctuelle("Tache de test", end);
 
@@ -45,7 +52,13 @@ public class TacheTest {
     @Test
     public void setAchieve() throws Exception {
         //given
-        Date end = new GregorianCalendar(2050,0,31).getTime();
+        Calendar end    = Calendar.getInstance();
+
+        end.setTime(new Date(System.currentTimeMillis() ));
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.set(Calendar.MILLISECOND, 0);
 
         final Ponctuelle testTache = new Ponctuelle("Tache de test", end);
 
@@ -61,17 +74,29 @@ public class TacheTest {
     /**
      * Test de la methode setEnd()
      *
-     * @see Tache#setEnd(java.util.Date)
+     * @see Tache#setEnd(java.util.Calendar)
      * @throws Exception NoSuchFieldException, IllegalAccessException
      */
     @Test
     public void setEnd() throws Exception {
         //given
-        Date end = new GregorianCalendar(2050,0,31).getTime();
+        Calendar end    = Calendar.getInstance();
+
+        end.setTime(new Date(System.currentTimeMillis() ));
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.set(Calendar.MILLISECOND, 0);
 
         final Ponctuelle testTache = new Ponctuelle("Tache de test", end);
 
-        Date nouvelleDate = new Date();
+        Calendar nouvelleDate    = Calendar.getInstance();
+
+        nouvelleDate.setTime(new Date(System.currentTimeMillis() + (4 * 24 * 60 * 60 * 1000)));
+        nouvelleDate.set(Calendar.HOUR_OF_DAY, 0);
+        nouvelleDate.set(Calendar.MINUTE, 0);
+        nouvelleDate.set(Calendar.SECOND, 0);
+        nouvelleDate.set(Calendar.MILLISECOND, 0);
         //when
         testTache.setEnd(nouvelleDate);
 
@@ -89,7 +114,14 @@ public class TacheTest {
     @Test
     public void getTitle() {
 
-        Date end = new GregorianCalendar(2050,0,31).getTime();
+
+        Calendar end    = Calendar.getInstance();
+
+        end.setTime(new Date(System.currentTimeMillis() + (4 * 24 * 60 * 60 * 1000)));
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.set(Calendar.MILLISECOND, 0);
 
         final Ponctuelle testTache = new Ponctuelle("Tache de test", end);
 
@@ -107,7 +139,13 @@ public class TacheTest {
     @Test
     public void getAchieve() {
 
-        Date end = new GregorianCalendar(2050,0,31).getTime();
+        Calendar end    = Calendar.getInstance();
+
+        end.setTime(new Date(System.currentTimeMillis() + (4 * 24 * 60 * 60 * 1000)));
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.set(Calendar.MILLISECOND, 0);
 
         final Ponctuelle testTache = new Ponctuelle("Tache de test", end);
 
@@ -126,14 +164,24 @@ public class TacheTest {
     @Test
     public void getEnd() {
 
-        Date end = new GregorianCalendar(2050,0,31).getTime();
+        Calendar end    = Calendar.getInstance();
+
+        end.setTime(new Date(System.currentTimeMillis() + (4 * 24 * 60 * 60 * 1000)));
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.set(Calendar.MILLISECOND, 0);
 
         final Ponctuelle testTache = new Ponctuelle("Tache de test", end);
 
 
-        Date date = testTache.getEnd();
+        Calendar date = testTache.getEnd();
 
-        assertTrue( new Date().compareTo(date) < 0 );
+        Calendar testDate    = Calendar.getInstance();
+
+        testDate.setTime(new Date(System.currentTimeMillis()));
+
+        assertTrue( testDate.compareTo(date) < 0 );
 
     }
 

@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -15,7 +16,7 @@ public class Ponctuelle extends Tache {
      * @param title titre de la Tache
      * @param end   fin de la Tache
      */
-    public Ponctuelle(String title, Date end) {
+    public Ponctuelle(String title, Calendar end) {
         super(title,end);
     }
 
@@ -27,7 +28,38 @@ public class Ponctuelle extends Tache {
      */
     public Boolean isLate() {
 
-        return ( new Date(System.currentTimeMillis()).compareTo(this.getEnd()) > 0 );
+
+        Calendar currentCalendar    = Calendar.getInstance();
+        Date today                  = new Date();
+
+        currentCalendar.setTime(today);
+        currentCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        currentCalendar.set(Calendar.MINUTE, 0);
+        currentCalendar.set(Calendar.SECOND, 0);
+        currentCalendar.set(Calendar.MILLISECOND, 0);
+
+
+        return ( currentCalendar.compareTo(this.end) > 0 );
+
+    }
+
+    /**
+     * ONLY FOR TESTING
+     *
+     * @return true if Tache is late, false if tache is not late
+     */
+    public Boolean isLate(Date todayForTheTest) {
+
+        Calendar currentCalendar = Calendar.getInstance();
+
+        currentCalendar.setTime(todayForTheTest);
+        currentCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        currentCalendar.set(Calendar.MINUTE, 0);
+        currentCalendar.set(Calendar.SECOND, 0);
+        currentCalendar.set(Calendar.MILLISECOND, 0);
+
+
+        return ( currentCalendar.after(this.end) );
 
     }
 }
