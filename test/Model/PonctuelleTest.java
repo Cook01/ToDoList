@@ -1,18 +1,20 @@
 package Model;
 
-import org.junit.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import java.util.Calendar;
 import java.util.Date;
-
-import static org.junit.Assert.*;
 
 /**
  * <h1>Classe de test JUnit pour la class {@link Ponctuelle}</h1>
  *
  * @author gkueny
  */
-public class PonctuelleTest {
+public class PonctuelleTest extends TestCase {
+
+    public static int totalAssertions = 0;
+    public static int bilanAssertions = 0;
 
     /**
      * Test de la methode isLate()
@@ -21,8 +23,7 @@ public class PonctuelleTest {
      * @see     Tache#isLate()
      * @throws  InterruptedException (sleep method)
      */
-    @Test
-    public void isLate() throws InterruptedException {
+    public void test_isLate() throws InterruptedException {
 
         Calendar end    = Calendar.getInstance();
 
@@ -39,7 +40,9 @@ public class PonctuelleTest {
 
         Boolean islate = testTache.isLate(endTest);
 
+        totalAssertions++ ;
         assertTrue( islate );
+        bilanAssertions++ ;
 
     }
 
@@ -50,8 +53,7 @@ public class PonctuelleTest {
      * @see     Tache#isLate()
      * @throws  InterruptedException (sleep method)
      */
-    @Test
-    public void isNotLate() throws InterruptedException {
+    public void test_isNotLate() throws InterruptedException {
 
         Calendar end    = Calendar.getInstance();
 
@@ -67,8 +69,31 @@ public class PonctuelleTest {
 
         Boolean islate = testTache.isLate(endTest);
 
+        totalAssertions++ ;
         assertFalse( islate );
+        bilanAssertions++ ;
 
     }
+
+    /**
+     * main de la classe Test
+     *
+     * @param args arguments
+     *
+     */
+    public static void main(String[] args) {
+
+        junit.textui.TestRunner.run(new TestSuite(PonctuelleTest.class));
+
+        if (bilanAssertions == totalAssertions) {
+            System.out.print("Bravo ! ");
+        }
+        else  {
+            System.out.print("OUPS ! ");
+        }
+
+        System.out.println(" "+bilanAssertions+"/"+totalAssertions+" assertions verifiees");
+
+    } // fin main
 
 }

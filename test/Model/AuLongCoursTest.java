@@ -1,13 +1,11 @@
 package Model;
 
-import org.junit.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-
-import static org.junit.Assert.*;
 
 
 /**
@@ -15,15 +13,17 @@ import static org.junit.Assert.*;
  *
  * @author gkueny
  */
-public class AuLongCoursTest {
+public class AuLongCoursTest extends TestCase {
+
+    public static int totalAssertions = 0;
+    public static int bilanAssertions = 0;
 
     /**
      * Test de la methode getBegin()
      *
      * @see AuLongCours#getBegin()
      */
-    @Test
-    public void getBegin() {
+    public void test_getBegin() {
         Calendar end    = Calendar.getInstance();
         Calendar begin  = Calendar.getInstance();
 
@@ -45,7 +45,10 @@ public class AuLongCoursTest {
 
         Calendar beginGet = testTache.getBegin();
 
+        totalAssertions++ ;
         assertEquals(beginGet, begin);
+        bilanAssertions++ ;
+
     }
 
     /**
@@ -53,8 +56,7 @@ public class AuLongCoursTest {
      *
      * @see AuLongCours#getPercentage()
      */
-    @Test
-    public void getPercentage() {
+    public void test_getPercentage() {
         Calendar end    = Calendar.getInstance();
 
         end.setTime(new Date(System.currentTimeMillis() + (4 * 24 * 60 * 60 * 1000)));
@@ -69,7 +71,10 @@ public class AuLongCoursTest {
 
         int percentage = testTache.getPercentage();
 
+        totalAssertions++ ;
         assertEquals(percentage, 0);
+        bilanAssertions++ ;
+
     }
 
     /**
@@ -78,8 +83,7 @@ public class AuLongCoursTest {
      * @see AuLongCours#setBegin(java.util.Calendar)
      * @throws Exception NoSuchFieldException, IllegalAccessException
      */
-    @Test
-    public void setBegin() throws Exception {
+    public void test_setBegin() throws Exception {
         //given
         Calendar end    = Calendar.getInstance();
         Calendar begin  = Calendar.getInstance();
@@ -112,7 +116,10 @@ public class AuLongCoursTest {
         field.setAccessible(true);
 
 
+        totalAssertions++ ;
         assertEquals(field.get(testTache),newEnd);
+        bilanAssertions++ ;
+
     }
 
     /**
@@ -121,8 +128,7 @@ public class AuLongCoursTest {
      * @see AuLongCours#setPercentage(int)
      * @throws Exception NoSuchFieldException, IllegalAccessException
      */
-    @Test
-    public void setPercentage() throws Exception {
+    public void test_setPercentage() throws Exception {
         //given
         Calendar end        = Calendar.getInstance();
         int newPercentage   = 50;
@@ -144,11 +150,14 @@ public class AuLongCoursTest {
         //then
         final Field field = testTache.getClass().getDeclaredField("percentage");
         field.setAccessible(true);
+
+        totalAssertions++ ;
         assertEquals(field.get(testTache),newPercentage);
+        bilanAssertions++ ;
+
     }
 
-    @Test
-    public void isNotLate25Percent() throws Exception {
+    public void test_isNotLate25Percent() throws Exception {
         Calendar end    = Calendar.getInstance();
         Date endTest    = new Date(System.currentTimeMillis() + (  24 * 60 * 60 * 1000 ));// 25% = 1J
 
@@ -166,11 +175,13 @@ public class AuLongCoursTest {
 
         Boolean islate = testTache.isLate(endTest);
 
+        totalAssertions++ ;
         assertFalse( islate );
+        bilanAssertions++ ;
+
     }
 
-    @Test
-    public void isLate25Percent() throws Exception {
+    public void test_isLate25Percent() throws Exception {
 
         Calendar end    = Calendar.getInstance();
         Date endTest    = new Date(System.currentTimeMillis() + (  24 * 60 * 60 * 1000 ));// 25% = 1J
@@ -189,11 +200,12 @@ public class AuLongCoursTest {
 
         Boolean islate = testTache.isLate(endTest);
 
+        totalAssertions++ ;
         assertTrue( islate );
+        bilanAssertions++ ;
     }
 
-    @Test
-    public void isNotLate50Percent() throws Exception {
+    public void test_isNotLate50Percent() throws Exception {
         Calendar end    = Calendar.getInstance();
         Date endTest    = new Date(System.currentTimeMillis() + ( 2 * 24 * 60 * 60 * 1000 ));// 50% = 2J
 
@@ -211,11 +223,13 @@ public class AuLongCoursTest {
 
         Boolean islate = testTache.isLate(endTest);
 
+        totalAssertions++ ;
         assertFalse( islate );
+        bilanAssertions++ ;
+
     }
 
-    @Test
-    public void isLate50Percent() throws Exception {
+    public void test_isLate50Percent() throws Exception {
 
         Calendar end    = Calendar.getInstance();
 
@@ -234,11 +248,13 @@ public class AuLongCoursTest {
 
         Boolean islate = testTache.isLate(endTest);
 
+        totalAssertions++ ;
         assertTrue( islate );
+        bilanAssertions++ ;
+
     }
 
-    @Test
-    public void isNotLate75Percent() throws Exception {
+    public void test_isNotLate75Percent() throws Exception {
         Calendar end    = Calendar.getInstance();
 
         end.setTime(new Date(System.currentTimeMillis() + (4 * 24 * 60 * 60 * 1000)));
@@ -255,11 +271,13 @@ public class AuLongCoursTest {
 
         Boolean islate = testTache.isLate(endTest);
 
+        totalAssertions++ ;
         assertFalse( islate );
+        bilanAssertions++ ;
+
     }
 
-    @Test
-    public void isLate75Percent() throws Exception {
+    public void test_isLate75Percent() throws Exception {
 
         Calendar end    = Calendar.getInstance();
 
@@ -278,11 +296,13 @@ public class AuLongCoursTest {
 
         Boolean islate = testTache.isLate(endTest);
 
+        totalAssertions++ ;
         assertTrue( islate );
+        bilanAssertions++ ;
+
     }
 
-    @Test
-    public void isNotLate100Percent() throws Exception {
+    public void test_isNotLate100Percent() throws Exception {
         Calendar end    = Calendar.getInstance();
 
         end.setTime(new Date(System.currentTimeMillis() + (4 * 24 * 60 * 60 * 1000)));
@@ -299,11 +319,13 @@ public class AuLongCoursTest {
 
         Boolean islate = testTache.isLate(endTest);
 
+        totalAssertions++ ;
         assertFalse( islate );
+        bilanAssertions++ ;
+
     }
 
-    @Test
-    public void isLate100Percent() throws Exception {
+    public void test_isLate100Percent() throws Exception {
 
         Calendar end    = Calendar.getInstance();
 
@@ -322,9 +344,26 @@ public class AuLongCoursTest {
 
         Boolean islate = testTache.isLate(endTest);
 
+        totalAssertions++ ;
         assertTrue( islate );
+        bilanAssertions++ ;
+
     }
 
+    public static void main(String[] args) {
+
+        junit.textui.TestRunner.run(new TestSuite(AuLongCoursTest.class));
+
+        if (bilanAssertions == totalAssertions) {
+            System.out.print("Bravo ! ");
+        }
+        else  {
+            System.out.print("OUPS ! ");
+        }
+
+        System.out.println(" "+bilanAssertions+"/"+totalAssertions+" assertions verifiees");
+
+    } // fin main
 
 
 }

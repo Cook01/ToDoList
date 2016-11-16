@@ -1,20 +1,22 @@
 package Model;
 
-import org.junit.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
-import static org.junit.Assert.*;
 
 /**
  * <h1>Classe de test JUnit pour la class {@link TacheTest} via la class {@link Ponctuelle}</h1>
  *
  * @author gkueny
  */
-public class TacheTest {
+public class TacheTest extends TestCase {
+
+    public static int totalAssertions = 0;
+    public static int bilanAssertions = 0;
 
     /**
      * Test de la methode setTitle()
@@ -22,8 +24,7 @@ public class TacheTest {
      * @see Tache#setTitle(String)
      * @throws Exception NoSuchFieldException, IllegalAccessException
      */
-    @Test
-    public void setTitle() throws Exception {
+    public void test_setTitle() throws Exception {
         Calendar end    = Calendar.getInstance();
 
         end.setTime(new Date(System.currentTimeMillis() ));
@@ -40,7 +41,10 @@ public class TacheTest {
         //then
         final Field field = testTache.getClass().getSuperclass().getDeclaredField("title");
         field.setAccessible(true);
+
+        totalAssertions ++;
         assertEquals(field.get(testTache), "Nouveau titre");
+        bilanAssertions++ ;
     }
 
     /**
@@ -49,8 +53,7 @@ public class TacheTest {
      * @see Tache#setAchieve(Boolean)
      * @throws Exception NoSuchFieldException, IllegalAccessException
      */
-    @Test
-    public void setAchieve() throws Exception {
+    public void test_setAchieve() throws Exception {
         //given
         Calendar end    = Calendar.getInstance();
 
@@ -68,7 +71,11 @@ public class TacheTest {
         //then
         final Field field = testTache.getClass().getSuperclass().getDeclaredField("achieve");
         field.setAccessible(true);
+
+        totalAssertions ++;
         assertEquals(field.get(testTache), true);
+        bilanAssertions++ ;
+
     }
 
     /**
@@ -77,8 +84,7 @@ public class TacheTest {
      * @see Tache#setEnd(java.util.Calendar)
      * @throws Exception NoSuchFieldException, IllegalAccessException
      */
-    @Test
-    public void setEnd() throws Exception {
+    public void test_setEnd() throws Exception {
         //given
         Calendar end    = Calendar.getInstance();
 
@@ -103,7 +109,11 @@ public class TacheTest {
         //then
         final Field field = testTache.getClass().getSuperclass().getDeclaredField("end");
         field.setAccessible(true);
+
+        totalAssertions ++;
         assertEquals(field.get(testTache),nouvelleDate);
+        bilanAssertions++ ;
+
     }
 
     /**
@@ -111,8 +121,7 @@ public class TacheTest {
      *
      * @see Tache#getTitle()
      */
-    @Test
-    public void getTitle() {
+    public void test_getTitle() {
 
 
         Calendar end    = Calendar.getInstance();
@@ -127,7 +136,9 @@ public class TacheTest {
 
         String title = testTache.getTitle();
 
+        totalAssertions ++;
         assertEquals(title, "Tache de test");
+        bilanAssertions++ ;
 
     }
 
@@ -136,8 +147,7 @@ public class TacheTest {
      *
      * @see Tache#getAchieve()
      */
-    @Test
-    public void getAchieve() {
+    public void test_getAchieve() {
 
         Calendar end    = Calendar.getInstance();
 
@@ -152,7 +162,9 @@ public class TacheTest {
 
         Boolean achieve = testTache.getAchieve();
 
-        assertEquals(achieve, false);
+        totalAssertions ++;
+        assertFalse(achieve);
+        bilanAssertions++ ;
 
     }
 
@@ -161,8 +173,7 @@ public class TacheTest {
      *
      * @see Tache#getEnd()
      */
-    @Test
-    public void getEnd() {
+    public void test_getEnd() {
 
         Calendar end    = Calendar.getInstance();
 
@@ -181,8 +192,26 @@ public class TacheTest {
 
         testDate.setTime(new Date(System.currentTimeMillis()));
 
+        totalAssertions ++;
         assertTrue( testDate.compareTo(date) < 0 );
+        bilanAssertions++ ;
 
     }
+
+
+    public static void main(String[] args) {
+
+        junit.textui.TestRunner.run(new TestSuite(TacheTest.class));
+
+        if (bilanAssertions == totalAssertions) {
+            System.out.print("Bravo ! ");
+        }
+        else  {
+            System.out.print("OUPS ! ");
+        }
+
+        System.out.println(" "+bilanAssertions+"/"+totalAssertions+" assertions verifiees");
+
+    } // fin main
 
 }
