@@ -17,6 +17,8 @@ public class MainView extends JFrame
     private JPanel pCenter;
 
     private String title;
+
+    private int space = 20;
  
 
 
@@ -36,7 +38,7 @@ public class MainView extends JFrame
         setTitle(this.title);
 
         pCenter = new JPanel(); 
-        pCenter.setLayout(new GridLayout(0,3));
+        pCenter.setLayout(new GridLayout(0,3,this.space, this.space));
 
         int size = this.tachesView.size();
         for (int i = 0; i < size; i++ ) {
