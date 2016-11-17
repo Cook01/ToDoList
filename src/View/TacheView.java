@@ -18,9 +18,8 @@ public class TacheView extends JPanel{
 
     public TacheView(String title, String endDate, String categorie, boolean isLate){
         super();
-        tacheModel = model;
 
-        initTacheView(titre, endDate, categorie, isLate);
+        initTacheView(title, endDate, categorie, isLate);
     }
 
     public void initTacheView(String title, String endDate, String categorie, boolean isLate){
@@ -36,11 +35,11 @@ public class TacheView extends JPanel{
             }
         }
 
-        panelHolder[0][1].add(title);
+        panelHolder[0][1].add(this.title);
 
         panelHolder[1][0].add(new JLabel("Date de fin : "));
-        panelHolder[1][1].add(endDate);
-        panelHolder[1][2].add(categorie);
+        panelHolder[1][1].add(this.endDate);
+        panelHolder[1][2].add(this.categorie);
 
         updateView(title, endDate, categorie, isLate);
     }
