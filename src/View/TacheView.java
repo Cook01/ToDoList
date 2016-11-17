@@ -1,39 +1,68 @@
 package View;
 
-import Model.Ponctuelle;
-import Model.Tache;
-
 import javax.swing.*;
 import java.awt.*;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by Vincent on 12/11/2016.
  */
 public class TacheView extends JPanel{
-    private Tache tacheModel;
-    private JLabel titre;
+    private JLabel title;
     private JLabel endDate;
+    private JLabel categorie;
 
-    public TacheView(Tache model){
+    private final int rows = 2;
+    private final int cols = 3;
+    private JPanel[][] panelHolder = new JPanel[rows][cols];
+
+
+    public void TacheView(String title, String endDate, String categorie, boolean isLate){
         super();
         tacheModel = model;
 
-        titre = new JLabel(tacheModel.getTitle());
+        initTacheView(titre, endDate, categorie, isLate);
+    }
 
-        SimpleDateFormat format1 = new SimpleDateFormat("EE dd MMM y");
-        endDate = new JLabel(format1.format(tacheModel.getEnd().getTime()));
+    public void initTacheView(String title, String endDate, String categorie, boolean isLate){
+        this.title = new JLabel();
+        this.endDate = new JLabel();
+        this.categorie = new JLabel();
 
-        this.setLayout(new BorderLayout());
+        this.setLayout(new GridLayout(rows, cols));
+        for(int row = 0; row < rows; row++) {
+            for(int col = 0; col < cols; col++) {
+                panelHolder[row][col] = new JPanel();
+                add(panelHolder[row][col]);
+            }
+        }
 
-        this.add(titre, BorderLayout.NORTH);
+        panelHolder[0][1].add(title);
 
-        JPanel south = new JPanel();
-        south.add(new JLabel("Date de fin : "));
-        south.add(endDate);
+        panelHolder[1][0].add(new JLabel("Date de fin : "));
+        panelHolder[1][1].add(endDate);
+        panelHolder[1][2].add(categorie);
 
-        this.add(south, BorderLayout.SOUTH);
+        updateView(title, endDate, categorie, isLate);
+    }
+
+    public void updateView(String title, String endDate, String categorie, boolean isLate){
+        setTitle(title, isLate);
+        setEndDate(endDate);
+        setCategorie(categorie);
+    }
+
+    public void setTitle(String title, boolean isLate){
+        this.title.setText(title);
+        if(isLate){
+            this.title.setForeground(Color.RED);
+        }
+    }
+
+    public void setEndDate(String endDate){
+        this.endDate.setText(endDate);
+    }
+
+    public void setCategorie(String categorie){
+        this.categorie.setText(categorie);
     }
 }
