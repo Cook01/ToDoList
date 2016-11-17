@@ -11,7 +11,7 @@ public class TacheView extends JPanel{
     private JLabel title;
     private JLabel endDate;
     private JLabel categorie;
-    private Jbutton editButton;
+    private JButton editButton;
 
     private final int rows = 2;
     private final int cols = 3;
@@ -28,7 +28,7 @@ public class TacheView extends JPanel{
         this.title = new JLabel();
         this.endDate = new JLabel();
         this.categorie = new JLabel();
-        this.editButton = new Jbutton("Edit");
+        this.editButton = new JButton("Edit");
 
         this.setBorder(LineBorder.createGrayLineBorder());
 
