@@ -39,7 +39,7 @@ public class TacheView extends JPanel{
         }
 
         panelHolder[0][1].add(this.title);
-        panelHolder[1][1].add(this.endDate);
+        panelHolder[1][0].add(this.endDate);
         panelHolder[1][2].add(this.categorie);
 
         updateView(title, endDate, categorie, isLate);
