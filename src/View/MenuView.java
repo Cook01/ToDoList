@@ -1,6 +1,6 @@
 package View;
 
-
+import Controller.MenuListener;
 
 import java.util.ArrayList;
 
@@ -19,18 +19,18 @@ public class MenuView extends JMenuBar
  
 
 
-    public MenuView(ArrayList<ArrayList<String>> menusTitle)  
+    public MenuView(ArrayList<ArrayList<String>> menusTitle, Class listener)  
     { 
 
         this.menus      = new ArrayList<JMenu>();
         this.menusTitle = menusTitle;
 
-        this.initMenuView();
+        this.initMenuView(listener);
 
 
     } 
 
-    private void initMenuView()
+    private void initMenuView(Class listener)
     {
 
         int size = this.menusTitle.size();
@@ -43,9 +43,19 @@ public class MenuView extends JMenuBar
             int subMenuSize = this.menusTitle.get(i).size();
             for (int j = 1 ; j < subMenuSize ; j++) {
             
-               
+                JMenuItem item = new JMenuItem( this.menusTitle.get(i).get(j) );
 
-                menu.add( new JMenuItem( this.menusTitle.get(i).get(j) ) );
+                menu.add( item );
+
+                try {
+
+                     item.addActionListener( (MenuListener)listener.newInstance() );
+
+                } catch(Exception e) {
+
+                    System.out.println(e);
+
+                }
 
             }
 

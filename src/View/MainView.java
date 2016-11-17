@@ -1,6 +1,6 @@
 package View;
 
-
+import Controller.MenuListener;
 
 import java.util.ArrayList;
 
@@ -22,17 +22,17 @@ public class MainView extends JFrame
  
 
 
-    public MainView(String title, ArrayList<TacheView> tachesView, ArrayList<ArrayList<String>> menusTitle)  
+    public MainView(String title, ArrayList<TacheView> tachesView, ArrayList<ArrayList<String>> menusTitle, Class listener)  
     { 
 
         this.tachesView = tachesView;
         this.title      = title;
 
-        this.initMainView(menusTitle);
+        this.initMainView(menusTitle, listener);
 
     } 
 
-    private void initMainView(ArrayList<ArrayList<String>> menusTitle)
+    private void initMainView(ArrayList<ArrayList<String>> menusTitle, Class listener)
     {
 
         setTitle(this.title);
@@ -49,7 +49,7 @@ public class MainView extends JFrame
 
         add(pCenter, "Center");
 
-        setJMenuBar(new MenuView(menusTitle));
+        setJMenuBar(new MenuView(menusTitle, listener));
 
         pack(); 
 
@@ -122,7 +122,7 @@ public class MainView extends JFrame
         tachesView.add(new TacheView("Titre8", "01-10-1996", "Bote", false));
         tachesView.add(new TacheView("Titre9", "31-10-1996", "Bite", true));
 
-        MainView f = new MainView("ToDo List", tachesView, menu); 
+        MainView f = new MainView("ToDo List", tachesView, menu, MenuListener.class); 
 
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
