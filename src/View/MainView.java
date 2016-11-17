@@ -22,17 +22,17 @@ public class MainView extends JFrame
  
 
 
-    public MainView(String title, ArrayList<TacheView> tachesView)  
+    public MainView(String title, ArrayList<TacheView> tachesView, ArrayList<ArrayList<String>> menusTitle)  
     { 
 
         this.tachesView = tachesView;
         this.title      = title;
 
-        this.initMainView();
+        this.initMainView(menusTitle);
 
     } 
 
-    private void initMainView()
+    private void initMainView(ArrayList<ArrayList<String>> menusTitle)
     {
 
         setTitle(this.title);
@@ -48,6 +48,8 @@ public class MainView extends JFrame
         }
 
         add(pCenter, "Center");
+
+        setJMenuBar(new MenuView(menusTitle));
 
         pack(); 
 
@@ -86,6 +88,28 @@ public class MainView extends JFrame
     public static void main(String args[])  
     { 
 
+        ArrayList<ArrayList<String>> menu   = new ArrayList<ArrayList<String>>();
+
+        ArrayList<String> submenu           = new ArrayList<String>();
+        ArrayList<String> submenu2          = new ArrayList<String>();
+        ArrayList<String> submenu3          = new ArrayList<String>();
+
+        submenu.add("Test");
+        submenu.add("Test1");
+        submenu.add("Test1");
+
+        submenu2.add("Test2");
+        submenu2.add("Test21");
+        submenu2.add("Test21");
+
+        submenu3.add("Test3");
+        submenu3.add("Test31");
+        submenu3.add("Test31");
+
+        menu.add(submenu);
+        menu.add(submenu2);
+        menu.add(submenu3);
+
         ArrayList<TacheView> tachesView = new ArrayList<TacheView>();
 
         tachesView.add(new TacheView("Titre1", "25-10-1996", "Bite", false));
@@ -98,7 +122,7 @@ public class MainView extends JFrame
         tachesView.add(new TacheView("Titre8", "01-10-1996", "Bote", false));
         tachesView.add(new TacheView("Titre9", "31-10-1996", "Bite", true));
 
-        MainView f = new MainView("ToDo List", tachesView); 
+        MainView f = new MainView("ToDo List", tachesView, menu); 
 
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
