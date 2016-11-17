@@ -10,6 +10,8 @@ public class MenuListener implements ActionListener
 	{
 	
 		System.out.println("Selected: " + e.getActionCommand());
+		System.out.println(e);
+		System.out.println("");
 
 	}
 
