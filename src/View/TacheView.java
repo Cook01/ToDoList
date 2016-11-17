@@ -16,7 +16,7 @@ public class TacheView extends JPanel{
     private JPanel[][] panelHolder = new JPanel[rows][cols];
 
 
-    public void TacheView(String title, String endDate, String categorie, boolean isLate){
+    public TacheView(String title, String endDate, String categorie, boolean isLate){
         super();
         tacheModel = model;
 
