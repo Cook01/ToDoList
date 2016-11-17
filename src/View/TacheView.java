@@ -1,6 +1,7 @@
 package View;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 /**
@@ -27,6 +28,8 @@ public class TacheView extends JPanel{
         this.endDate = new JLabel();
         this.categorie = new JLabel();
 
+        this.setBorder(LineBorder.createGrayLineBorder());
+
         this.setLayout(new GridLayout(rows, cols));
         for(int row = 0; row < rows; row++) {
             for(int col = 0; col < cols; col++) {
@@ -36,8 +39,6 @@ public class TacheView extends JPanel{
         }
 
         panelHolder[0][1].add(this.title);
-
-        panelHolder[1][0].add(new JLabel("Date de fin : "));
         panelHolder[1][1].add(this.endDate);
         panelHolder[1][2].add(this.categorie);
 
