@@ -28,6 +28,7 @@ public class EditTacheView extends JPanel{
 
     public void initEditTacheView(String title, String endDate, String categorie, boolean isLate){
         this.title = new JTextField();
+        this.title.setPreferredSize(new Dimension(200, 24));
 
         SpinnerDateModel model = new SpinnerDateModel();
         this.endDate = new JSpinner(model);
@@ -69,6 +70,8 @@ public class EditTacheView extends JPanel{
 
     public void setTitle(String title){
         this.title.setText(title);
+
+        
     }
 
     public void setEndDate(String endDate, boolean isLate){
@@ -87,7 +90,7 @@ public class EditTacheView extends JPanel{
         EditTacheView test = new EditTacheView("Test", "25-10-2012", "cat", true);
 
         frame.add(test);
-        frame.pack();
+        //frame.pack();
 
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
