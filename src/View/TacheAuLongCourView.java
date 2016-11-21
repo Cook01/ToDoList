@@ -12,8 +12,8 @@ import java.awt.*;
 public class TacheAuLongCourView extends TacheView{
     JProgressBar progressBar;
 
-    public TacheAuLongCourView(String title, String endDate, String categorie, boolean isLate, int pourcentage){
-        super(title, endDate, categorie, isLate);
+    public TacheAuLongCourView(String title, String endDate, String categorie, boolean isLate, int pourcentage, Class tacheListener){
+        super(title, endDate, categorie, isLate, tacheListener);
 
         this.progressBar = new JProgressBar(0, 100);
 
