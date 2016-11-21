@@ -1,6 +1,6 @@
 package Model;
 
-enum MenuItem {
+public enum MenuItems {
 
 	CARTEPONCTUELLE("Carte ponctuelle"),
 	CARTEAULONGCOURS("Carte AuLongCours"),
@@ -10,7 +10,7 @@ enum MenuItem {
 
 	private final String text;
 
-    private Strings(final String text) {
+    private MenuItems(final String text) {
         this.text = text;
     }
 

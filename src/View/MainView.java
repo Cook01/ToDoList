@@ -1,7 +1,7 @@
 package View;
 
 import Controller.MenuListener;
-import Model.MenuItem;
+import Model.MenuItems;
 
 import java.util.ArrayList;
 
@@ -96,15 +96,15 @@ public class MainView extends JFrame
         ArrayList<String> submenu3          = new ArrayList<String>();
 
         submenu.add("Créer");
-        submenu.add(MenuItem.CARTEPONCTUELLE);
-        submenu.add(MenuItem.CARTEAULONGCOURS);
+        submenu.add(MenuItems.CARTEPONCTUELLE.toString());
+        submenu.add(MenuItems.CARTEAULONGCOURS.toString());
 
         submenu2.add("Manager");
-        submenu2.add(MenuItem.CATEGORIE);
+        submenu2.add(MenuItems.CATEGORIE.toString());
 
         submenu3.add("Autres");
-        submenu3.add(MenuItem.SAUVEGARDER);
-        submenu3.add(MenuItem.QUITTER);
+        submenu3.add(MenuItems.SAUVEGARDER.toString());
+        submenu3.add(MenuItems.QUITTER.toString());
 
         menu.add(submenu);
         menu.add(submenu2);
