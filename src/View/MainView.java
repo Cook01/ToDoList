@@ -1,6 +1,8 @@
 package View;
 
 import Controller.MenuListener;
+import Controller.TacheListener;
+
 import Model.MenuItems;
 
 import java.util.ArrayList;
@@ -23,17 +25,17 @@ public class MainView extends JFrame
  
 
 
-    public MainView(String title, ArrayList<TacheView> tachesView, ArrayList<ArrayList<String>> menusTitle, Class listener)  
+    public MainView(String title, ArrayList<TacheView> tachesView, ArrayList<ArrayList<String>> menusTitle, Class menuListener)  
     { 
 
         this.tachesView = tachesView;
         this.title      = title;
 
-        this.initMainView(menusTitle, listener);
+        this.initMainView(menusTitle, menuListener);
 
     } 
 
-    private void initMainView(ArrayList<ArrayList<String>> menusTitle, Class listener)
+    private void initMainView(ArrayList<ArrayList<String>> menusTitle, Class menuListener)
     {
 
         setTitle(this.title);
@@ -50,7 +52,7 @@ public class MainView extends JFrame
 
         add(pCenter, "Center");
 
-        setJMenuBar(new MenuView(menusTitle, listener));
+        setJMenuBar(new MenuView(menusTitle, menuListener));
 
         pack(); 
 
@@ -112,15 +114,15 @@ public class MainView extends JFrame
 
         ArrayList<TacheView> tachesView = new ArrayList<TacheView>();
 
-        tachesView.add(new TacheView("Titre1", "25-10-1996", "Bite", false));
-        tachesView.add(new TacheView("Titre2", "25-10-1997", "Bote", false));
-        tachesView.add(new TacheView("Titre3", "25-10-1999", "", false));
-        tachesView.add(new TacheView("Titre4", "25-12-1996", "Bite", true));
-        tachesView.add(new TacheView("Titre5", "25-08-1996", "Bô", false));
-        tachesView.add(new TacheView("Titre6", "25-01-1996", "Bô", false));
-        tachesView.add(new TacheView("Titre7", "23-10-1996", "Bite", false));
-        tachesView.add(new TacheView("Titre8", "01-10-1996", "Bote", false));
-        tachesView.add(new TacheView("Titre9", "31-10-1996", "Bite", true));
+        tachesView.add(new TacheView("Titre1", "25-10-1996", "Bite", false, TacheListener.class));
+        tachesView.add(new TacheView("Titre2", "25-10-1997", "Bote", false, TacheListener.class));
+        tachesView.add(new TacheView("Titre3", "25-10-1999", "", false, TacheListener.class));
+        tachesView.add(new TacheView("Titre4", "25-12-1996", "Bite", true, TacheListener.class));
+        tachesView.add(new TacheView("Titre5", "25-08-1996", "Bô", false, TacheListener.class));
+        tachesView.add(new TacheView("Titre6", "25-01-1996", "Bô", false, TacheListener.class));
+        tachesView.add(new TacheView("Titre7", "23-10-1996", "Bite", false, TacheListener.class));
+        tachesView.add(new TacheView("Titre8", "01-10-1996", "Bote", false, TacheListener.class));
+        tachesView.add(new TacheView("Titre9", "31-10-1996", "Bite", true, TacheListener.class));
 
         MainView f = new MainView("ToDo List", tachesView, menu, MenuListener.class); 
 

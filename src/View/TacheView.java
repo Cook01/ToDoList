@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
+import Controller.TacheListener;
+
 /**
  * Created by Vincent on 12/11/2016.
  */
@@ -19,7 +21,7 @@ public class TacheView extends JPanel{
     private JPanel[][] panelHolder = new JPanel[rows][cols];
 
 
-    public TacheView(String title, String endDate, String categorie, boolean isLate){
+    public TacheView(String title, String endDate, String categorie, boolean isLate, Class tacheListener){
         super();
 
         this.title = new JLabel();
@@ -28,10 +30,10 @@ public class TacheView extends JPanel{
         this.editButton = new JButton("Edit");
         this.deleteButton = new JButton("X");
 
-        initTacheView(title, endDate, categorie, isLate);
+        initTacheView(title, endDate, categorie, isLate, tacheListener);
     }
 
-    public void initTacheView(String title, String endDate, String categorie, boolean isLate){
+    public void initTacheView(String title, String endDate, String categorie, boolean isLate, Class tacheListener){
 
         this.setBorder(LineBorder.createGrayLineBorder());
 
@@ -42,6 +44,19 @@ public class TacheView extends JPanel{
                 add(panelHolder[row][col]);
             }
         }
+
+         try {
+
+            this.editButton.addActionListener( (TacheListener)tacheListener.newInstance() );
+            this.deleteButton.addActionListener( (TacheListener)tacheListener.newInstance() );
+
+        } catch(Exception e) {
+
+            System.out.println(e);
+
+        }
+
+        
 
         panelHolder[0][0].add(this.editButton);
         panelHolder[0][1].add(this.title);
