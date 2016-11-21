@@ -14,6 +14,7 @@ public class EditTacheView extends JPanel{
     private JSpinner endDate;
     private JComboBox categorie;
     private JButton saveButton;
+    private JButton deleteButton;
 
     private final int rows = 2;
     private final int cols = 3;
@@ -23,10 +24,6 @@ public class EditTacheView extends JPanel{
     public EditTacheView(String title, String endDate, String categorie, boolean isLate){
         super();
 
-        initEditTacheView(title, endDate, categorie, isLate);
-    }
-
-    public void initEditTacheView(String title, String endDate, String categorie, boolean isLate){
         this.title = new JTextField();
         this.title.setPreferredSize(new Dimension(200, 24));
 
@@ -39,10 +36,14 @@ public class EditTacheView extends JPanel{
         formatter.setAllowsInvalid(false);
         formatter.setOverwriteMode(true);
 
-        
         this.categorie = new JComboBox();
         this.saveButton = new JButton("Save");
+        this.deleteButton = new JButton("X");
 
+        initEditTacheView(title, endDate, categorie, isLate);
+    }
+
+    public void initEditTacheView(String title, String endDate, String categorie, boolean isLate){
         this.setBorder(LineBorder.createGrayLineBorder());
 
         this.setLayout(new GridLayout(rows, cols));
@@ -53,8 +54,9 @@ public class EditTacheView extends JPanel{
             }
         }
 
+        panelHolder[0][0].add(this.saveButton);
         panelHolder[0][1].add(this.title);
-        panelHolder[0][2].add(this.saveButton);
+        panelHolder[0][2].add(this.deleteButton);
 
         panelHolder[1][0].add(this.endDate);
         panelHolder[1][2].add(this.categorie);

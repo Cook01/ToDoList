@@ -12,6 +12,7 @@ public class TacheView extends JPanel{
     private JLabel endDate;
     private JLabel categorie;
     private JButton editButton;
+    private JButton deleteButton;
 
     private final int rows = 2;
     private final int cols = 3;
@@ -21,14 +22,16 @@ public class TacheView extends JPanel{
     public TacheView(String title, String endDate, String categorie, boolean isLate){
         super();
 
-        initTacheView(title, endDate, categorie, isLate);
-    }
-
-    public void initTacheView(String title, String endDate, String categorie, boolean isLate){
         this.title = new JLabel();
         this.endDate = new JLabel();
         this.categorie = new JLabel();
         this.editButton = new JButton("Edit");
+        this.deleteButton = new JButton("X");
+
+        initTacheView(title, endDate, categorie, isLate);
+    }
+
+    public void initTacheView(String title, String endDate, String categorie, boolean isLate){
 
         this.setBorder(LineBorder.createGrayLineBorder());
 
@@ -40,8 +43,9 @@ public class TacheView extends JPanel{
             }
         }
 
+        panelHolder[0][0].add(this.editButton);
         panelHolder[0][1].add(this.title);
-        panelHolder[0][2].add(this.editButton);
+        panelHolder[0][2].add(this.deleteButton);
 
         panelHolder[1][0].add(this.endDate);
         panelHolder[1][2].add(this.categorie);
