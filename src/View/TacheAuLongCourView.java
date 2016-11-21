@@ -1,5 +1,7 @@
 package View;
 
+import Controller.*;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.text.DateFormatter;
@@ -12,8 +14,8 @@ import java.awt.*;
 public class TacheAuLongCourView extends TacheView{
     JProgressBar progressBar;
 
-    public TacheAuLongCourView(String title, String endDate, String categorie, boolean isLate, int pourcentage){
-        super(title, endDate, categorie, isLate);
+    public TacheAuLongCourView(String title, String endDate, String categorie, boolean isLate, int pourcentage, TacheListener listener){
+        super(title, endDate, categorie, isLate, listener);
 
         this.progressBar = new JProgressBar(0, 100);
 

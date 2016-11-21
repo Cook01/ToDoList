@@ -1,5 +1,9 @@
 package View;
 
+import Controller.*;
+
+import java.lang.Exception;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.text.DateFormatter;
@@ -23,7 +27,7 @@ public class EditTacheView extends JPanel{
     private JPanel[][] panelHolder = new JPanel[rows][cols];
 
 
-    public EditTacheView(String title, String endDate, String[] categories, int idCategorie, boolean isLate){
+    public EditTacheView(String title, String endDate, String[] categories, int idCategorie, boolean isLate, TacheListener listener){
         super();
 
         this.canvas = new JPanel();
@@ -44,10 +48,10 @@ public class EditTacheView extends JPanel{
         this.saveButton = new JButton("Save");
         this.deleteButton = new JButton("X");
 
-        initEditTacheView(title, endDate, categories, idCategorie, isLate);
+        initEditTacheView(title, endDate, categories, idCategorie, isLate, listener);
     }
 
-    public void initEditTacheView(String title, String endDate, String[] categories, int idCategorie, boolean isLate){
+    public void initEditTacheView(String title, String endDate, String[] categories, int idCategorie, boolean isLate, TacheListener listener){
         this.setBorder(LineBorder.createGrayLineBorder());
         this.setLayout(new BorderLayout());
 
@@ -67,6 +71,9 @@ public class EditTacheView extends JPanel{
         panelHolder[1][2].add(this.categorie);
 
         this.add(canvas, BorderLayout.NORTH);
+
+        this.addListenerOnSaveButton(listener);
+        this.addListenerOnDeleteButton(listener);
 
         updateView(title, endDate, categories, idCategorie, isLate);
     }
@@ -98,15 +105,21 @@ public class EditTacheView extends JPanel{
         this.categorie.setSelectedIndex(idCategorie);
     }
 
-    public static void main(String args[]){
 
-        JFrame frame = new JFrame();
-        TacheView test = new TacheAuLongCourView("Test", "25-10-2012", "Test", false, 70);
-
-        frame.add(test);
-        frame.pack();
-
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+    public void addListenerOnSaveButton(TacheListener listener){
+        try{
+            this.saveButton.addActionListener(listener);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+    }
+    
+    public void addListenerOnDeleteButton(TacheListener listener){
+        try{
+            this.deleteButton.addActionListener(listener);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
