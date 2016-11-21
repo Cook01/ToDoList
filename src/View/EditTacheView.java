@@ -98,15 +98,4 @@ public class EditTacheView extends JPanel{
         this.categorie.setSelectedIndex(idCategorie);
     }
 
-    public static void main(String args[]){
-
-        JFrame frame = new JFrame();
-        TacheView test = new TacheAuLongCourView("Test", "25-10-2012", "Test", false, 70);
-
-        frame.add(test);
-        frame.pack();
-
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-    }
 }
