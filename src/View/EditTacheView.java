@@ -21,11 +21,10 @@ public class EditTacheView extends JPanel{
     private JPanel[][] panelHolder = new JPanel[rows][cols];
 
 
-    public EditTacheView(String title, String endDate, String categorie, boolean isLate){
+    public EditTacheView(String title, String endDate, String[] categories, int idCategorie, boolean isLate){
         super();
 
         this.title = new JTextField();
-        this.title.setPreferredSize(new Dimension(200, 24));
 
         SpinnerDateModel model = new SpinnerDateModel();
         this.endDate = new JSpinner(model);
@@ -37,13 +36,14 @@ public class EditTacheView extends JPanel{
         formatter.setOverwriteMode(true);
 
         this.categorie = new JComboBox();
+
         this.saveButton = new JButton("Save");
         this.deleteButton = new JButton("X");
 
-        initEditTacheView(title, endDate, categorie, isLate);
+        initEditTacheView(title, endDate, categories, idCategorie, isLate);
     }
 
-    public void initEditTacheView(String title, String endDate, String categorie, boolean isLate){
+    public void initEditTacheView(String title, String endDate, String[] categories, int idCategorie, boolean isLate){
         this.setBorder(LineBorder.createGrayLineBorder());
 
         this.setLayout(new GridLayout(rows, cols));
@@ -61,38 +61,45 @@ public class EditTacheView extends JPanel{
         panelHolder[1][0].add(this.endDate);
         panelHolder[1][2].add(this.categorie);
 
-        updateView(title, endDate, categorie, isLate);
+        updateView(title, endDate, categories, idCategorie, isLate);
     }
 
-    public void updateView(String title, String endDate, String categorie, boolean isLate){
+    public void updateView(String title, String endDate, String[] categories, int idCategorie, boolean isLate){
         setTitle(title);
         setEndDate(endDate, isLate);
-        setCategorie(categorie);
+        setCategorie(categories, idCategorie);
     }
 
     public void setTitle(String title){
         this.title.setText(title);
 
-        
+        this.title.setPreferredSize(new Dimension(100, 24));        
     }
 
     public void setEndDate(String endDate, boolean isLate){
         if(isLate){
             this.endDate.setEnabled(false);
         }
-        
     }
 
-    public void setCategorie(String categorie){
-        //this.categorie.setText(categorie);
+    public void setCategorie(String[] categories, int idCategorie){
+
+        for(String categorie : categories){
+            this.categorie.addItem(categorie);
+        }
+
+        this.categorie.setSelectedIndex(idCategorie);
     }
 
     public static void main(String args[]){
+
+        String[] categories = {"cat", "test", "lol", "ok"};
+
         JFrame frame = new JFrame();
-        EditTacheView test = new EditTacheView("Test", "25-10-2012", "cat", true);
+        EditTacheView test = new EditTacheView("Test", "25-10-2012", categories, 2, true);
 
         frame.add(test);
-        //frame.pack();
+        frame.pack();
 
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
