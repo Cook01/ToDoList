@@ -40,7 +40,7 @@ public class AuLongCoursTest extends TestCase {
         begin.set(Calendar.MILLISECOND, 0);
 
 
-        final AuLongCours testTache = new AuLongCours("Tache de test",begin, end);
+        final AuLongCours testTache = new AuLongCours(1, "Tache de test",begin, end);
 
 
         Calendar beginGet = testTache.getBegin();
@@ -66,7 +66,7 @@ public class AuLongCoursTest extends TestCase {
         end.set(Calendar.MILLISECOND, 0);
 
 
-        final AuLongCours testTache = new AuLongCours("Tache de test", end);
+        final AuLongCours testTache = new AuLongCours(1,"Tache de test", end);
 
 
         int percentage = testTache.getPercentage();
@@ -107,7 +107,7 @@ public class AuLongCoursTest extends TestCase {
         newEnd.set(Calendar.MILLISECOND, 0);
 
 
-        final AuLongCours testTache = new AuLongCours("Tache de test",begin, end);
+        final AuLongCours testTache = new AuLongCours(1,"Tache de test",begin, end);
 
 
         testTache.setBegin(newEnd);
@@ -140,7 +140,7 @@ public class AuLongCoursTest extends TestCase {
         end.set(Calendar.MILLISECOND, 0);
 
 
-        final AuLongCours testTache = new AuLongCours("Tache de test", end);
+        final AuLongCours testTache = new AuLongCours(1,"Tache de test", end);
 
 
         //when
@@ -167,7 +167,7 @@ public class AuLongCoursTest extends TestCase {
         end.set(Calendar.SECOND, 0);
         end.set(Calendar.MILLISECOND, 0);
 
-        final AuLongCours testTache = new AuLongCours("Tache de test" , end);
+        final AuLongCours testTache = new AuLongCours(1,"Tache de test" , end);
 
 
         testTache.setPercentage(25);
@@ -192,7 +192,7 @@ public class AuLongCoursTest extends TestCase {
         end.set(Calendar.SECOND, 0);
         end.set(Calendar.MILLISECOND, 0);
 
-        final AuLongCours testTache = new AuLongCours("Tache de test" , end);
+        final AuLongCours testTache = new AuLongCours(1,"Tache de test" , end);
 
 
         testTache.setPercentage(20);
@@ -215,7 +215,7 @@ public class AuLongCoursTest extends TestCase {
         end.set(Calendar.SECOND, 0);
         end.set(Calendar.MILLISECOND, 0);
 
-        final AuLongCours testTache = new AuLongCours("Tache de test" , end);
+        final AuLongCours testTache = new AuLongCours(1,"Tache de test" , end);
 
 
         testTache.setPercentage(55);
@@ -239,7 +239,7 @@ public class AuLongCoursTest extends TestCase {
         end.set(Calendar.SECOND, 0);
         end.set(Calendar.MILLISECOND, 0);
 
-        final AuLongCours testTache = new AuLongCours("Tache de test" , end);
+        final AuLongCours testTache = new AuLongCours(1,"Tache de test" , end);
 
 
         testTache.setPercentage(40);
@@ -263,7 +263,7 @@ public class AuLongCoursTest extends TestCase {
         end.set(Calendar.SECOND, 0);
         end.set(Calendar.MILLISECOND, 0);
 
-        final AuLongCours testTache = new AuLongCours("Tache de test" , end);
+        final AuLongCours testTache = new AuLongCours(1,"Tache de test" , end);
 
         testTache.setPercentage(99);
 
@@ -287,7 +287,7 @@ public class AuLongCoursTest extends TestCase {
         end.set(Calendar.SECOND, 0);
         end.set(Calendar.MILLISECOND, 0);
 
-        final AuLongCours testTache = new AuLongCours("Tache de test" , end);
+        final AuLongCours testTache = new AuLongCours(1,"Tache de test" , end);
 
 
         testTache.setPercentage(74);
@@ -311,7 +311,7 @@ public class AuLongCoursTest extends TestCase {
         end.set(Calendar.SECOND, 0);
         end.set(Calendar.MILLISECOND, 0);
 
-        final AuLongCours testTache = new AuLongCours("Tache de test" , end);
+        final AuLongCours testTache = new AuLongCours(1,"Tache de test" , end);
 
         testTache.setPercentage(100);
 
@@ -335,7 +335,7 @@ public class AuLongCoursTest extends TestCase {
         end.set(Calendar.SECOND, 0);
         end.set(Calendar.MILLISECOND, 0);
 
-        final AuLongCours testTache = new AuLongCours("Tache de test" , end);
+        final AuLongCours testTache = new AuLongCours(1,"Tache de test" , end);
 
 
         testTache.setPercentage(3);

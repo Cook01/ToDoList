@@ -33,7 +33,7 @@ public class TacheTest extends TestCase {
         end.set(Calendar.SECOND, 0);
         end.set(Calendar.MILLISECOND, 0);
 
-        final Ponctuelle testTache = new Ponctuelle("Tache de test", end);
+        final Ponctuelle testTache = new Ponctuelle(1,"Tache de test", end);
 
         //when
         testTache.setTitle("Nouveau titre");
@@ -63,7 +63,7 @@ public class TacheTest extends TestCase {
         end.set(Calendar.SECOND, 0);
         end.set(Calendar.MILLISECOND, 0);
 
-        final Ponctuelle testTache = new Ponctuelle("Tache de test", end);
+        final Ponctuelle testTache = new Ponctuelle(1,"Tache de test", end);
 
         //when
         testTache.setAchieve(true);
@@ -94,7 +94,7 @@ public class TacheTest extends TestCase {
         end.set(Calendar.SECOND, 0);
         end.set(Calendar.MILLISECOND, 0);
 
-        final Ponctuelle testTache = new Ponctuelle("Tache de test", end);
+        final Ponctuelle testTache = new Ponctuelle(1,"Tache de test", end);
 
         Calendar nouvelleDate    = Calendar.getInstance();
 
@@ -132,7 +132,7 @@ public class TacheTest extends TestCase {
         end.set(Calendar.SECOND, 0);
         end.set(Calendar.MILLISECOND, 0);
 
-        final Ponctuelle testTache = new Ponctuelle("Tache de test", end);
+        final Ponctuelle testTache = new Ponctuelle(1,"Tache de test", end);
 
         String title = testTache.getTitle();
 
@@ -157,7 +157,7 @@ public class TacheTest extends TestCase {
         end.set(Calendar.SECOND, 0);
         end.set(Calendar.MILLISECOND, 0);
 
-        final Ponctuelle testTache = new Ponctuelle("Tache de test", end);
+        final Ponctuelle testTache = new Ponctuelle(1,"Tache de test", end);
 
 
         Boolean achieve = testTache.getAchieve();
@@ -183,7 +183,7 @@ public class TacheTest extends TestCase {
         end.set(Calendar.SECOND, 0);
         end.set(Calendar.MILLISECOND, 0);
 
-        final Ponctuelle testTache = new Ponctuelle("Tache de test", end);
+        final Ponctuelle testTache = new Ponctuelle(1,"Tache de test", end);
 
 
         Calendar date = testTache.getEnd();

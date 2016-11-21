@@ -27,9 +27,9 @@ public class AuLongCours extends Tache {
      * @param title titre de la Tache
      * @param end   fin de la Tache
      */
-    public AuLongCours(String title, Calendar end) {
+    public AuLongCours(int id, String title, Calendar end) {
 
-        super(title,end);
+        super(id, title,end);
 
         this.begin = Calendar.getInstance();
 
@@ -50,8 +50,8 @@ public class AuLongCours extends Tache {
      * @param begin debut de la Tache
      * @param end   fin de la Tache
      */
-    public AuLongCours(String title,Calendar begin, Calendar end) {
-        super(title,end);
+    public AuLongCours(int id, String title,Calendar begin, Calendar end) {
+        super(id, title,end);
 
         this.begin      = begin;
         this.percentage = 0;

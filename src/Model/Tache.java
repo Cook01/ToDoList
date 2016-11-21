@@ -10,6 +10,8 @@ import java.util.Date;
  */
 public abstract class Tache {
 
+    protected int id;
+
     /**
      * Titre de la Tache
      */
@@ -33,13 +35,15 @@ public abstract class Tache {
      * @param title titre de la Tache
      * @param end   fin de la Tache
      */
-    public Tache(String title, Calendar end){
+    public Tache(int id, String title, Calendar end){
 
+        this.id         = id;
         this.title      = title;
         this.achieve    = false;
         this.end        = end;
 
     }
+
 
     /**
      * Setter de l'attribut  title
@@ -69,6 +73,10 @@ public abstract class Tache {
     }
 
 
+    public int getId() {
+        return id;
+    }
+    
     /**
      * Getter de l'attribut title
      *

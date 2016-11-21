@@ -114,24 +114,23 @@ public class MainView extends JFrame
 
         ArrayList<TacheView> tachesView = new ArrayList<TacheView>();
 
-        try {
-            tachesView.add(new TacheView("Titre1", "25-10-1996", "Bite", false, TacheListener.class.newInstance()));
-            tachesView.add(new TacheView("Titre2", "25-10-1997", "Bote", false, TacheListener.class.newInstance()));
-            tachesView.add(new TacheView("Titre3", "25-10-1999", "", false, TacheListener.class.newInstance()));
-            tachesView.add(new TacheView("Titre4", "25-12-1996", "Bite", true, TacheListener.class.newInstance()));
-            tachesView.add(new TacheAuLongCourView("Titre5", "25-08-1996", "Bô", false, 20, TacheListener.class.newInstance()));
-            tachesView.add(new TacheView("Titre6", "25-01-1996", "Bô", false, TacheListener.class.newInstance()));
-            tachesView.add(new TacheView("Titre7", "23-10-1996", "Bite", false, TacheListener.class.newInstance()));
-            tachesView.add(new TacheView("Titre8", "01-10-1996", "Bote", false, TacheListener.class.newInstance()));
-            tachesView.add(new TacheView("Titre9", "31-10-1996", "Bite", true, TacheListener.class.newInstance()));
 
-            MainView f = new MainView("ToDo List", tachesView, menu, MenuListener.class); 
 
-            f.setVisible(true);
-            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        tachesView.add(new TacheView("Titre1", "25-10-1996", "Bite", false, new TacheListener(1)));
+        tachesView.add(new TacheView("Titre2", "25-10-1997", "Bote", false, new TacheListener(2)));
+        tachesView.add(new TacheView("Titre3", "25-10-1999", "", false, new TacheListener(3)));
+        tachesView.add(new TacheView("Titre4", "25-12-1996", "Bite", true, new TacheListener(9)));
+        tachesView.add(new TacheAuLongCourView("Titre5", "25-08-1996", "Bô", false, 20, new TacheListener(4)));
+        tachesView.add(new TacheView("Titre6", "25-01-1996", "Bô", false, new TacheListener(5)));
+        tachesView.add(new TacheView("Titre7", "23-10-1996", "Bite", false, new TacheListener(6)));
+        tachesView.add(new TacheView("Titre8", "01-10-1996", "Bote", false, new TacheListener(7)));
+        tachesView.add(new TacheView("Titre9", "31-10-1996", "Bite", true, new TacheListener(8)));
+
+        MainView f = new MainView("ToDo List", tachesView, menu, MenuListener.class); 
+
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+
 
         
 

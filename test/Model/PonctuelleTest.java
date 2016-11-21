@@ -34,7 +34,7 @@ public class PonctuelleTest extends TestCase {
         end.set(Calendar.MILLISECOND, 0);
 
 
-        final Ponctuelle testTache = new Ponctuelle("Tache de test" , end);
+        final Ponctuelle testTache = new Ponctuelle(1,"Tache de test" , end);
 
         Date endTest = new Date(System.currentTimeMillis() + (6 * 24 * 60 * 60 * 1000));//6 jours
 
@@ -63,7 +63,7 @@ public class PonctuelleTest extends TestCase {
         end.set(Calendar.SECOND, 0);
         end.set(Calendar.MILLISECOND, 0);
 
-        final Ponctuelle testTache = new Ponctuelle("Tache de test" , end);
+        final Ponctuelle testTache = new Ponctuelle(1,"Tache de test" , end);
 
         Date endTest = new Date(System.currentTimeMillis() + (4 * 24 * 60 * 60 * 1000));//6 jours
 
