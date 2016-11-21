@@ -10,6 +10,8 @@ import java.awt.*;
  * Created by Vincent on 12/11/2016.
  */
 public class EditTacheView extends JPanel{
+    protected JPanel canvas;
+
     private JTextField title;
     private JSpinner endDate;
     private JComboBox categorie;
@@ -23,6 +25,8 @@ public class EditTacheView extends JPanel{
 
     public EditTacheView(String title, String endDate, String[] categories, int idCategorie, boolean isLate){
         super();
+
+        this.canvas = new JPanel();
 
         this.title = new JTextField();
 
@@ -45,12 +49,13 @@ public class EditTacheView extends JPanel{
 
     public void initEditTacheView(String title, String endDate, String[] categories, int idCategorie, boolean isLate){
         this.setBorder(LineBorder.createGrayLineBorder());
+        this.setLayout(new BorderLayout());
 
-        this.setLayout(new GridLayout(rows, cols));
+        canvas.setLayout(new GridLayout(rows, cols));
         for(int row = 0; row < rows; row++) {
             for(int col = 0; col < cols; col++) {
                 panelHolder[row][col] = new JPanel();
-                add(panelHolder[row][col]);
+                canvas.add(panelHolder[row][col]);
             }
         }
 
@@ -60,6 +65,8 @@ public class EditTacheView extends JPanel{
 
         panelHolder[1][0].add(this.endDate);
         panelHolder[1][2].add(this.categorie);
+
+        this.add(canvas, BorderLayout.NORTH);
 
         updateView(title, endDate, categories, idCategorie, isLate);
     }
@@ -93,10 +100,8 @@ public class EditTacheView extends JPanel{
 
     public static void main(String args[]){
 
-        String[] categories = {"cat", "test", "lol", "ok"};
-
         JFrame frame = new JFrame();
-        EditTacheView test = new EditTacheView("Test", "25-10-2012", categories, 2, true);
+        TacheView test = new TacheAuLongCourView("Test", "25-10-2012", "Test", false, 70);
 
         frame.add(test);
         frame.pack();

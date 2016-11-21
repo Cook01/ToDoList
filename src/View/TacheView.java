@@ -8,6 +8,8 @@ import java.awt.*;
  * Created by Vincent on 12/11/2016.
  */
 public class TacheView extends JPanel{
+    protected JPanel canvas;
+
     private JLabel title;
     private JLabel endDate;
     private JLabel categorie;
@@ -22,6 +24,8 @@ public class TacheView extends JPanel{
     public TacheView(String title, String endDate, String categorie, boolean isLate){
         super();
 
+        this.canvas = new JPanel();
+
         this.title = new JLabel();
         this.endDate = new JLabel();
         this.categorie = new JLabel();
@@ -35,11 +39,13 @@ public class TacheView extends JPanel{
 
         this.setBorder(LineBorder.createGrayLineBorder());
 
-        this.setLayout(new GridLayout(rows, cols));
+        this.setLayout(new BorderLayout());
+
+        canvas.setLayout(new GridLayout(rows, cols));
         for(int row = 0; row < rows; row++) {
             for(int col = 0; col < cols; col++) {
                 panelHolder[row][col] = new JPanel();
-                add(panelHolder[row][col]);
+                canvas.add(panelHolder[row][col]);
             }
         }
 
@@ -49,6 +55,8 @@ public class TacheView extends JPanel{
 
         panelHolder[1][0].add(this.endDate);
         panelHolder[1][2].add(this.categorie);
+
+        this.add(canvas, BorderLayout.NORTH);
 
         updateView(title, endDate, categorie, isLate);
     }
