@@ -13,4 +13,4 @@ java -cp ./out:./Junit/junit.jar:./out/ Model.TacheTest
 cd ./out
 
 #execute MainView
-java View.MainView
+java Controller.MainController
