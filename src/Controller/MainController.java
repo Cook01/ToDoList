@@ -14,6 +14,8 @@ public class MainController
 
 	private static MainView f;
 
+	private static SortTaches sortTache;
+
 	private static ArrayList<ArrayList<String>> menu;
 	private static ArrayList<TacheView> tachesView;
 
@@ -29,9 +31,11 @@ public class MainController
 	public static void main(String args[])  
     { 
 
+    	sortTache = new SortTachesByNewest();
+
 	    allTaches = getTaches();
 
-	    allTaches = sortTaches(allTaches);
+	    allTaches = sortTache.sort(allTaches);
 	    
         menu 		= getMenu();
         tachesView	= getTachesView(allTaches);
@@ -116,20 +120,7 @@ public class MainController
         return allTaches;
     }
 
-    private static ArrayList<Tache> sortTaches(ArrayList<Tache> allTaches)
-    {
-    	// Sorting
-		Collections.sort(allTaches, new Comparator<Tache>() {
-			@Override
-			public int compare(Tache tache1, Tache tache2)
-			{
 
-				return  tache1.getEnd().compareTo(tache2.getEnd());
-			}
-		});
-
-		return allTaches;
-    }
     private static ArrayList<TacheView> getTachesView(ArrayList<Tache> allTaches)
     {
     	ArrayList<TacheView> tachesView = new ArrayList<TacheView>();
