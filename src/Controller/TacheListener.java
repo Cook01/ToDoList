@@ -17,9 +17,8 @@ public class TacheListener implements ActionListener
 
 	public void actionPerformed(ActionEvent e) 
 	{
-	
-		System.out.println(e.getActionCommand());
-		System.out.println(id);
+
+		MainController.removeTache((int)id);
 
 
 	}

@@ -13,6 +13,7 @@ public class MainController
 {
 
 	private static MainView f;
+	private static String title = "ToDo List";
 
 	private static SortTaches sortTache;
 
@@ -40,7 +41,7 @@ public class MainController
         menu 		= getMenu();
         tachesView	= getTachesView(allTaches);
 
-        f 			= new MainView("ToDo List", tachesView, menu, MenuListener.class); 
+        f 			= new MainView(title, tachesView, menu, MenuListener.class); 
 
         f.setVisible(true);
 
@@ -75,9 +76,37 @@ public class MainController
 
     }
 
-    public static void removeTache()
+    public static void update()
     {
 
+	    allTaches = sortTache.sort(allTaches);
+
+	    tachesView	= getTachesView(allTaches);
+
+    	f.updateView(title, tachesView);
+    }
+
+    public static void removeTache(int id)
+    {
+
+    	int i = 0;
+    	int size = allTaches.size();
+    	boolean find = false;
+
+    	while(!find && i < size) {
+
+    		if (allTaches.get(i).getId() == id) {
+
+    			allTaches.remove(i);
+    			find = true;
+
+    		}
+
+    		i++;
+
+    	}
+
+    	update();
     }
 
     private static ArrayList<Tache> getTaches()
