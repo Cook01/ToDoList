@@ -16,7 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-public class CreateTacheView extends Jpanel
+public class CreateTacheView extends JPanel
 {
 
 	protected JPanel canvas;
