@@ -166,7 +166,7 @@ public class MainController
     		if(allTaches.get(i) instanceof Ponctuelle)
 				tachesView.add(new TacheView(allTaches.get(i).getTitle(), dateFormated, "Unknow", allTaches.get(i).isLate(), new TacheListener(allTaches.get(i).getId())));
     		else if (allTaches.get(i) instanceof AuLongCours)
-    			tachesView.add(new TacheAuLongCourView(allTaches.get(i).getTitle(), dateFormated, "Unknow", allTaches.get(i).isLate(), ((AuLongCours)allTaches.get(i)).getPercentage(), new TacheListener(allTaches.get(i).getId())));
+				tachesView.add(new TacheAuLongCourView(allTaches.get(i).getTitle(), dateFormated, "Unknow", allTaches.get(i).isLate(), ((AuLongCours)allTaches.get(i)).getPercentage(), new TacheListener(allTaches.get(i).getId())));
     	}
 
 

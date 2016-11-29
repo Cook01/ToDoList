@@ -13,7 +13,8 @@ import java.awt.*;
 /**
  * Created by Vincent on 12/11/2016.
  */
-public class EditTacheView extends JPanel{
+public class EditTacheView extends JPanel
+{
     protected JPanel canvas;
 
     private JTextField title;
