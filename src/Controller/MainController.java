@@ -4,20 +4,55 @@ import View.*;
 import Model.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class MainController
 {
 
-	private  MainView f;
+	private static MainView f;
 
-	ArrayList<ArrayList<String>> menu;
-	ArrayList<TacheView> tachesView;
+	private static ArrayList<ArrayList<String>> menu;
+	private static ArrayList<TacheView> tachesView;
+
+	private static Calendar end;
+	private static Calendar end2;
+	private static Calendar end3;
+	
+	private static ArrayList<Tache> allTaches;
+
+	private static SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
+	
 
 	public static void main(String args[])  
     { 
 
+    	end = Calendar.getInstance();
+    	end.setTime(new Date(System.currentTimeMillis() + (5 * 24 * 60 * 60 * 1000)));
+	    end.set(Calendar.HOUR_OF_DAY, 0);
+	    end.set(Calendar.MINUTE, 0);
+	    end.set(Calendar.SECOND, 0);
+	    end.set(Calendar.MILLISECOND, 0);
+
+	    end2 = Calendar.getInstance();
+    	end2.setTime(new Date(System.currentTimeMillis() + (2 * 24 * 60 * 60 * 1000)));
+	    end2.set(Calendar.HOUR_OF_DAY, 0);
+	    end2.set(Calendar.MINUTE, 0);
+	    end2.set(Calendar.SECOND, 0);
+	    end2.set(Calendar.MILLISECOND, 0);
+
+	    end3 = Calendar.getInstance();
+    	end3.setTime(new Date(System.currentTimeMillis() + (1 * 24 * 60 * 60 * 1000)));
+	    end3.set(Calendar.HOUR_OF_DAY, 0);
+	    end3.set(Calendar.MINUTE, 0);
+	    end3.set(Calendar.SECOND, 0);
+	    end3.set(Calendar.MILLISECOND, 0);
+
+	    allTaches = getTaches();
+	    
         menu 		= getMenu();
-        tachesView	= getTacheView();
+        tachesView	= getTachesView(allTaches);
 
         f 			= new MainView("ToDo List", tachesView, menu, MenuListener.class); 
 
@@ -54,21 +89,48 @@ public class MainController
 
     }
 
-    public static
+    public static void removeTache()
+    {
 
-    private static ArrayList<TacheView> getTacheView()
+    }
+
+    private static ArrayList<Tache> getTaches()
+    {
+    	ArrayList<Tache> allTaches = new ArrayList<Tache>();
+
+    	AuLongCours aloLongCour = new AuLongCours(6, "TacheAuLongCours2", end);
+    	aloLongCour.setPercentage(40);
+
+        allTaches.add(new Ponctuelle(1, "TachePonctuelle1", end));
+		allTaches.add(new Ponctuelle(2, "TachePonctuelle2", end2));
+		allTaches.add(new Ponctuelle(3, "TachePonctuelle3", end));
+		allTaches.add(new Ponctuelle(4, "TachePonctuelle4", end3));
+
+		allTaches.add(new AuLongCours(4, "TacheAuLongCours1", end2));
+		allTaches.add(aloLongCour);
+
+        return allTaches;
+    }
+
+    private static ArrayList<TacheView> getTachesView(ArrayList<Tache> allTaches)
     {
     	ArrayList<TacheView> tachesView = new ArrayList<TacheView>();
 
-        tachesView.add(new TacheView("Titre1", "25-10-1996", "Bite", false, new TacheListener(1)));
-        tachesView.add(new TacheView("Titre2", "25-10-1997", "Bote", false, new TacheListener(2)));
-        tachesView.add(new TacheView("Titre3", "25-10-1999", "", false, new TacheListener(3)));
-        tachesView.add(new TacheView("Titre4", "25-12-1996", "Bite", true, new TacheListener(9)));
-        tachesView.add(new TacheAuLongCourView("Titre5", "25-08-1996", "Bô", false, 20, new TacheListener(4)));
-        tachesView.add(new TacheView("Titre6", "25-01-1996", "Bô", false, new TacheListener(5)));
-        tachesView.add(new TacheView("Normal", "23-10-1996", "Bite", false, new TacheListener(6)));
-        tachesView.add(new TacheView("Titre8", "01-10-1996", "Bote", false, new TacheListener(7)));
-        tachesView.add(new TacheView("Titre9", "31-10-1996", "Bite", true, new TacheListener(8)));
+    	
+
+    	int size = allTaches.size();
+
+    	for (int i = 0; i < size ; i++ ) {
+
+
+    		String dateFormated = formatDate.format(allTaches.get(i).getEnd().getTime());
+
+    		if(allTaches.get(i) instanceof Ponctuelle)
+				tachesView.add(new TacheView(allTaches.get(i).getTitle(), dateFormated, "Unknow", allTaches.get(i).isLate(), new TacheListener(allTaches.get(i).getId())));
+    		else if (allTaches.get(i) instanceof AuLongCours)
+    			tachesView.add(new TacheAuLongCourView(allTaches.get(i).getTitle(), dateFormated, "Unknow", allTaches.get(i).isLate(), ((AuLongCours)allTaches.get(i)).getPercentage(), new TacheListener(allTaches.get(i).getId())));
+    	}
+
 
         return tachesView;
     }
