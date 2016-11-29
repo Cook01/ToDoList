@@ -8,7 +8,8 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
-import Controller.TacheListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Vincent on 12/11/2016.
@@ -27,7 +28,7 @@ public class TacheView extends JPanel{
     private JPanel[][] panelHolder = new JPanel[rows][cols];
 
 
-    public TacheView(String title, String endDate, String categorie, boolean isLate, TacheListener listener){
+    public TacheView(String title, String endDate, String categorie, boolean isLate){
         super();
 
         this.canvas = new JPanel();
@@ -38,10 +39,10 @@ public class TacheView extends JPanel{
         this.editButton = new JButton("Edit");
         this.deleteButton = new JButton("X");
 
-        initTacheView(title, endDate, categorie, isLate, listener);
+        initTacheView(title, endDate, categorie, isLate);
     }
 
-    public void initTacheView(String title, String endDate, String categorie, boolean isLate, TacheListener listener){
+    public void initTacheView(String title, String endDate, String categorie, boolean isLate){
         this.setBorder(LineBorder.createGrayLineBorder());
 
         this.setLayout(new BorderLayout());
@@ -62,9 +63,6 @@ public class TacheView extends JPanel{
         panelHolder[1][2].add(this.categorie);
 
         this.add(canvas, BorderLayout.NORTH);
-
-        this.addListenerOnEditButton(listener);
-        this.addListenerOnDeleteButton(listener);
 
         updateView(title, endDate, categorie, isLate);
     }
@@ -90,16 +88,15 @@ public class TacheView extends JPanel{
         this.categorie.setText(categorie);
     }
 
-    public void addListenerOnEditButton(TacheListener listener){
+    public void addListenerOnEditButton(ActionListener listener){
         try{
             this.editButton.addActionListener(listener);
         }catch(Exception e){
             e.printStackTrace();
-        }
-        
+        }   
     }
 
-    public void addListenerOnDeleteButton(TacheListener listener){
+    public void addListenerOnSuppButton(ActionListener listener){
         try{
             this.deleteButton.addActionListener(listener);
         }catch(Exception e){

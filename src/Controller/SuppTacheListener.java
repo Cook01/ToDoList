@@ -5,12 +5,12 @@ import java.awt.event.ActionListener;
 
 import Model.MenuItems;
 
-public class TacheListener implements ActionListener
+public class SuppTacheListener implements ActionListener
 {
 
 	private int id;
 
-	public TacheListener(int id) 
+	public SuppTacheListener(int id) 
 	{
 		this.id = id;
 	}
@@ -22,8 +22,4 @@ public class TacheListener implements ActionListener
 
 
 	}
-
-
-
-
 }

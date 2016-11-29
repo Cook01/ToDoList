@@ -9,6 +9,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class MainController
 {
 
@@ -18,7 +21,7 @@ public class MainController
 	private static SortTaches sortTache;
 
 	private static ArrayList<ArrayList<String>> menu;
-	private static ArrayList<TacheView> tachesView;
+	private static ArrayList<JPanel> tachesView;
 
 	private static Calendar end;
 	private static Calendar end2;
@@ -109,6 +112,18 @@ public class MainController
     	update();
     }
 
+    public static void editTache(int id)
+    {
+    	System.out.println("edit tache " + id);
+    }
+
+    public static void saveTache(int id)
+    {
+    	System.out.println("save tache " + id);
+    }
+
+    
+
     private static ArrayList<Tache> getTaches()
     {
 
@@ -150,9 +165,9 @@ public class MainController
     }
 
 
-    private static ArrayList<TacheView> getTachesView(ArrayList<Tache> allTaches)
+    private static ArrayList<JPanel> getTachesView(ArrayList<Tache> allTaches)
     {
-    	ArrayList<TacheView> tachesView = new ArrayList<TacheView>();
+    	ArrayList<JPanel> tachesView = new ArrayList<JPanel>();
 
     	
 
@@ -164,11 +179,18 @@ public class MainController
     		String dateFormated = formatDate.format(allTaches.get(i).getEnd().getTime());
 
     		if(allTaches.get(i) instanceof Ponctuelle)
-				tachesView.add(new TacheView(allTaches.get(i).getTitle(), dateFormated, "Unknow", allTaches.get(i).isLate(), new TacheListener(allTaches.get(i).getId())));
+				tachesView.add(new TacheView(allTaches.get(i).getTitle(), dateFormated, "Unknow", allTaches.get(i).isLate()));
     		else if (allTaches.get(i) instanceof AuLongCours)
-    			tachesView.add(new TacheAuLongCourView(allTaches.get(i).getTitle(), dateFormated, "Unknow", allTaches.get(i).isLate(), ((AuLongCours)allTaches.get(i)).getPercentage(), new TacheListener(allTaches.get(i).getId())));
-    	}
+    			tachesView.add(new TacheAuLongCourView(allTaches.get(i).getTitle(), dateFormated, "Unknow", allTaches.get(i).isLate(), ((AuLongCours)allTaches.get(i)).getPercentage()));
 
+    		if(tachesView.get(i) instanceof TacheView){
+    			((TacheView)tachesView.get(i)).addListenerOnEditButton(new EditTacheListener(allTaches.get(i).getId()));
+    			((TacheView)tachesView.get(i)).addListenerOnSuppButton(new SuppTacheListener(allTaches.get(i).getId()));
+    		} else if(tachesView.get(i) instanceof EditTacheView){
+    			((EditTacheView)tachesView.get(i)).addListenerOnSaveButton(new SaveTacheListener(allTaches.get(i).getId()));
+    			((EditTacheView)tachesView.get(i)).addListenerOnSuppButton(new SuppTacheListener(allTaches.get(i).getId()));
+    		}
+    	}
 
         return tachesView;
     }

@@ -10,6 +10,9 @@ import javax.swing.text.DateFormatter;
 
 import java.awt.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  * Created by Vincent on 12/11/2016.
  */
@@ -27,7 +30,7 @@ public class EditTacheView extends JPanel{
     private JPanel[][] panelHolder = new JPanel[rows][cols];
 
 
-    public EditTacheView(String title, String endDate, String[] categories, int idCategorie, boolean isLate, TacheListener listener){
+    public EditTacheView(String title, String endDate, String[] categories, int idCategorie, boolean isLate){
         super();
 
         this.canvas = new JPanel();
@@ -48,10 +51,10 @@ public class EditTacheView extends JPanel{
         this.saveButton = new JButton("Save");
         this.deleteButton = new JButton("X");
 
-        initEditTacheView(title, endDate, categories, idCategorie, isLate, listener);
+        initEditTacheView(title, endDate, categories, idCategorie, isLate);
     }
 
-    public void initEditTacheView(String title, String endDate, String[] categories, int idCategorie, boolean isLate, TacheListener listener){
+    public void initEditTacheView(String title, String endDate, String[] categories, int idCategorie, boolean isLate){
         this.setBorder(LineBorder.createGrayLineBorder());
         this.setLayout(new BorderLayout());
 
@@ -71,9 +74,6 @@ public class EditTacheView extends JPanel{
         panelHolder[1][2].add(this.categorie);
 
         this.add(canvas, BorderLayout.NORTH);
-
-        this.addListenerOnSaveButton(listener);
-        this.addListenerOnDeleteButton(listener);
 
         updateView(title, endDate, categories, idCategorie, isLate);
     }
@@ -105,7 +105,7 @@ public class EditTacheView extends JPanel{
         this.categorie.setSelectedIndex(idCategorie);
     }
 
-    public void addListenerOnSaveButton(TacheListener listener){
+    public void addListenerOnSaveButton(ActionListener listener){
         try{
             this.saveButton.addActionListener(listener);
         }catch(Exception e){
@@ -114,7 +114,7 @@ public class EditTacheView extends JPanel{
         
     }
     
-    public void addListenerOnDeleteButton(TacheListener listener){
+    public void addListenerOnSuppButton(ActionListener listener){
         try{
             this.deleteButton.addActionListener(listener);
         }catch(Exception e){

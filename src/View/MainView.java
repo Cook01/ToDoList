@@ -16,7 +16,7 @@ import java.awt.*;
 public class MainView extends JFrame
 {
 
-    private ArrayList<TacheView> tachesView;
+    private ArrayList<JPanel> tachesView;
     private JPanel pCenter;
 
     private String title;
@@ -25,7 +25,7 @@ public class MainView extends JFrame
  
 
 
-    public MainView(String title, ArrayList<TacheView> tachesView, ArrayList<ArrayList<String>> menusTitle, Class menuListener)  
+    public MainView(String title, ArrayList<JPanel> tachesView, ArrayList<ArrayList<String>> menusTitle, Class menuListener)  
     { 
 
         this.tachesView = tachesView;
@@ -61,7 +61,7 @@ public class MainView extends JFrame
 
     }
 
-    public void updateView(String title, ArrayList<TacheView> tachesView)
+    public void updateView(String title, ArrayList<JPanel> tachesView)
     {
         this.setTitleView(title);
         this.setTachesView(tachesView);
@@ -73,7 +73,7 @@ public class MainView extends JFrame
         setTitle(this.title);
     }
 
-     private void setTachesView(ArrayList<TacheView> tachesView)
+     private void setTachesView(ArrayList<JPanel> tachesView)
     {
         this.tachesView = tachesView;
         
