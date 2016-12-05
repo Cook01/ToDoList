@@ -3,6 +3,7 @@ package Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import View.*;
 import Model.MenuItems;
 
 public class MenuListener implements ActionListener
@@ -50,6 +51,9 @@ public class MenuListener implements ActionListener
 	{
 		if (ponctuelle) {
 			System.out.println("create Ponctuelle");
+			CreateTacheView ctv = new CreateTacheView(this);
+
+			ctv.setVisible(true);
 		} else {
 			System.out.println("create AuLongCours");
 		}

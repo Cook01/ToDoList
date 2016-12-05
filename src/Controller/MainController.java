@@ -49,7 +49,7 @@ public class MainController
         f.setVisible(true);
 
  
-    } 
+    }
 
     private static ArrayList<ArrayList<String>> getMenu()
     {

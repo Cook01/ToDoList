@@ -16,7 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-public class CreateTacheView extends JPanel
+public class CreateTacheView extends JFrame 
 {
 
 	protected JPanel canvas;
@@ -41,6 +41,7 @@ public class CreateTacheView extends JPanel
 		this.canvas = new JPanel();
 
 		this.title 	= new JTextField();
+		this.title.setColumns(20);
 
 		SpinnerDateModel model 	= new SpinnerDateModel();
 		this.endDate 			= new JSpinner(model);
@@ -61,8 +62,6 @@ public class CreateTacheView extends JPanel
 
 	public void initCreateTacheView(ActionListener listener)
 	{
-		this.setBorder(LineBorder.createGrayLineBorder());
-		this.setLayout(new BorderLayout());
 
 		canvas.setLayout(new GridLayout(rows, cols));
 
@@ -87,6 +86,8 @@ public class CreateTacheView extends JPanel
 
         this.addListenerOnSaveButton(listener);
         this.addListenerOnCancelButton(listener);
+
+        this.pack();
 
         
     }
