@@ -32,7 +32,7 @@ public class MainController
 	private static SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
 	
 
-	public static void main(String args[])  
+	/* public static void main(String args[])  
     { 
 
     	sortTache = new SortTachesByNewest();
@@ -49,7 +49,7 @@ public class MainController
         f.setVisible(true);
 
  
-    } 
+    } */
 
     private static ArrayList<ArrayList<String>> getMenu()
     {
