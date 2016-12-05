@@ -108,13 +108,35 @@ public class MainController
     		i++;
 
     	}
-
-    	update();
     }
 
     public static void editTache(int id)
     {
     	System.out.println("edit tache " + id);
+
+        for(Tache t : allTaches){
+            if(t.getId() == id){
+
+                String[] catList = {"Lol", "Il faudrait", "Penser a", "Implementer les", "Categories"};
+
+                EditTacheView edit = new EditTacheView(id, t.getTitle(), formatDate.format(t.getEnd().getTime()), catList, 1, t.isLate());
+
+                for(JPanel jp : tachesView){
+                    if(jp instanceof TacheView){
+                        TacheView tv = (TacheView)jp;
+
+                        if(tv.getId() == id){
+
+                            int index = tachesView.indexOf(jp);
+
+                            tachesView.set(index, jp);
+                        }
+                    }
+                }
+            }
+        }
+
+        f.updateView(f.getTitle(), tachesView);
     }
 
     public static void saveTache(int id)
@@ -167,9 +189,7 @@ public class MainController
 
     private static ArrayList<JPanel> getTachesView(ArrayList<Tache> allTaches)
     {
-    	ArrayList<JPanel> tachesView = new ArrayList<JPanel>();
-
-    	
+    	tachesView = new ArrayList<JPanel>();
 
     	int size = allTaches.size();
 
@@ -179,9 +199,9 @@ public class MainController
     		String dateFormated = formatDate.format(allTaches.get(i).getEnd().getTime());
 
     		if(allTaches.get(i) instanceof Ponctuelle)
-				tachesView.add(new TacheView(allTaches.get(i).getTitle(), dateFormated, "Unknow", allTaches.get(i).isLate()));
+				tachesView.add(new TacheView(allTaches.get(i).getId(), allTaches.get(i).getTitle(), dateFormated, "Unknow", allTaches.get(i).isLate()));
     		else if (allTaches.get(i) instanceof AuLongCours)
-    			tachesView.add(new TacheAuLongCourView(allTaches.get(i).getTitle(), dateFormated, "Unknow", allTaches.get(i).isLate(), ((AuLongCours)allTaches.get(i)).getPercentage()));
+    			tachesView.add(new TacheAuLongCourView(allTaches.get(i).getId(), allTaches.get(i).getTitle(), dateFormated, "Unknow", allTaches.get(i).isLate(), ((AuLongCours)allTaches.get(i)).getPercentage()));
 
     		if(tachesView.get(i) instanceof TacheView){
     			((TacheView)tachesView.get(i)).addListenerOnEditButton(new EditTacheListener(allTaches.get(i).getId()));

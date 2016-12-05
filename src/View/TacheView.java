@@ -15,6 +15,8 @@ import java.awt.event.ActionListener;
  * Created by Vincent on 12/11/2016.
  */
 public class TacheView extends JPanel{
+    private int id;
+
     protected JPanel canvas;
 
     private JLabel title;
@@ -28,8 +30,10 @@ public class TacheView extends JPanel{
     private JPanel[][] panelHolder = new JPanel[rows][cols];
 
 
-    public TacheView(String title, String endDate, String categorie, boolean isLate){
+    public TacheView(int id, String title, String endDate, String categorie, boolean isLate){
         super();
+
+        this.id = id;
 
         this.canvas = new JPanel();
 
@@ -102,5 +106,9 @@ public class TacheView extends JPanel{
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public int getId(){
+        return id;
     }
 }

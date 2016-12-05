@@ -18,6 +18,8 @@ import java.awt.event.ActionListener;
  */
 public class EditTacheView extends JPanel
 {
+    private int id;
+
     protected JPanel canvas;
 
     private JTextField title;
@@ -31,8 +33,10 @@ public class EditTacheView extends JPanel
     private JPanel[][] panelHolder = new JPanel[rows][cols];
 
 
-    public EditTacheView(String title, String endDate, String[] categories, int idCategorie, boolean isLate){
+    public EditTacheView(int id, String title, String endDate, String[] categories, int idCategorie, Boolean isLate){
         super();
+
+        this.id = id;
 
         this.canvas = new JPanel();
 
@@ -55,7 +59,7 @@ public class EditTacheView extends JPanel
         initEditTacheView(title, endDate, categories, idCategorie, isLate);
     }
 
-    public void initEditTacheView(String title, String endDate, String[] categories, int idCategorie, boolean isLate){
+    public void initEditTacheView(String title, String endDate, String[] categories, int idCategorie, Boolean isLate){
         this.setBorder(LineBorder.createGrayLineBorder());
         this.setLayout(new BorderLayout());
 
@@ -79,7 +83,7 @@ public class EditTacheView extends JPanel
         updateView(title, endDate, categories, idCategorie, isLate);
     }
 
-    public void updateView(String title, String endDate, String[] categories, int idCategorie, boolean isLate){
+    public void updateView(String title, String endDate, String[] categories, int idCategorie, Boolean isLate){
         setTitle(title);
         setEndDate(endDate, isLate);
         setCategorie(categories, idCategorie);
@@ -91,7 +95,7 @@ public class EditTacheView extends JPanel
         this.title.setPreferredSize(new Dimension(100, 24));        
     }
 
-    public void setEndDate(String endDate, boolean isLate){
+    public void setEndDate(String endDate, Boolean isLate){
         if(isLate){
             this.endDate.setEnabled(false);
         }
@@ -123,4 +127,7 @@ public class EditTacheView extends JPanel
         }
     }
 
+    public int getId(){
+        return id;
+    }
 }
