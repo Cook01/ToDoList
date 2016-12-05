@@ -62,8 +62,6 @@ public class CreateTacheView extends JFrame
 
 	public void initCreateTacheView(ActionListener listener)
 	{
-		//this.setBorder(LineBorder.createGrayLineBorder());
-		//this.setLayout(new BorderLayout());
 
 		canvas.setLayout(new GridLayout(rows, cols));
 
