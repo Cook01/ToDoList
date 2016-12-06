@@ -5,6 +5,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Vincent on 12/11/2016.
@@ -122,5 +124,21 @@ public class EditTacheView extends JPanel
 
     public int getId(){
         return id;
+    }
+
+    public String getTitle() {
+        return this.title.getText();
+    }
+
+    public Calendar getEndDate() {
+        Calendar endDateCalendar    = Calendar.getInstance();
+
+        endDateCalendar.setTime((Date) endDate.getValue());
+
+        return endDateCalendar;
+    }
+
+    public String getCategorie() {
+        return categorie.getSelectedItem().toString();
     }
 }
