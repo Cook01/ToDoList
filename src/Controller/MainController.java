@@ -1,16 +1,19 @@
 package Controller;
 
-import View.*;
-import Model.*;
+import Model.AuLongCours;
+import Model.MenuItems;
+import Model.Ponctuelle;
+import Model.Tache;
+import View.EditTacheView;
+import View.MainView;
+import View.TacheAuLongCourView;
+import View.TacheView;
 
-import java.util.*;
+import javax.swing.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.text.SimpleDateFormat;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class MainController
 {
@@ -54,11 +57,10 @@ public class MainController
     private static ArrayList<ArrayList<String>> getMenu()
     {
 
-		ArrayList<ArrayList<String>> menu   = new ArrayList<ArrayList<String>>();
-
-	    ArrayList<String> submenu           = new ArrayList<String>();
-	    ArrayList<String> submenu2          = new ArrayList<String>();
-	    ArrayList<String> submenu3          = new ArrayList<String>();
+		ArrayList<ArrayList<String>> menu   = new ArrayList<>();
+	    ArrayList<String> submenu           = new ArrayList<>();
+	    ArrayList<String> submenu2          = new ArrayList<>();
+	    ArrayList<String> submenu3          = new ArrayList<>();
 
 	    submenu.add("Créer");
 	    submenu.add(MenuItems.CARTEPONCTUELLE.toString());
@@ -81,7 +83,6 @@ public class MainController
 
     public static void update()
     {
-
 	    allTaches = sortTache.sort(allTaches);
 
 	    tachesView	= getTachesView(allTaches);
@@ -129,7 +130,7 @@ public class MainController
 
                             int index = tachesView.indexOf(jp);
 
-                            tachesView.set(index, jp);
+                            tachesView.set(index, edit);
                         }
                     }
                 }
@@ -170,7 +171,7 @@ public class MainController
 	    end3.set(Calendar.SECOND, 0);
 	    end3.set(Calendar.MILLISECOND, 0);
 
-    	ArrayList<Tache> allTaches = new ArrayList<Tache>();
+    	ArrayList<Tache> allTaches = new ArrayList<>();
 
     	AuLongCours aloLongCour = new AuLongCours(6, "TacheAuLongCours2", end);
     	aloLongCour.setPercentage(40);
@@ -189,7 +190,7 @@ public class MainController
 
     private static ArrayList<JPanel> getTachesView(ArrayList<Tache> allTaches)
     {
-    	tachesView = new ArrayList<JPanel>();
+    	tachesView = new ArrayList<>();
 
     	int size = allTaches.size();
 

@@ -10,7 +10,7 @@ public enum MenuItems {
 
 	private final String text;
 
-    private MenuItems(final String text) {
+    MenuItems(final String text) {
         this.text = text;
     }
 

@@ -1,14 +1,8 @@
 package View;
 
-import Controller.MenuListener;
-import Controller.TacheListener;
-
-import Model.MenuItems;
-
-import java.util.ArrayList;
-
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * @author gkueny

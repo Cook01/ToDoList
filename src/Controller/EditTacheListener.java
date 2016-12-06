@@ -3,8 +3,6 @@ package Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import Model.MenuItems;
-
 public class EditTacheListener implements ActionListener
 {
 
@@ -18,7 +16,7 @@ public class EditTacheListener implements ActionListener
 	public void actionPerformed(ActionEvent e) 
 	{
 
-		MainController.editTache((int)id);
+		MainController.editTache(id);
 
 
 	}

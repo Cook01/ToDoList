@@ -1,7 +1,6 @@
 package Model;
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * <h1>Class Tache</h1>

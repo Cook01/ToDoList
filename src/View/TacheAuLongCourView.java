@@ -1,13 +1,6 @@
 package View;
 
-import Controller.*;
-
 import javax.swing.*;
-import javax.swing.border.LineBorder;
-import javax.swing.text.DateFormatter;
-
-import Controller.TacheListener;
-
 import java.awt.*;
 
 /**

@@ -2,10 +2,8 @@ package View;
 
 import Controller.MenuListener;
 
-import java.util.ArrayList;
-
 import javax.swing.*;
-import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * @author gkueny
@@ -22,7 +20,7 @@ public class MenuView extends JMenuBar
     public MenuView(ArrayList<ArrayList<String>> menusTitle, Class listener)  
     { 
 
-        this.menus      = new ArrayList<JMenu>();
+        this.menus      = new ArrayList<>();
         this.menusTitle = menusTitle;
 
         this.initMenuView(listener);
