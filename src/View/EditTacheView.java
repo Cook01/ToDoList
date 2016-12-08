@@ -41,7 +41,7 @@ public class EditTacheView extends JPanel
         SpinnerDateModel model = new SpinnerDateModel();
         this.endDate = new JSpinner(model);
 
-        JSpinner.DateEditor editor = new JSpinner.DateEditor(this.endDate, "dd.MM.yyyy");
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(this.endDate, "dd / MM / yyyy");
         DateFormatter formatter = (DateFormatter)editor.getTextField().getFormatter();
 
         formatter.setAllowsInvalid(false);
