@@ -5,6 +5,7 @@ import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CreateTacheView extends JFrame 
 {
@@ -34,6 +35,9 @@ public class CreateTacheView extends JFrame
 		this.title.setColumns(20);
 
 		SpinnerDateModel model 	= new SpinnerDateModel();
+        model.setValue(new Date(System.currentTimeMillis() + (1 * 24 * 60 * 60 * 1000)));
+        model.setStart(new Date(System.currentTimeMillis() - (1 * 24 * 60 * 60 * 1000)));
+
 		this.endDate 			= new JSpinner(model);
 
 		JSpinner.DateEditor editor = new JSpinner.DateEditor(this.endDate, "dd / MM / yyyy");
@@ -42,6 +46,10 @@ public class CreateTacheView extends JFrame
         formatter.setOverwriteMode(true);
 
         this.endDate.setEditor(editor);
+
+        JComponent editorDefaukt = (JSpinner.DefaultEditor) this.endDate.getEditor();
+        JFormattedTextField ftf = ((JSpinner.DefaultEditor) editorDefaukt).getTextField();
+        ftf.setColumns(8);
 
 
         this.categorie = new JComboBox();
