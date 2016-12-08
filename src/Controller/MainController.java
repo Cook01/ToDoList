@@ -87,7 +87,12 @@ public class MainController
 
 	    tachesView	= getTachesView(allTaches);
 
-    	f.updateView(title, tachesView);
+    	updateView();
+    }
+
+    public static void updateView()
+    {
+        f.updateView(title, tachesView);
     }
 
     public static void removeTache(int id)
@@ -111,7 +116,22 @@ public class MainController
 
     	}
 
-        update();
+        size = tachesView.size();
+        find = false;
+        while(!find && i < size) {
+
+            if (tachesView.get(i).getId() == id) {
+
+                tachesView.remove(i);
+                find = true;
+
+            }
+
+            i++;
+
+        }
+
+        updateView();
     }
 
     public static void editTache(int id)
