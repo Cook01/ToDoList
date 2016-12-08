@@ -51,9 +51,9 @@ public class MenuListener implements ActionListener
 	{
 		if (ponctuelle) {
 			System.out.println("create Ponctuelle");
-			CreateTacheView ctv = new CreateTacheView(this);
 
-			ctv.setVisible(true);
+			MainController.createTache();
+
 		} else {
 			System.out.println("create AuLongCours");
 		}
