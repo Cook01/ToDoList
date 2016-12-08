@@ -158,7 +158,7 @@ public class MainController
             if(t.getId() == id){
                 String[] catList = {"Lol", "Il faudrait", "Penser a", "Implementer les", "Categories"};
 
-                EditTacheView edit = new EditTacheView(id, t.getTitle(), formatDate.format(t.getEnd().getTime()), catList, 1, t.isLate());
+                EditTacheView edit = new EditTacheView(id, t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getEnd().getTime(), catList, 1, t.isLate(), t.getDateCreation());
                 edit.addListenerOnSuppButton(new SuppTacheListener(id));
                 edit.addListenerOnSaveButton(new SaveTacheListener(id));
 
