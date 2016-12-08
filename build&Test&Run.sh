@@ -10,7 +10,7 @@ java -cp ./out:./Junit/junit.jar:./out/ Model.PonctuelleTest
 java -cp ./out:./Junit/junit.jar:./out/ Model.TacheTest
 
 #go to out folder
-#cd ./out
+cd ./out
 
 #execute MainView
-#java Controller.MainController
+java Controller.MainController

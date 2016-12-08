@@ -20,9 +20,6 @@ import java.util.Locale;
 
 public class MainController
 {
-
-    public static Categorie cat = new Categorie("test", "tes");
-
 	private static MainView f;
 	private static String title = "ToDo List";
 
@@ -36,6 +33,7 @@ public class MainController
 	private static Calendar end3;
 	
 	private static ArrayList<Tache> allTaches;
+    public static ArrayList<Categorie> catList;
 
 	private static SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
 	
@@ -45,6 +43,7 @@ public class MainController
 
     	sortTache = new SortTachesByNewest();
 
+        catList = getCategorie();
 	    allTaches = getTaches();
 
 	    allTaches = sortTache.sort(allTaches);
@@ -156,9 +155,19 @@ public class MainController
     {
     	for(Tache t : allTaches){
             if(t.getId() == id){
-                String[] catList = {"Lol", "Il faudrait", "Penser a", "Implementer les", "Categories"};
 
-                EditTacheView edit = new EditTacheView(id, t.getTitle(), formatDate.format(t.getEnd().getTime()), catList, 1, t.isLate());
+                ArrayList<String> stringList = new ArrayList<>();
+                int indexCat = 0;
+
+                for(Categorie cat : catList){
+                    stringList.add(cat.getTitre());
+
+                    if(t.getCategorie().getTitre().equals(cat.getTitre())){
+                        indexCat = catList.indexOf(cat);
+                    }
+                }
+
+                EditTacheView edit = new EditTacheView(id, t.getTitle(), formatDate.format(t.getEnd().getTime()), stringList.toArray(new String[stringList.size()]), indexCat, t.isLate());
                 edit.addListenerOnSuppButton(new SuppTacheListener(id));
                 edit.addListenerOnSaveButton(new SaveTacheListener(id));
 
@@ -195,18 +204,23 @@ public class MainController
                         endDate.set(Calendar.MILLISECOND, 0);
                         t.setEnd(endDate);
 
-                        //t.setCategorie(edit.getCategorie());
+                        String cat = edit.getCategorie();
+                        for(Categorie c : catList){
+                            if(c.getTitre().equals(cat)){
+                                t.setCategorie(c);
+                            }
+                        }
 
                         if(edit.getId() == id){
                             if(t instanceof Ponctuelle){
-                                TacheView tw = new TacheView(t.getId(), t.getTitle(), formatDate.format(t.getEnd().getTime()), edit.getCategorie(), t.isLate());
+                                TacheView tw = new TacheView(t.getId(), t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getCategorie().getAbreviation(), t.isLate());
                                 tw.addListenerOnSuppButton(new SuppTacheListener(id));
                                 tw.addListenerOnEditButton(new EditTacheListener(id));
 
                                 int index = tachesView.indexOf(jp);
                                 tachesView.set(index, tw);
                             } else if(t instanceof  AuLongCours){
-                                TacheAuLongCourView tw = new TacheAuLongCourView(t.getId(), t.getTitle(), formatDate.format(t.getEnd().getTime()), edit.getCategorie(), t.isLate(), ((AuLongCours) t).getPercentage());
+                                TacheAuLongCourView tw = new TacheAuLongCourView(t.getId(), t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getCategorie().getAbreviation(), t.isLate(), ((AuLongCours) t).getPercentage());
                                 tw.addListenerOnSuppButton(new SuppTacheListener(id));
                                 tw.addListenerOnEditButton(new EditTacheListener(id));
 
@@ -222,6 +236,20 @@ public class MainController
        update();
     }
 
+
+    private static ArrayList<Categorie> getCategorie(){
+        Categorie travail = new Categorie("Travail", "work");
+        Categorie personnel = new Categorie("Personnel", "perso");
+        Categorie vide = new Categorie("", "");
+
+        ArrayList<Categorie> ret = new ArrayList<>();
+        ret.add(travail);
+        ret.add(personnel);
+
+        ret.add(vide);
+
+        return ret;
+    }
     
 
     private static ArrayList<Tache> getTaches()
@@ -250,16 +278,16 @@ public class MainController
 
     	ArrayList<Tache> allTaches = new ArrayList<>();
 
-    	AuLongCours aloLongCour = new AuLongCours(6, "TacheAuLongCours2", end, cat);
-    	aloLongCour.setPercentage(40);
+        allTaches.add(new Ponctuelle(1, "TachePonctuelle1", end, catList.get(0)));
+		allTaches.add(new Ponctuelle(2, "TachePonctuelle2", end2, catList.get(1)));
+		allTaches.add(new Ponctuelle(3, "TachePonctuelle3", end, catList.get(1)));
+		allTaches.add(new Ponctuelle(4, "TachePonctuelle4", end3, catList.get(0)));
 
-        allTaches.add(new Ponctuelle(1, "TachePonctuelle1", end, cat));
-		allTaches.add(new Ponctuelle(2, "TachePonctuelle2", end2, cat));
-		allTaches.add(new Ponctuelle(3, "TachePonctuelle3", end, cat));
-		allTaches.add(new Ponctuelle(4, "TachePonctuelle4", end3, cat));
-
-		allTaches.add(new AuLongCours(5, "TacheAuLongCours1", end2, cat));
-		allTaches.add(aloLongCour);
+		allTaches.add(new AuLongCours(5, "TacheAuLongCours5", end2, catList.get(1)));
+		
+        AuLongCours aloLongCour = new AuLongCours(6, "TacheAuLongCours6", end, catList.get(0));
+        aloLongCour.setPercentage(40);
+        allTaches.add(aloLongCour);
 
         return allTaches;
     }
@@ -277,9 +305,9 @@ public class MainController
     		String dateFormated = formatDate.format(allTaches.get(i).getEnd().getTime());
 
     		if(allTaches.get(i) instanceof Ponctuelle)
-				tachesView.add(new TacheView(allTaches.get(i).getId(), allTaches.get(i).getTitle(), dateFormated, "Unknow", allTaches.get(i).isLate()));
+				tachesView.add(new TacheView(allTaches.get(i).getId(), allTaches.get(i).getTitle(), dateFormated, allTaches.get(i).getCategorie().getAbreviation(), allTaches.get(i).isLate()));
     		else if (allTaches.get(i) instanceof AuLongCours)
-    			tachesView.add(new TacheAuLongCourView(allTaches.get(i).getId(), allTaches.get(i).getTitle(), dateFormated, "Unknow", allTaches.get(i).isLate(), ((AuLongCours)allTaches.get(i)).getPercentage()));
+                tachesView.add(new TacheAuLongCourView(allTaches.get(i).getId(), allTaches.get(i).getTitle(), dateFormated, allTaches.get(i).getCategorie().getAbreviation(), allTaches.get(i).isLate(), ((AuLongCours)allTaches.get(i)).getPercentage()));
 
     		if(tachesView.get(i) instanceof TacheView){
     			((TacheView)tachesView.get(i)).addListenerOnEditButton(new EditTacheListener(allTaches.get(i).getId()));
