@@ -3,6 +3,7 @@ package Controller;
 import Model.AuLongCours;
 import Model.MenuItems;
 import Model.Ponctuelle;
+import Model.Categorie;
 import Model.Tache;
 import View.EditTacheView;
 import View.MainView;
@@ -19,6 +20,8 @@ import java.util.Locale;
 
 public class MainController
 {
+
+    public static Categorie cat = new Categorie("test", "tes");
 
 	private static MainView f;
 	private static String title = "ToDo List";
@@ -240,15 +243,15 @@ public class MainController
 
     	ArrayList<Tache> allTaches = new ArrayList<>();
 
-    	AuLongCours aloLongCour = new AuLongCours(6, "TacheAuLongCours2", end);
+    	AuLongCours aloLongCour = new AuLongCours(6, "TacheAuLongCours2", end, cat);
     	aloLongCour.setPercentage(40);
 
-        allTaches.add(new Ponctuelle(1, "TachePonctuelle1", end));
-		allTaches.add(new Ponctuelle(2, "TachePonctuelle2", end2));
-		allTaches.add(new Ponctuelle(3, "TachePonctuelle3", end));
-		allTaches.add(new Ponctuelle(4, "TachePonctuelle4", end3));
+        allTaches.add(new Ponctuelle(1, "TachePonctuelle1", end, cat));
+		allTaches.add(new Ponctuelle(2, "TachePonctuelle2", end2, cat));
+		allTaches.add(new Ponctuelle(3, "TachePonctuelle3", end, cat));
+		allTaches.add(new Ponctuelle(4, "TachePonctuelle4", end3, cat));
 
-		allTaches.add(new AuLongCours(5, "TacheAuLongCours1", end2));
+		allTaches.add(new AuLongCours(5, "TacheAuLongCours1", end2, cat));
 		allTaches.add(aloLongCour);
 
         return allTaches;
