@@ -118,9 +118,26 @@ public class MainController
 
         size = tachesView.size();
         find = false;
+        i = 0;
         while(!find && i < size) {
 
-            if (tachesView.get(i).getId() == id) {
+            int myId = -1;
+
+            if(tachesView.get(i) instanceof TacheView){
+                TacheView tache = (TacheView)tachesView.get(i);
+                myId = tache.getId();
+            }
+            if(tachesView.get(i) instanceof TacheAuLongCourView){
+                 TacheAuLongCourView tache = (TacheAuLongCourView)tachesView.get(i);
+                myId = tache.getId();
+            }
+            if(tachesView.get(i) instanceof EditTacheView){
+                EditTacheView tache = (EditTacheView)tachesView.get(i);
+                myId = tache.getId();
+            } 
+            
+
+            if ( myId == id) {
 
                 tachesView.remove(i);
                 find = true;
