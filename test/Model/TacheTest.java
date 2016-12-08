@@ -19,6 +19,37 @@ public class TacheTest extends TestCase {
     public static int bilanAssertions = 0;
     public static Categorie cat = new Categorie("test", "tes");
 
+
+    /**
+     * Test de la methode setCategorie()
+     *
+     * @see Tache#setCategorie(Categorie)
+     * @throws Exception NoSuchFieldException, IllegalAccessException
+     */
+    public void test_setCategorie() throws Exception {
+        Calendar end    = Calendar.getInstance();
+
+        end.setTime(new Date(System.currentTimeMillis() ));
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.set(Calendar.MILLISECOND, 0);
+
+        final Ponctuelle testTache = new Ponctuelle(1,"Tache de test", end, cat);
+
+        Categorie newCat = new Categorie("test2", "tes2");
+        //when
+        testTache.setCategorie(newCat);
+
+        //then
+        final Field field = testTache.getClass().getSuperclass().getDeclaredField("categorie");
+        field.setAccessible(true);
+
+        totalAssertions ++;
+        assertEquals(field.get(testTache), newCat);
+        bilanAssertions++ ;
+    }
+
     /**
      * Test de la methode setTitle()
      *
@@ -113,6 +144,32 @@ public class TacheTest extends TestCase {
 
         totalAssertions ++;
         assertEquals(field.get(testTache),nouvelleDate);
+        bilanAssertions++ ;
+
+    }
+
+    /**
+     * Test de la methode getCategorie()
+     *
+     * @see Tache#getCategorie()
+     */
+    public void test_getCategorie() {
+
+
+        Calendar end    = Calendar.getInstance();
+
+        end.setTime(new Date(System.currentTimeMillis() + (4 * 24 * 60 * 60 * 1000)));
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.set(Calendar.MILLISECOND, 0);
+
+        final Ponctuelle testTache = new Ponctuelle(1,"Tache de test", end, cat);
+
+        Categorie categorie = testTache.getCategorie();
+
+        totalAssertions ++;
+        assertEquals(categorie, cat);
         bilanAssertions++ ;
 
     }
