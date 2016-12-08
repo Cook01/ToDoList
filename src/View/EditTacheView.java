@@ -47,6 +47,8 @@ public class EditTacheView extends JPanel
         formatter.setAllowsInvalid(false);
         formatter.setOverwriteMode(true);
 
+        this.endDate.setEditor(editor);
+
         this.categorie = new JComboBox();
 
         this.saveButton = new JButton("Save");
