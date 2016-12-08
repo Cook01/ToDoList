@@ -97,6 +97,19 @@ public class MainController
         f.updateView(title, tachesView);
     }
 
+    public static void editCategorie(){
+        ArrayList<String> titleList = new ArrayList<>();
+        ArrayList<String> labelList = new ArrayList<>();
+
+        for(Categorie c : catLists){
+            titleList.add(c.getTitre());
+            labelList.add(c.getAbreviation());
+        }
+
+        EditCategorieView ecv = new EditCategorieView(titleList.toArray(String[titleList.size()]), labelList.toArray(String[labelList.size()]));
+        ecv.setVisible(true);
+    }
+
     public static void removeTache(int id)
     {
         int i = 0;
@@ -111,9 +124,7 @@ public class MainController
     			find = true;
 
     		}
-
     		i++;
-
     	}
 
         size = tachesView.size();
