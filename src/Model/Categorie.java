@@ -43,4 +43,22 @@ public class Categorie {
     public void setAbreviation(String abreviation) {
         this.abreviation = abreviation;
     }
+
+    /**
+     * Getter de l'attribut titre
+     *
+     * @return {@link String} titre
+     */
+    public String getTitre() {
+        return this.titre;
+    }
+
+    /**
+     * Getter de l'attribut abreviation
+     *
+     * @return {@link String} abreviation
+     */
+    public String getAbreviation() {
+        return this.abreviation;
+    }
 }
