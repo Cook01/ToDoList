@@ -15,6 +15,8 @@ public class CreateTacheView extends JFrame
 
     private int id;
 
+    private Boolean type;
+
 	private JTextField title;
 	private JSpinner endDate;
 	private JComboBox categorie;
@@ -28,12 +30,14 @@ public class CreateTacheView extends JFrame
     private final int cols = 3;
     private JPanel[][] panelHolder = new JPanel[rows][cols];
 
-	public CreateTacheView(int id, String[] categories, ActionListener listener)
+	public CreateTacheView(int id, String[] categories, ActionListener listener, Boolean type)
 	{
 		super();
 
         System.out.println("id : " + id);
         this.id = id; 
+
+        this.type = type;
 
 		this.canvas = new JPanel();
 
@@ -145,6 +149,11 @@ public class CreateTacheView extends JFrame
 
     public String getCategorie() {
         return categorie.getSelectedItem().toString();
+    }
+
+    public Boolean getIsPonctuelle()
+    {
+        return this.type;
     }
 
 

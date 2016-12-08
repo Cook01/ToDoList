@@ -11,6 +11,7 @@ import View.MainView;
 import View.TacheAuLongCourView;
 import View.TacheView;
 
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,7 +37,8 @@ public class MainController
 	private static ArrayList<Tache> allTaches;
     public static ArrayList<Categorie> catList;
 
-    private static CreateTacheView createPonctuelle;
+    private static CreateTacheView createTache;
+
 
 	private static SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
 	
@@ -159,14 +161,14 @@ public class MainController
 
     public static void cancelCreateTache()
     {
-        if(createPonctuelle != null) {
+        if(createTache != null) {
 
-            createPonctuelle.dispose();
-            createPonctuelle = null;
+            createTache.dispose();
+            createTache = null;
         }
     }
 
-    public static void createTache()
+    public static void createTache(Boolean ponctuelle)
     {
         ArrayList<String> stringList = new ArrayList<>();
         
@@ -174,15 +176,27 @@ public class MainController
             stringList.add(cat.getTitre());
         }
 
-        if(createPonctuelle != null) {
-            createPonctuelle.dispose();
-            createPonctuelle = null;
+        ActionListener listener;
+
+        if(createTache != null) {
+            createTache.dispose();
+            createTache = null;
         }
 
+        if(ponctuelle) {
+
+            listener = new CreateTacheListener();
+            
+        } else {
+
+            listener = new CreateTacheAuLongCoursListener();
+
+        }
 
         int id = (int) (new Date().getTime()/1000);
-        createPonctuelle = new CreateTacheView(id, stringList.toArray(new String[stringList.size()]), new CreateTacheListener());
-        createPonctuelle.setVisible(true);
+        createTache = new CreateTacheView(id, stringList.toArray(new String[stringList.size()]), listener, ponctuelle);
+        createTache.setVisible(true);
+        
     }
 
     public static void editTache(int id)
@@ -226,9 +240,9 @@ public class MainController
     public static void addTache()
     {
 
-        if(createPonctuelle != null) {
+        if(createTache != null) {
 
-            String cat = createPonctuelle.getCategorie();
+            String cat = createTache.getCategorie();
             Categorie catTache = new Categorie("", "");
 
             for(Categorie c : catList){
@@ -237,19 +251,35 @@ public class MainController
                 }
             }
 
-            Ponctuelle tache = new Ponctuelle(createPonctuelle.getId(), createPonctuelle.getTitle(), createPonctuelle.getEndDate(), catTache);
-            allTaches.add(tache);
+            if(createTache.getIsPonctuelle()) {
+                Ponctuelle tache = new Ponctuelle(createTache.getId(), createTache.getTitle(), createTache.getEndDate(), catTache);
+                allTaches.add(tache);
 
-            String dateFormated = formatDate.format(createPonctuelle.getEndDate().getTime());
-            TacheView tacheView = new TacheView(createPonctuelle.getId(), tache.getTitle(), dateFormated,catTache.getAbreviation(), tache.isLate());
-            tacheView.addListenerOnEditButton(new EditTacheListener(createPonctuelle.getId()));
-            tacheView.addListenerOnSuppButton(new SuppTacheListener(createPonctuelle.getId()));
+                String dateFormated = formatDate.format(createTache.getEndDate().getTime());
+                TacheView tacheView = new TacheView(createTache.getId(), tache.getTitle(), dateFormated,catTache.getAbreviation(), tache.isLate());
+                tacheView.addListenerOnEditButton(new EditTacheListener(createTache.getId()));
+                tacheView.addListenerOnSuppButton(new SuppTacheListener(createTache.getId()));
 
 
-            tachesView.add(tacheView);
+                tachesView.add(tacheView);
 
-            createPonctuelle.dispose();
-            createPonctuelle = null;
+            } else {
+                AuLongCours tache = new AuLongCours(createTache.getId(), createTache.getTitle(), createTache.getEndDate(), catTache);
+                allTaches.add(tache);
+
+                String dateFormated = formatDate.format(createTache.getEndDate().getTime());
+                TacheAuLongCourView tacheView = new TacheAuLongCourView(createTache.getId(), tache.getTitle(), dateFormated,catTache.getAbreviation(), tache.isLate(), tache.getPercentage());
+                tacheView.addListenerOnEditButton(new EditTacheListener(createTache.getId()));
+                tacheView.addListenerOnSuppButton(new SuppTacheListener(createTache.getId()));
+
+
+                tachesView.add(tacheView);
+            }
+
+            
+
+            createTache.dispose();
+            createTache = null;
 
         }
 

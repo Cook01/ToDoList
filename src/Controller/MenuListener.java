@@ -49,14 +49,9 @@ public class MenuListener implements ActionListener
 
 	private void createCarte(Boolean ponctuelle)
 	{
-		if (ponctuelle) {
-			System.out.println("create Ponctuelle");
+	
+		MainController.createTache(ponctuelle);
 
-			MainController.createTache();
-
-		} else {
-			System.out.println("create AuLongCours");
-		}
 	}
 
 	private void categorie()
