@@ -59,6 +59,7 @@ public class MainView extends JFrame
     {
         this.setTitleView(title);
         this.setTachesView(tachesView);
+        this.pack(); 
     }
 
     private void setTitleView(String title)

@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+
 /**
  * Created by Vincent on 12/11/2016.
  */
@@ -29,7 +30,7 @@ public class EditTacheView extends JPanel
     private JPanel[][] panelHolder = new JPanel[rows][cols];
 
 
-    public EditTacheView(int id, String title, String endDate, String[] categories, int idCategorie, Boolean isLate){
+    public EditTacheView(int id, String title, String endString,Date endDate, String[] categories, int idCategorie, Boolean isLate, Calendar dateCreation){
         super();
 
         this.id = id;
@@ -39,22 +40,28 @@ public class EditTacheView extends JPanel
         this.title = new JTextField();
 
         SpinnerDateModel model = new SpinnerDateModel();
+        model.setValue(endDate);
+        model.setStart(dateCreation.getTime());
+
         this.endDate = new JSpinner(model);
 
-        JSpinner.DateEditor editor = new JSpinner.DateEditor(this.endDate, "dd / MM / yyyy");
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(this.endDate, "dd/MM/yyyy");
         DateFormatter formatter = (DateFormatter)editor.getTextField().getFormatter();
-
         formatter.setAllowsInvalid(false);
         formatter.setOverwriteMode(true);
 
         this.endDate.setEditor(editor);
+
+        JComponent editorDefaukt = (JSpinner.DefaultEditor) this.endDate.getEditor();
+        JFormattedTextField ftf = ((JSpinner.DefaultEditor) editorDefaukt).getTextField();
+        ftf.setColumns(8);
 
         this.categorie = new JComboBox();
 
         this.saveButton = new JButton("Save");
         this.deleteButton = new JButton("X");
 
-        initEditTacheView(title, endDate, categories, idCategorie, isLate);
+        initEditTacheView(title, endString, categories, idCategorie, isLate);
     }
 
     public void initEditTacheView(String title, String endDate, String[] categories, int idCategorie, Boolean isLate){

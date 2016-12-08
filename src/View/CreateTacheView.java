@@ -5,11 +5,17 @@ import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Calendar;
 
 public class CreateTacheView extends JFrame 
 {
 
 	protected JPanel canvas;
+
+    private int id;
+
+    private Boolean type;
 
 	private JTextField title;
 	private JSpinner endDate;
@@ -24,9 +30,14 @@ public class CreateTacheView extends JFrame
     private final int cols = 3;
     private JPanel[][] panelHolder = new JPanel[rows][cols];
 
-	public CreateTacheView(ActionListener listener)
+	public CreateTacheView(int id, String[] categories, ActionListener listener, Boolean type)
 	{
 		super();
+
+        System.out.println("id : " + id);
+        this.id = id; 
+
+        this.type = type;
 
 		this.canvas = new JPanel();
 
@@ -34,6 +45,9 @@ public class CreateTacheView extends JFrame
 		this.title.setColumns(20);
 
 		SpinnerDateModel model 	= new SpinnerDateModel();
+        model.setValue(new Date(System.currentTimeMillis() + (1 * 24 * 60 * 60 * 1000)));
+        model.setStart(new Date(System.currentTimeMillis() - (1 * 24 * 60 * 60 * 1000)));
+
 		this.endDate 			= new JSpinner(model);
 
 		JSpinner.DateEditor editor = new JSpinner.DateEditor(this.endDate, "dd / MM / yyyy");
@@ -43,17 +57,21 @@ public class CreateTacheView extends JFrame
 
         this.endDate.setEditor(editor);
 
+        JComponent editorDefaukt = (JSpinner.DefaultEditor) this.endDate.getEditor();
+        JFormattedTextField ftf = ((JSpinner.DefaultEditor) editorDefaukt).getTextField();
+        ftf.setColumns(8);
+
 
         this.categorie = new JComboBox();
 
         this.saveButton = new JButton("Save");
         this.cancelButton = new JButton("Cancel");
 
-        initCreateTacheView(listener);
+        initCreateTacheView(categories, listener);
 
 	}
 
-	public void initCreateTacheView(ActionListener listener)
+	public void initCreateTacheView(String[] categories, ActionListener listener)
 	{
 
 		canvas.setLayout(new GridLayout(rows, cols));
@@ -80,9 +98,19 @@ public class CreateTacheView extends JFrame
         this.addListenerOnSaveButton(listener);
         this.addListenerOnCancelButton(listener);
 
+        this.setCategorie(categories);
+
         this.pack();
 
         
+    }
+
+    public void setCategorie(String[] categories){
+
+        for(String categorie : categories){
+            this.categorie.addItem(categorie);
+        }
+
     }
 
     public void addListenerOnSaveButton(ActionListener listener){
@@ -100,6 +128,32 @@ public class CreateTacheView extends JFrame
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public int getId()
+    {
+        return this.id;
+    }
+
+    public String getTitle() {
+        return this.title.getText();
+    }
+
+    public Calendar getEndDate() {
+        Calendar endDateCalendar = Calendar.getInstance();
+
+        endDateCalendar.setTime((Date) endDate.getValue());
+
+        return endDateCalendar;
+    }
+
+    public String getCategorie() {
+        return categorie.getSelectedItem().toString();
+    }
+
+    public Boolean getIsPonctuelle()
+    {
+        return this.type;
     }
 
 
