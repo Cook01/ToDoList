@@ -85,7 +85,7 @@ public class MainController
     {
 	    allTaches = sortTache.sort(allTaches);
 
-	    tachesView	= getTachesView(allTaches);
+	    tachesView	= reOrderTacheView(allTaches, tachesView);
 
     	updateView();
     }
@@ -148,7 +148,7 @@ public class MainController
 
         }
 
-        updateView();
+        update();
     }
 
     public static void editTache(int id)
@@ -176,7 +176,7 @@ public class MainController
             }
         }
 
-        f.updateView(f.getTitle(), tachesView);
+       updateView();
     }
 
     public static void saveTache(int id)
@@ -215,7 +215,7 @@ public class MainController
             }
         }
 
-        f.updateView(f.getTitle(), tachesView);
+       update();
     }
 
     
@@ -287,5 +287,41 @@ public class MainController
     	}
 
         return tachesView;
+    }
+
+    public static ArrayList<JPanel> reOrderTacheView(ArrayList<Tache> allTaches, ArrayList<JPanel> tacheView)
+    {
+        ArrayList<JPanel> newTacheView = new ArrayList<JPanel>();
+
+        int tacheSize = allTaches.size();
+        for (int i = 0; i <  tacheSize; i++) {
+
+            int tacheId = allTaches.get(i).getId();
+
+            int tacheViewSize = tacheView.size();
+            for (int j = 0; j < tacheViewSize; j++ ) {
+                
+                int tacheViewId = -1;
+
+                if(tachesView.get(j) instanceof TacheView){
+                    TacheView tache = (TacheView)tachesView.get(j);
+                    tacheViewId = tache.getId();
+                }
+                if(tachesView.get(j) instanceof TacheAuLongCourView){
+                     TacheAuLongCourView tache = (TacheAuLongCourView)tachesView.get(j);
+                    tacheViewId = tache.getId();
+                }
+                if(tachesView.get(j) instanceof EditTacheView){
+                    EditTacheView tache = (EditTacheView)tachesView.get(j);
+                    tacheViewId = tache.getId();
+                } 
+
+                if(tacheViewId == tacheId)
+                    newTacheView.add(tachesView.get(j));
+
+            }
+        }
+
+        return newTacheView;
     }
 }
