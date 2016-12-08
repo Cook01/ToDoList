@@ -97,9 +97,7 @@ public class MainController
 
     public static void removeTache(int id)
     {
-        System.out.println("Remove " + id);
-
-    	int i = 0;
+        int i = 0;
     	int size = allTaches.size();
     	boolean find = false;
 
@@ -153,9 +151,7 @@ public class MainController
 
     public static void editTache(int id)
     {
-    	System.out.println("edit tache " + id);
-
-        for(Tache t : allTaches){
+    	for(Tache t : allTaches){
             if(t.getId() == id){
                 String[] catList = {"Lol", "Il faudrait", "Penser a", "Implementer les", "Categories"};
 
@@ -181,9 +177,7 @@ public class MainController
 
     public static void saveTache(int id)
     {
-    	System.out.println("save tache " + id);
-
-        for(Tache t : allTaches){
+    	for(Tache t : allTaches){
             if(t.getId() == id){
                 for(JPanel jp : tachesView){
                     if(jp instanceof EditTacheView){
