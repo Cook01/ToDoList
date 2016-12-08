@@ -108,7 +108,9 @@ public class MainController
             labelList.add(c.getAbreviation());
         }
 
-        EditCategorieView ecv = new EditCategorieView(titleList.toArray(new String[titleList.size()]), labelList.toArray(new String[labelList.size()]));
+        EditCategorieView ecv = new EditCategorieView(titleList, labelList);
+        ecv.addListSelectionListener(ecv);
+
         ecv.setVisible(true);
     }
 

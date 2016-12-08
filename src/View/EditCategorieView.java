@@ -1,20 +1,24 @@
 package View;
 
 import javax.swing.*;
+import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class EditCategorieView extends JFrame implements ListSelectionListener{
 
-	private String[] catNameList;
-	private String[] catLabelList;
+	private ArrayList<String> catNameList;
+	private ArrayList<String> catLabelList;
 
 	private JPanel canvas;
 
 	private JScrollPane listScroller;
-	private JList list;
+
+    private DefaultListModel<String> model;
+	private JList<String> list;
 
 	private JPanel textFieldPanel;
 
@@ -33,7 +37,7 @@ public class EditCategorieView extends JFrame implements ListSelectionListener{
     private final int cols = 1;
     private JPanel[][] panelHolder = new JPanel[rows][cols];
 
-	public EditCategorieView(String[] catNameList, String[] catLabelList){
+	public EditCategorieView(ArrayList<String> catNameList, ArrayList<String> catLabelList){
 		super();
 
 		this.canvas = new JPanel();
@@ -41,8 +45,10 @@ public class EditCategorieView extends JFrame implements ListSelectionListener{
 		this.catNameList = catNameList;
 		this.catLabelList = catLabelList;
 
+		this.model = new DefaultListModel<>();
+
 		this.listScroller = new JScrollPane();
-		this.list = new JList(catNameList);
+		this.list = new JList<>(model);
 
 		this.textFieldPanel = new JPanel();
 
@@ -64,19 +70,24 @@ public class EditCategorieView extends JFrame implements ListSelectionListener{
 	public void initEditCategorieView(){
 		this.canvas.setLayout(new GridLayout(rows, cols));
 
+        for(String name : catNameList){
+            model.addElement(name);
+        }
+
 		this.list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		this.list.setLayoutOrientation(JList.VERTICAL);
-		this.list.setVisibleRowCount(-1);
+		this.list.setVisibleRowCount(10);
 
 		this.listScroller.setPreferredSize(new Dimension(250, 80));
+		this.listScroller.setViewportView(list);
 
-		this.listScroller.add(list);
-
+        this.textFieldPanel.setLayout(new FlowLayout());
 		this.textFieldPanel.add(titleLabel);
 		this.textFieldPanel.add(titleField);
 		this.textFieldPanel.add(labelLabel);
 		this.textFieldPanel.add(labelField);
 
+        this.buttonPanel.setLayout(new FlowLayout());
 		this.buttonPanel.add(addButton);
 		this.buttonPanel.add(editButton);
 		this.buttonPanel.add(suppButton);
@@ -105,20 +116,29 @@ public class EditCategorieView extends JFrame implements ListSelectionListener{
 		String label = "";
 
 		if(index != -1){
-			title = catNameList[index];
-			label = catLabelList[index];
-		}		
+			title = catNameList.get(index);
+			label = catLabelList.get(index);
+		}
 
 		setTitle(title);
 		setLabel(label);
+
 	}
 
 	public void setTitle(String title){
 		this.titleField.setText(title);
+
+		if(title.equals("")){
+		    this.titleField.setPreferredSize(new Dimension(100, 20));
+        }
 	}
 
 	public void setLabel(String label){
-		this.titleLabel.setText(label);
+		this.labelField.setText(label);
+
+        if(label.equals("")){
+            this.labelField.setPreferredSize(new Dimension(100, 20));
+        }
 	}
 
 	public void addListenerOnAddButton(ActionListener listener){
