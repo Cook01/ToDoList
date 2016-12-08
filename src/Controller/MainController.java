@@ -5,20 +5,14 @@ import Model.MenuItems;
 import Model.Ponctuelle;
 import Model.Categorie;
 import Model.Tache;
-import View.EditTacheView;
-import View.CreateTacheView;
-import View.MainView;
-import View.TacheAuLongCourView;
-import View.TacheView;
+import View.*;
 
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class MainController
 {
@@ -109,12 +103,12 @@ public class MainController
         ArrayList<String> titleList = new ArrayList<>();
         ArrayList<String> labelList = new ArrayList<>();
 
-        for(Categorie c : catLists){
+        for(Categorie c : catList){
             titleList.add(c.getTitre());
             labelList.add(c.getAbreviation());
         }
 
-        EditCategorieView ecv = new EditCategorieView(titleList.toArray(String[titleList.size()]), labelList.toArray(String[labelList.size()]));
+        EditCategorieView ecv = new EditCategorieView(titleList.toArray(new String[titleList.size()]), labelList.toArray(new String[labelList.size()]));
         ecv.setVisible(true);
     }
 

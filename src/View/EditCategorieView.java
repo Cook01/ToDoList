@@ -1,11 +1,10 @@
 package View;
 
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
-
-import java.util.ArrayList;
 
 public class EditCategorieView extends JFrame implements ListSelectionListener{
 
@@ -40,14 +39,15 @@ public class EditCategorieView extends JFrame implements ListSelectionListener{
 		this.canvas = new JPanel();
 
 		this.catNameList = catNameList;
+		this.catLabelList = catLabelList;
 
 		this.listScroller = new JScrollPane();
-		this.list = new JList(this.catNameList.toArray(String[this.catNameList.size()]));
+		this.list = new JList(catNameList);
 
 		this.textFieldPanel = new JPanel();
 
 		this.titleLabel = new JLabel("Titre : ");
-		this.titleField = new titleField();
+		this.titleField = new JTextField();
 
 		this.labelLabel = new JLabel("Abrev. : ");
 		this.labelField = new JTextField();
@@ -62,7 +62,7 @@ public class EditCategorieView extends JFrame implements ListSelectionListener{
 	}
 
 	public void initEditCategorieView(){
-		this.canva.setLayout(new GridLayout(rows, cols));
+		this.canvas.setLayout(new GridLayout(rows, cols));
 
 		this.list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		this.list.setLayoutOrientation(JList.VERTICAL);
