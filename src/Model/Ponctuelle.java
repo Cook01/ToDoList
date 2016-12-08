@@ -16,8 +16,8 @@ public class Ponctuelle extends Tache {
      * @param title titre de la Tache
      * @param end   fin de la Tache
      */
-    public Ponctuelle(int id, String title, Calendar end) {
-        super(id, title,end);
+    public Ponctuelle(int id, String title, Calendar end, Categorie categorie) {
+        super(id, title,end, categorie);
     }
 
 

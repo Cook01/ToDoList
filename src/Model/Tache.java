@@ -26,6 +26,11 @@ public abstract class Tache {
      */
     protected Calendar end;
 
+    /**
+    * Categorie de la tache
+    */
+    protected Categorie categorie;
+
 
 
     /**
@@ -34,15 +39,26 @@ public abstract class Tache {
      * @param title titre de la Tache
      * @param end   fin de la Tache
      */
-    public Tache(int id, String title, Calendar end){
+    public Tache(int id, String title, Calendar end, Categorie categorie){
 
         this.id         = id;
         this.title      = title;
         this.achieve    = false;
         this.end        = end;
+        this.categorie  = categorie;
 
     }
 
+
+    /**
+     * Setter de l'attribut  categorie
+     *
+     * @param categorie nouvelle categorie de la Tache
+     */
+    public void setCategorie(Categorie categorie)
+    {
+        this.categorie = categorie;
+    }
 
     /**
      * Setter de l'attribut  title
@@ -72,10 +88,24 @@ public abstract class Tache {
     }
 
 
+    /**
+     * Getter de l'attribut id
+     *
+     * @return int id
+     */
     public int getId() {
         return id;
     }
     
+    /**
+     * Getter de l'attribut categorie
+     *
+     * @return Categorie categorie
+     */
+    public Categorie getCategorie() {
+        return categorie;
+    }
+
     /**
      * Getter de l'attribut title
      *

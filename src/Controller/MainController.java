@@ -3,6 +3,7 @@ package Controller;
 import Model.AuLongCours;
 import Model.MenuItems;
 import Model.Ponctuelle;
+import Model.Categorie;
 import Model.Tache;
 import View.EditTacheView;
 import View.MainView;
@@ -19,6 +20,8 @@ import java.util.Locale;
 
 public class MainController
 {
+
+    public static Categorie cat = new Categorie("test", "tes");
 
 	private static MainView f;
 	private static String title = "ToDo List";
@@ -85,7 +88,7 @@ public class MainController
     {
 	    allTaches = sortTache.sort(allTaches);
 
-	    tachesView	= getTachesView(allTaches);
+	    tachesView	= reOrderTacheView(allTaches, tachesView);
 
     	updateView();
     }
@@ -97,9 +100,7 @@ public class MainController
 
     public static void removeTache(int id)
     {
-        System.out.println("Remove " + id);
-
-    	int i = 0;
+        int i = 0;
     	int size = allTaches.size();
     	boolean find = false;
 
@@ -148,14 +149,12 @@ public class MainController
 
         }
 
-        updateView();
+        update();
     }
 
     public static void editTache(int id)
     {
-    	System.out.println("edit tache " + id);
-
-        for(Tache t : allTaches){
+    	for(Tache t : allTaches){
             if(t.getId() == id){
                 String[] catList = {"Lol", "Il faudrait", "Penser a", "Implementer les", "Categories"};
 
@@ -176,14 +175,12 @@ public class MainController
             }
         }
 
-        f.updateView(f.getTitle(), tachesView);
+       updateView();
     }
 
     public static void saveTache(int id)
     {
-    	System.out.println("save tache " + id);
-
-        for(Tache t : allTaches){
+    	for(Tache t : allTaches){
             if(t.getId() == id){
                 for(JPanel jp : tachesView){
                     if(jp instanceof EditTacheView){
@@ -222,7 +219,7 @@ public class MainController
             }
         }
 
-        f.updateView(f.getTitle(), tachesView);
+       update();
     }
 
     
@@ -253,15 +250,15 @@ public class MainController
 
     	ArrayList<Tache> allTaches = new ArrayList<>();
 
-    	AuLongCours aloLongCour = new AuLongCours(6, "TacheAuLongCours2", end);
+    	AuLongCours aloLongCour = new AuLongCours(6, "TacheAuLongCours2", end, cat);
     	aloLongCour.setPercentage(40);
 
-        allTaches.add(new Ponctuelle(1, "TachePonctuelle1", end));
-		allTaches.add(new Ponctuelle(2, "TachePonctuelle2", end2));
-		allTaches.add(new Ponctuelle(3, "TachePonctuelle3", end));
-		allTaches.add(new Ponctuelle(4, "TachePonctuelle4", end3));
+        allTaches.add(new Ponctuelle(1, "TachePonctuelle1", end, cat));
+		allTaches.add(new Ponctuelle(2, "TachePonctuelle2", end2, cat));
+		allTaches.add(new Ponctuelle(3, "TachePonctuelle3", end, cat));
+		allTaches.add(new Ponctuelle(4, "TachePonctuelle4", end3, cat));
 
-		allTaches.add(new AuLongCours(5, "TacheAuLongCours1", end2));
+		allTaches.add(new AuLongCours(5, "TacheAuLongCours1", end2, cat));
 		allTaches.add(aloLongCour);
 
         return allTaches;
@@ -294,5 +291,41 @@ public class MainController
     	}
 
         return tachesView;
+    }
+
+    public static ArrayList<JPanel> reOrderTacheView(ArrayList<Tache> allTaches, ArrayList<JPanel> tacheView)
+    {
+        ArrayList<JPanel> newTacheView = new ArrayList<JPanel>();
+
+        int tacheSize = allTaches.size();
+        for (int i = 0; i <  tacheSize; i++) {
+
+            int tacheId = allTaches.get(i).getId();
+
+            int tacheViewSize = tacheView.size();
+            for (int j = 0; j < tacheViewSize; j++ ) {
+                
+                int tacheViewId = -1;
+
+                if(tachesView.get(j) instanceof TacheView){
+                    TacheView tache = (TacheView)tachesView.get(j);
+                    tacheViewId = tache.getId();
+                }
+                if(tachesView.get(j) instanceof TacheAuLongCourView){
+                     TacheAuLongCourView tache = (TacheAuLongCourView)tachesView.get(j);
+                    tacheViewId = tache.getId();
+                }
+                if(tachesView.get(j) instanceof EditTacheView){
+                    EditTacheView tache = (EditTacheView)tachesView.get(j);
+                    tacheViewId = tache.getId();
+                } 
+
+                if(tacheViewId == tacheId)
+                    newTacheView.add(tachesView.get(j));
+
+            }
+        }
+
+        return newTacheView;
     }
 }
