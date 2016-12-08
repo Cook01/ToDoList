@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * <h1>Class Tache</h1>
@@ -31,6 +32,11 @@ public abstract class Tache {
     */
     protected Categorie categorie;
 
+    /**
+    * Date de creation de la tache
+    */
+    protected Calendar dateCreation;
+
 
 
     /**
@@ -46,6 +52,14 @@ public abstract class Tache {
         this.achieve    = false;
         this.end        = end;
         this.categorie  = categorie;
+
+        dateCreation    = Calendar.getInstance();
+        dateCreation.setTime(new Date(System.currentTimeMillis()));
+
+        dateCreation.set(Calendar.HOUR_OF_DAY, 0);
+        dateCreation.set(Calendar.MINUTE, 0);
+        dateCreation.set(Calendar.SECOND, 0);
+        dateCreation.set(Calendar.MILLISECOND, 0);
 
     }
 
@@ -95,6 +109,15 @@ public abstract class Tache {
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * Getter de l'attribut dateCreation
+     *
+     * @return Calendar dateCreation
+     */
+    public Calendar getDateCreation() {
+        return dateCreation;
     }
     
     /**

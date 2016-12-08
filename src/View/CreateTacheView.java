@@ -36,10 +36,13 @@ public class CreateTacheView extends JFrame
 		SpinnerDateModel model 	= new SpinnerDateModel();
 		this.endDate 			= new JSpinner(model);
 
-		JSpinner.DateEditor editor = new JSpinner.DateEditor(this.endDate, "dd.MM.yyyy");
+		JSpinner.DateEditor editor = new JSpinner.DateEditor(this.endDate, "dd / MM / yyyy");
         DateFormatter formatter 	= (DateFormatter)editor.getTextField().getFormatter();
         formatter.setAllowsInvalid(false);
         formatter.setOverwriteMode(true);
+
+        this.endDate.setEditor(editor);
+
 
         this.categorie = new JComboBox();
 

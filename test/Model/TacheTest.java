@@ -6,6 +6,7 @@ import junit.framework.TestSuite;
 import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Calendar;
 
 
 /**
@@ -144,6 +145,39 @@ public class TacheTest extends TestCase {
 
         totalAssertions ++;
         assertEquals(field.get(testTache),nouvelleDate);
+        bilanAssertions++ ;
+
+    }
+
+     /**
+     * Test de la methode getDateCreation()
+     *
+     * @see Tache#getDateCreation()
+     */
+    public void test_getDateCreation() {
+
+        Calendar end    = Calendar.getInstance();
+
+        end.setTime(new Date(System.currentTimeMillis() + (4 * 24 * 60 * 60 * 1000)));
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.set(Calendar.MILLISECOND, 0);
+
+
+        Calendar dateCreationTest = Calendar.getInstance();
+        dateCreationTest.setTime(new Date(System.currentTimeMillis()));
+        dateCreationTest.set(Calendar.HOUR_OF_DAY, 0);
+        dateCreationTest.set(Calendar.MINUTE, 0);
+        dateCreationTest.set(Calendar.SECOND, 0);
+        dateCreationTest.set(Calendar.MILLISECOND, 0);
+
+        final Ponctuelle testTache = new Ponctuelle(1,"Tache de test", end, cat);
+
+        Calendar dateCreation = testTache.getDateCreation();
+
+        totalAssertions ++;
+        assertEquals(dateCreation, dateCreationTest);
         bilanAssertions++ ;
 
     }
