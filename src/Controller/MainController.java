@@ -34,7 +34,7 @@ public class MainController
 	
 	private static ArrayList<Tache> allTaches;
 
-	private static SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
+	private static SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
 	
 
 	public static void main(String args[])  
@@ -190,7 +190,14 @@ public class MainController
                         EditTacheView edit = (EditTacheView)jp;
 
                         t.setTitle(edit.getTitle());
-                        t.setEnd(edit.getEndDate());
+
+                        Calendar endDate = edit.getEndDate();
+                        endDate.set(Calendar.HOUR_OF_DAY, 0);
+                        endDate.set(Calendar.MINUTE, 0);
+                        endDate.set(Calendar.SECOND, 0);
+                        endDate.set(Calendar.MILLISECOND, 0);
+                        t.setEnd(endDate);
+
                         //t.setCategorie(edit.getCategorie());
 
                         if(edit.getId() == id){

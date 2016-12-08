@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by Vincent on 12/11/2016.
@@ -94,6 +95,15 @@ public class EditTacheView extends JPanel
         if(isLate){
             this.endDate.setEnabled(false);
         }
+
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy"); 
+        Date startDate;
+
+        try {
+            this.endDate.setValue(df.parse(endDate));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void setCategorie(String[] categories, int idCategorie){
@@ -131,7 +141,7 @@ public class EditTacheView extends JPanel
     }
 
     public Calendar getEndDate() {
-        Calendar endDateCalendar    = Calendar.getInstance();
+        Calendar endDateCalendar = Calendar.getInstance();
 
         endDateCalendar.setTime((Date) endDate.getValue());
 
