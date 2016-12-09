@@ -8,7 +8,7 @@ public class EditTacheListener implements ActionListener
 
 	private int id;
 
-	public EditTacheListener(int id) 
+	EditTacheListener(int id)
 	{
 		this.id = id;
 	}

@@ -4,14 +4,13 @@ import javax.swing.*;
 import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 
 public class CreateTacheView extends JFrame 
 {
 
-	protected JPanel canvas;
+	private JPanel canvas;
 
     private int id;
 
@@ -19,12 +18,10 @@ public class CreateTacheView extends JFrame
 
 	private JTextField title;
 	private JSpinner endDate;
-	private JComboBox categorie;
+	private JComboBox<String> categorie;
     private JButton saveButton;
     private JButton cancelButton;
 
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-	
 
     private final int rows = 2;
     private final int cols = 3;
@@ -56,12 +53,12 @@ public class CreateTacheView extends JFrame
 
         this.endDate.setEditor(editor);
 
-        JComponent editorDefaukt = (JSpinner.DefaultEditor) this.endDate.getEditor();
+        JComponent editorDefaukt = this.endDate.getEditor();
         JFormattedTextField ftf = ((JSpinner.DefaultEditor) editorDefaukt).getTextField();
         ftf.setColumns(8);
 
 
-        this.categorie = new JComboBox();
+        this.categorie = new JComboBox<>();
 
         this.saveButton = new JButton("Save");
         this.cancelButton = new JButton("Cancel");
@@ -70,7 +67,7 @@ public class CreateTacheView extends JFrame
 
 	}
 
-	public void initCreateTacheView(String[] categories, ActionListener listener)
+	private void initCreateTacheView(String[] categories, ActionListener listener)
 	{
 
 		canvas.setLayout(new GridLayout(rows, cols));
@@ -112,7 +109,7 @@ public class CreateTacheView extends JFrame
 
     }
 
-    public void addListenerOnSaveButton(ActionListener listener){
+    private void addListenerOnSaveButton(ActionListener listener){
         try{
             this.saveButton.addActionListener(listener);
         }catch(Exception e){
@@ -121,7 +118,7 @@ public class CreateTacheView extends JFrame
         
     }
     
-    public void addListenerOnCancelButton(ActionListener listener){
+    private void addListenerOnCancelButton(ActionListener listener){
         try{
             this.cancelButton.addActionListener(listener);
         }catch(Exception e){

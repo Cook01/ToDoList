@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * @author gkueny
  */
-public class MenuView extends JMenuBar
+class MenuView extends JMenuBar
 {
 
     private ArrayList<JMenu> menus;
@@ -17,7 +17,7 @@ public class MenuView extends JMenuBar
  
 
 
-    public MenuView(ArrayList<ArrayList<String>> menusTitle, Class listener)  
+    MenuView(ArrayList<ArrayList<String>> menusTitle, Class listener)
     { 
 
         this.menus      = new ArrayList<>();
@@ -50,9 +50,7 @@ public class MenuView extends JMenuBar
                      item.addActionListener( (MenuListener)listener.newInstance() );
 
                 } catch(Exception e) {
-
-                    System.out.println(e);
-
+                   e.printStackTrace();
                 }
 
             }

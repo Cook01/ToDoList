@@ -15,9 +15,6 @@ public class MainView extends JFrame
 
     private String title;
 
-    private int space = 20;
- 
-
 
     public MainView(String title, ArrayList<JPanel> tachesView, ArrayList<ArrayList<String>> menusTitle, Class menuListener)  
     { 
@@ -27,7 +24,7 @@ public class MainView extends JFrame
 
         this.initMainView(menusTitle, menuListener);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
     } 
 
@@ -37,13 +34,13 @@ public class MainView extends JFrame
         setTitle(this.title); 
 
 
-        pCenter = new JPanel(); 
-        pCenter.setLayout(new GridLayout(0,3,this.space, this.space));
+        pCenter = new JPanel();
+        int space = 20;
+        pCenter.setLayout(new GridLayout(0,3, space, space));
 
-        int size = this.tachesView.size();
-        for (int i = 0; i < size; i++ ) {
+        for (JPanel aTachesView : this.tachesView) {
 
-            pCenter.add(this.tachesView.get(i));
+            pCenter.add(aTachesView);
 
         }
 
@@ -74,10 +71,9 @@ public class MainView extends JFrame
         
         pCenter.removeAll();
 
-        int size = this.tachesView.size();
-        for (int i = 0; i < size; i++ ) {
+        for (JPanel aTachesView : this.tachesView) {
 
-            pCenter.add(this.tachesView.get(i));
+            pCenter.add(aTachesView);
 
         }
 

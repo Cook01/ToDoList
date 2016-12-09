@@ -62,7 +62,7 @@ public class AuLongCours extends Tache {
      *
      * @return {@link Calendar} begin
      */
-    public Calendar getBegin() {
+    Calendar getBegin() {
         return begin;
     }
 
@@ -80,7 +80,7 @@ public class AuLongCours extends Tache {
      *
      * @param begin nouveau debut de la tache
      */
-    public void setBegin(Calendar begin) {
+    void setBegin(Calendar begin) {
         this.begin = begin;
     }
 

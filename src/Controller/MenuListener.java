@@ -1,10 +1,9 @@
 package Controller;
 
+import Model.MenuItems;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import View.*;
-import Model.MenuItems;
 
 public class MenuListener implements ActionListener
 {

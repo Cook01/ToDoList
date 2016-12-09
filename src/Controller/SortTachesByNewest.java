@@ -8,7 +8,7 @@ import Model.*;
 class SortTachesByNewest implements SortTaches
 {
 
-    private Comparator<Tache> comparator = (left, right) -> left.getEnd().getTime().compareTo(right.getEnd().getTime());
+    private Comparator<Tache> comparator = Comparator.comparing(left -> left.getEnd().getTime());
 
 	public ArrayList<Tache> sort(ArrayList<Tache> allTaches)
 	{

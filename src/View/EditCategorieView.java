@@ -66,7 +66,7 @@ public class EditCategorieView extends JFrame implements ListSelectionListener{
 		initEditCategorieView();
 	}
 
-	public void initEditCategorieView(){
+	private void initEditCategorieView(){
 		this.canvas.setLayout(new GridLayout(rows, cols));
 
         for(String name : catNameList){
@@ -108,7 +108,7 @@ public class EditCategorieView extends JFrame implements ListSelectionListener{
         this.pack();
 	}
 
-	public void updateView(){
+	private void updateView(){
 		int index = list.getSelectedIndex();
 
 		String title = "";
@@ -142,7 +142,7 @@ public class EditCategorieView extends JFrame implements ListSelectionListener{
 		return this.titleField.getText();
 	}
 
-	public void setLabel(String label){
+	private void setLabel(String label){
 		this.labelField.setText(label);
 
         if(label.equals("")){

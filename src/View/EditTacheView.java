@@ -17,11 +17,11 @@ public class EditTacheView extends JPanel
 {
     private int id;
 
-    protected JPanel canvas;
+    private JPanel canvas;
 
     private JTextField title;
     private JSpinner endDate;
-    private JComboBox categorie;
+    private JComboBox<String> categorie;
     private JButton saveButton;
     private JButton deleteButton;
 
@@ -52,11 +52,11 @@ public class EditTacheView extends JPanel
 
         this.endDate.setEditor(editor);
 
-        JComponent editorDefaukt = (JSpinner.DefaultEditor) this.endDate.getEditor();
+        JComponent editorDefaukt = this.endDate.getEditor();
         JFormattedTextField ftf = ((JSpinner.DefaultEditor) editorDefaukt).getTextField();
         ftf.setColumns(8);
 
-        this.categorie = new JComboBox();
+        this.categorie = new JComboBox<>();
 
         this.saveButton = new JButton("Save");
         this.deleteButton = new JButton("X");
@@ -64,7 +64,7 @@ public class EditTacheView extends JPanel
         initEditTacheView(title, endString, categories, idCategorie, isLate);
     }
 
-    public void initEditTacheView(String title, String endDate, String[] categories, int idCategorie, Boolean isLate){
+    private void initEditTacheView(String title, String endDate, String[] categories, int idCategorie, Boolean isLate){
         this.setBorder(LineBorder.createGrayLineBorder());
         this.setLayout(new BorderLayout());
 
@@ -88,7 +88,7 @@ public class EditTacheView extends JPanel
         updateView(title, endDate, categories, idCategorie, isLate);
     }
 
-    public void updateView(String title, String endDate, String[] categories, int idCategorie, Boolean isLate){
+    private void updateView(String title, String endDate, String[] categories, int idCategorie, Boolean isLate){
         setTitle(title);
         setEndDate(endDate, isLate);
         setCategorie(categories, idCategorie);
@@ -100,13 +100,12 @@ public class EditTacheView extends JPanel
         this.title.setPreferredSize(new Dimension(100, 24));        
     }
 
-    public void setEndDate(String endDate, Boolean isLate){
+    private void setEndDate(String endDate, Boolean isLate){
         if(isLate){
             this.endDate.setEnabled(false);
         }
 
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy"); 
-        Date startDate;
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
         try {
             this.endDate.setValue(df.parse(endDate));
@@ -115,7 +114,7 @@ public class EditTacheView extends JPanel
         }
     }
 
-    public void setCategorie(String[] categories, int idCategorie){
+    private void setCategorie(String[] categories, int idCategorie){
 
         for(String categorie : categories){
             this.categorie.addItem(categorie);

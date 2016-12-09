@@ -11,8 +11,8 @@ import java.awt.event.ActionListener;
 public class TacheView extends JPanel{
     private int id;
 
-    protected JPanel canvas;
-    protected JPanel center;
+    private JPanel canvas;
+    private JPanel center;
 
     private JLabel title;
     private JLabel endDate;
@@ -45,7 +45,7 @@ public class TacheView extends JPanel{
         initTacheView(title, endDate, categorie, isLate);
     }
 
-    public void initTacheView(String title, String endDate, String categorie, boolean isLate){
+    private void initTacheView(String title, String endDate, String categorie, boolean isLate){
         this.setBorder(LineBorder.createGrayLineBorder());
 
         this.setLayout(new BorderLayout());
@@ -75,12 +75,12 @@ public class TacheView extends JPanel{
         updateView(title, endDate, categorie, isLate);
     }
 
-    protected void setFinisButtonText(String text)
+    void setFinisButtonText(String text)
     {
         this.finish.setText(text);
     }
 
-    public void updateView(String title, String endDate, String categorie, boolean isLate){
+    void updateView(String title, String endDate, String categorie, boolean isLate){
         setTitle(title, isLate);
         setEndDate(endDate);
         setCategorie(categorie);
@@ -93,7 +93,7 @@ public class TacheView extends JPanel{
         }
     }
 
-    public void setEndDate(String endDate){
+    private void setEndDate(String endDate){
         this.endDate.setText(endDate);
     }
 

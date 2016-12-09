@@ -8,7 +8,7 @@ public class SaveTacheListener implements ActionListener
 
 	private int id;
 
-	public SaveTacheListener(int id) 
+	SaveTacheListener(int id)
 	{
 		this.id = id;
 	}

@@ -7,7 +7,7 @@ import java.awt.*;
  * Created by Vincent on 21/11/2016.
  */
 public class TacheAuLongCourView extends TacheView{
-    JProgressBar progressBar;
+    private JProgressBar progressBar;
 
     public TacheAuLongCourView(int id, String title, String endDate, String categorie, boolean isLate, int pourcentage){
         super(id, title, endDate, categorie, isLate);
@@ -17,7 +17,7 @@ public class TacheAuLongCourView extends TacheView{
         initTacheAuLongCourView(title, endDate, categorie, isLate, pourcentage);
     }
 
-    public void initTacheAuLongCourView(String title, String endDate, String categorie, boolean isLate, int pourcentage){
+    private void initTacheAuLongCourView(String title, String endDate, String categorie, boolean isLate, int pourcentage){
 
         super.add(this.progressBar, BorderLayout.SOUTH);
         super.setFinisButtonText("Avancer");
@@ -25,12 +25,12 @@ public class TacheAuLongCourView extends TacheView{
         updateView(title, endDate, categorie, isLate, pourcentage);
     }
 
-    public void updateView(String title, String endDate, String categorie, boolean isLate, int pourcentage){
+    private void updateView(String title, String endDate, String categorie, boolean isLate, int pourcentage){
         super.updateView(title, endDate, categorie, isLate);
         setProgressBar(pourcentage);
     }
 
-    public void setProgressBar(int pourcentage){
+    private void setProgressBar(int pourcentage){
         this.progressBar.setValue(pourcentage);
         this.progressBar.setStringPainted(true);    
     }

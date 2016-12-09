@@ -8,7 +8,7 @@ public class SuppTacheListener implements ActionListener
 
 	private int id;
 
-	public SuppTacheListener(int id) 
+	SuppTacheListener(int id)
 	{
 		this.id = id;
 	}

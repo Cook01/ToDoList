@@ -10,9 +10,9 @@ import java.util.ArrayList;
 /**
  * Created by Vincent on 09/12/2016.
  */
-public class CategorieController {
+class CategorieController {
 
-    public static void addCategorie(EditCategorieView ecv, ArrayList<Categorie> catList) {
+    static void addCategorie(EditCategorieView ecv, ArrayList<Categorie> catList) {
         String title = ecv.getTitre();
         String abreviation = ecv.getLabel();
 
@@ -44,7 +44,7 @@ public class CategorieController {
         MainController.editCategorie();
     }
 
-    public static void editCategorie(EditCategorieView ecv, ArrayList<Categorie> catList) {
+    static void editCategorie(EditCategorieView ecv, ArrayList<Categorie> catList) {
         String title = ecv.getTitre();
         String abreviation = ecv.getLabel();
 
@@ -83,7 +83,7 @@ public class CategorieController {
         MainController.updateView();
     }
 
-    public static void removeCategorie(EditCategorieView ecv, ArrayList<Categorie> catList, ArrayList<Tache> tacheList) {
+    static void removeCategorie(EditCategorieView ecv, ArrayList<Categorie> catList, ArrayList<Tache> tacheList) {
         Categorie catToRemove = null;
 
         for(Categorie c : catList) {
