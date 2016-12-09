@@ -1,7 +1,6 @@
 package View;
 
 import javax.swing.*;
-import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
@@ -139,6 +138,10 @@ public class EditCategorieView extends JFrame implements ListSelectionListener{
         }
 	}
 
+	public String getTitre(){
+		return this.titleField.getText();
+	}
+
 	public void setLabel(String label){
 		this.labelField.setText(label);
 
@@ -146,6 +149,10 @@ public class EditCategorieView extends JFrame implements ListSelectionListener{
             this.labelField.setPreferredSize(new Dimension(100, 20));
         }
 	}
+
+    public String getLabel() {
+        return this.labelField.getText();
+    }
 
 	public String getSelectedTitle(){
 		return catNameList.get(this.list.getSelectedIndex());
@@ -182,4 +189,6 @@ public class EditCategorieView extends JFrame implements ListSelectionListener{
     public void valueChanged(ListSelectionEvent e){
     	updateView();
     }
+
+
 }

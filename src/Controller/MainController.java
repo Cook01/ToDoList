@@ -111,9 +111,9 @@ public class MainController
         EditCategorieView ecv = new EditCategorieView(titleList, labelList);
 
         ecv.addListSelectionListener(ecv);
-        ecv.addListenerOnAddButton(e -> CategorieController.addCategorie());
-        ecv.addListenerOnEditButton(e -> CategorieController.editCategorie());
-        ecv.addListenerOnSuppButton(e -> CategorieController.removeCategorie());
+        ecv.addListenerOnAddButton(e -> CategorieController.addCategorie(ecv, catList));
+        ecv.addListenerOnEditButton(e -> CategorieController.editCategorie(ecv, catList));
+        ecv.addListenerOnSuppButton(e -> CategorieController.removeCategorie(ecv, catList));
 
         ecv.setVisible(true);
     }
