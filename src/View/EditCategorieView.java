@@ -118,6 +118,12 @@ public class EditCategorieView extends JFrame implements ListSelectionListener{
 		if(index != -1){
 			title = catNameList.get(index);
 			label = catLabelList.get(index);
+
+			this.editButton.setEnabled(true);
+			this.suppButton.setEnabled(true);
+		} else {
+			this.editButton.setEnabled(false);
+			this.suppButton.setEnabled(false);
 		}
 
 		setTitle(title);
@@ -141,13 +147,16 @@ public class EditCategorieView extends JFrame implements ListSelectionListener{
         }
 	}
 
+	public String getSelectedTitle(){
+		return catNameList.get(this.list.getSelectedIndex());
+	}
+
 	public void addListenerOnAddButton(ActionListener listener){
         try{
             this.addButton.addActionListener(listener);
         }catch(Exception e){
             e.printStackTrace();
         }
-        
     }
 
     public void addListenerOnEditButton(ActionListener listener){
@@ -156,7 +165,6 @@ public class EditCategorieView extends JFrame implements ListSelectionListener{
         }catch(Exception e){
             e.printStackTrace();
         }
-        
     }
     
     public void addListenerOnSuppButton(ActionListener listener){
