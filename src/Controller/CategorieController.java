@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Categorie;
+import Model.Tache;
 import View.EditCategorieView;
 
 import java.awt.event.WindowEvent;
@@ -14,6 +15,14 @@ public class CategorieController {
     public static void addCategorie(EditCategorieView ecv, ArrayList<Categorie> catList) {
         String title = ecv.getTitre();
         String abreviation = ecv.getLabel();
+
+        if(title.equals("")){
+            title = "Titre_Par_Defaut";
+        }
+
+        if(abreviation.equals("")){
+            abreviation = "Def";
+        }
 
         boolean titleIsOk = false;
 
@@ -39,6 +48,14 @@ public class CategorieController {
         String title = ecv.getTitre();
         String abreviation = ecv.getLabel();
 
+        if(title.equals("")){
+            title = "Titre_Par_Defaut";
+        }
+
+        if(abreviation.equals("")){
+            abreviation = "Def";
+        }
+
         for(Categorie c : catList){
             if(c.getTitre().equals(ecv.getSelectedTitle())){
                 boolean titleIsOk = false;
@@ -61,9 +78,32 @@ public class CategorieController {
 
         ecv.dispatchEvent(new WindowEvent(ecv, WindowEvent.WINDOW_CLOSING));
         MainController.editCategorie();
+
+        MainController.updateAllTaches();
+        MainController.updateView();
     }
 
-    public static void removeCategorie(EditCategorieView ecv, ArrayList<Categorie> catList) {
+    public static void removeCategorie(EditCategorieView ecv, ArrayList<Categorie> catList, ArrayList<Tache> tacheList) {
+        Categorie catToRemove = null;
 
+        for(Categorie c : catList) {
+            if (c.getTitre().equals(ecv.getSelectedTitle())) {
+                catToRemove = c;
+            }
+        }
+
+        for(Tache t : tacheList){
+            if(t.getCategorie().equals(catToRemove)){
+                t.setCategorie(new Categorie("", ""));
+            }
+        }
+
+        catList.remove(catToRemove);
+
+        ecv.dispatchEvent(new WindowEvent(ecv, WindowEvent.WINDOW_CLOSING));
+        MainController.editCategorie();
+
+        MainController.updateAllTaches();
+        MainController.updateView();
     }
 }
