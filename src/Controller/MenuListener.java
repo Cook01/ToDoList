@@ -61,6 +61,8 @@ public class MenuListener implements ActionListener
 	private void sauvegarder()
 	{
 		System.out.println("sauvegarder");
+
+		MainController.saveAll();
 	}
 
 	private void quitter()

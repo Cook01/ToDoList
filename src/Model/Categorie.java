@@ -1,13 +1,15 @@
 package Model;
 
 
+import java.io.Serializable;
+
 /**
  * <h1>Range les {@link Tache} dans des Categories</h1>
  * Comporte le Titre et une Abreviation de la Categorie
  *
  * @author  Vincent THOMAS
  */
-public class Categorie {
+public class Categorie implements Serializable{
     /**
      * Titre de la Categorie
      */

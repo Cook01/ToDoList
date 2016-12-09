@@ -9,6 +9,7 @@ import View.*;
 
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -562,5 +563,34 @@ public class MainController
         }
 
         return newTacheView;
+    }
+
+    public static void saveAll() {
+        saveCategorieInFile("res/catSave.sav");
+        saveTachesInFile("res/tacheSave.sav");
+    }
+
+    private static void saveTachesInFile(String file) {
+        try{
+            FileOutputStream fileOut = new FileOutputStream(file);
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(allTaches);
+            objectOut.close();
+            fileOut.close();
+        }catch(IOException ioe){
+            ioe.printStackTrace();
+        }
+    }
+
+    private static void saveCategorieInFile(String file) {
+        try{
+            FileOutputStream fileOut= new FileOutputStream(file);
+            ObjectOutputStream objectOut= new ObjectOutputStream(fileOut);
+            objectOut.writeObject(catList);
+            objectOut.close();
+            fileOut.close();
+        }catch(IOException ioe){
+            ioe.printStackTrace();
+        }
     }
 }
