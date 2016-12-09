@@ -1,19 +1,14 @@
 package Controller;
 
-import Model.AuLongCours;
-import Model.MenuItems;
-import Model.Ponctuelle;
-import Model.Categorie;
-import Model.Tache;
+import Model.*;
 import View.*;
 
-import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class MainController
@@ -84,11 +79,11 @@ public class MainController
 
         allTaches = sortTache.sort(allTaches);
 
-        List<Tache> allTachesFilter =  allTaches.stream()
-                .filter(tache -> !tache.getAchieve()).collect(Collectors.toList());
+        ArrayList<Tache> allTachesFilter =  allTaches.stream()
+                .filter(tache -> !tache.getAchieve()).collect(Collectors.toCollection(ArrayList::new));
 
-	    tachesView	= reOrderTacheView((ArrayList<Tache>) allTachesFilter, tachesView);
-        
+	    tachesView	= reOrderTacheView(allTachesFilter, tachesView);
+
     	updateView();
     }
 
@@ -97,7 +92,8 @@ public class MainController
         f.updateView(title, tachesView);
     }
 
-    static void editCategorie(){
+    static void editCategorie()
+    {
         ArrayList<String> titleList = new ArrayList<>();
         ArrayList<String> labelList = new ArrayList<>();
 
@@ -197,6 +193,9 @@ public class MainController
                     ((AuLongCours)allTaches.get(i)).setPercentage(((AuLongCours)allTaches.get(i)).getPercentage() + 10);
 
                 }
+
+                if( allTaches.get(i).getAchieve())
+                    JOptionPane.showMessageDialog(f, "La tâche " +  allTaches.get(i).getTitle() + " est terminée");
 
                 find = true;
 
