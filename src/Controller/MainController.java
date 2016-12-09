@@ -353,6 +353,31 @@ public class MainController
                 tachesView.set(index, tw);
             }
         });
+
+
+        ArrayList<String> stringList = new ArrayList<>();
+        int indexCat = 0;
+
+        for(Categorie cat : catList){
+            stringList.add(cat.getTitre());
+
+            if(t.getCategorie().getTitre().equals(cat.getTitre())){
+                indexCat = catList.indexOf(cat);
+            }
+        }
+
+        final int id = indexCat;
+
+        tachesView.stream().filter(jp -> jp instanceof EditTacheView).filter(jp -> ((EditTacheView) jp).getId() == t.getId()).forEach(jp -> {
+
+            EditTacheView tw = new EditTacheView(t.getId(), t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getEnd().getTime(),stringList.toArray(new String[stringList.size()]) , id, t.isLate(), t.getDateCreation());
+            tw.addListenerOnSuppButton(new SuppTacheListener(t.getId()));
+            tw.addListenerOnSaveButton(new SaveTacheListener(t.getId()));
+
+            int index = tachesView.indexOf(jp);
+            tachesView.set(index, tw);
+
+        });
     }
 
     static void updateAllTaches() {
