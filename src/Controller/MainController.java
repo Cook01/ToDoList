@@ -441,20 +441,12 @@ public class MainController
 
 
     private static ArrayList<Categorie> getCategorie(){
-	    ArrayList<Categorie> ret = new ArrayList<>();
-        try{
-            FileInputStream fis = new FileInputStream("res/catSave.sav");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            ret = (ArrayList<Categorie>) ois.readObject();
-            ois.close();
-            fis.close();
-        }catch(IOException ioe){
-            ioe.printStackTrace();
+        Categorie travail = new Categorie("Travail", "work");
+        Categorie personnel = new Categorie("Personnel", "perso");
 
-        }catch(ClassNotFoundException c){
-            System.out.println("Class not found");
-            c.printStackTrace();
-        }
+        ArrayList<Categorie> ret = new ArrayList<>();
+        ret.add(travail);
+        ret.add(personnel);
 
         return ret;
     }
@@ -464,19 +456,16 @@ public class MainController
     {
         ArrayList<Tache> allTaches = new ArrayList<>();
 
-        try{
-            FileInputStream fis = new FileInputStream("res/tacheSave.sav");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            allTaches = (ArrayList<Tache>) ois.readObject();
-            ois.close();
-            fis.close();
-        }catch(IOException ioe){
-            ioe.printStackTrace();
+        allTaches.add(new Ponctuelle(1, "TachePonctuelle1", end, catList.get(0)));
+		allTaches.add(new Ponctuelle(2, "TachePonctuelle2", end2, catList.get(1)));
+		allTaches.add(new Ponctuelle(3, "TachePonctuelle3", end, catList.get(1)));
+		allTaches.add(new Ponctuelle(4, "TachePonctuelle4", end3, catList.get(0)));
 
-        }catch(ClassNotFoundException c){
-            System.out.println("Class not found");
-            c.printStackTrace();
-        }
+		allTaches.add(new AuLongCours(5, "TacheAuLongCours5", end2, catList.get(1)));
+		
+        AuLongCours aloLongCour = new AuLongCours(6, "TacheAuLongCours6", end4, catList.get(0));
+        aloLongCour.setPercentage(40);
+        allTaches.add(aloLongCour);
 
         return allTaches;
     }
