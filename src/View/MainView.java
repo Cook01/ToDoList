@@ -2,7 +2,9 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.EventListener;
 
 /**
  * @author gkueny
@@ -12,29 +14,32 @@ public class MainView extends JFrame
 
     private ArrayList<JPanel> tachesView;
     private JPanel pCenter;
+    private JPanel pNorth;
 
     private String title;
 
 
-    public MainView(String title, ArrayList<JPanel> tachesView, ArrayList<ArrayList<String>> menusTitle, Class menuListener)  
+    public MainView(String title, ArrayList<JPanel> tachesView, ArrayList<ArrayList<String>> menusTitle, ActionListener menuListener, ActionListener sortListener)
     { 
 
         this.tachesView = tachesView;
         this.title      = title;
 
-        this.initMainView(menusTitle, menuListener);
+        this.initMainView(menusTitle, menuListener, sortListener);
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
     } 
 
-    private void initMainView(ArrayList<ArrayList<String>> menusTitle, Class menuListener)
+    private void initMainView(ArrayList<ArrayList<String>> menusTitle, ActionListener menuListener, ActionListener sortListener)
     {
 
         setTitle(this.title); 
 
 
         pCenter = new JPanel();
+        pNorth = new JPanel();
+
         int space = 20;
         pCenter.setLayout(new GridLayout(0,3, space, space));
 
@@ -44,6 +49,17 @@ public class MainView extends JFrame
 
         }
 
+        JButton newestSort = new JButton("simple");
+        JButton inteSort = new JButton("intermediaire");
+
+        newestSort.addActionListener(sortListener);
+        inteSort.addActionListener(sortListener);
+
+        pNorth.add(new JLabel("Type de tri : "));
+        pNorth.add(newestSort);
+        pNorth.add(inteSort);
+
+        add(pNorth, "North");
         add(pCenter, "Center");
 
         setJMenuBar(new MenuView(menusTitle, menuListener));

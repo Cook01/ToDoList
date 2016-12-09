@@ -62,4 +62,9 @@ public class Ponctuelle extends Tache {
         return ( currentCalendar.after(this.end) );
 
     }
+
+    public Calendar getDateEcheanceIntermediaire()
+    {
+        return getEnd();
+    }
 }

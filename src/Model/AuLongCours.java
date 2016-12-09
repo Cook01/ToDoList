@@ -149,7 +149,7 @@ public class AuLongCours extends Tache {
 
 
     /**
-     * ONLT FOR TEST
+     * ONLY FOR TEST
      *
      * @return true if Tache is late, false if tache is not late
      */
@@ -185,6 +185,47 @@ public class AuLongCours extends Tache {
         }
 
         return this.percentage < 0;
+
+
+    }
+
+    public Calendar getDateEcheanceIntermediaire()
+    {
+        long interval = getEnd().getTime().getTime() - getBegin().getTime().getTime();
+        int intervalInt = (int) interval;
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(getBegin().getTime());
+
+        int diffDays = intervalInt / (24 * 60 * 60 * 1000);
+
+        int unQuart = (diffDays ) / 4;
+        int deuxQuart =  (diffDays * 2 ) / 4;
+        int troisQuart =  (diffDays * 3 ) /4;
+
+
+        if(getPercentage() <= 25) {
+
+            c.add(Calendar.DATE, unQuart);
+
+        } else if( getPercentage() <= 50) {
+
+            c.add(Calendar.DATE, deuxQuart);
+
+        } else if( getPercentage() <= 75) {
+
+            c.add(Calendar.DATE, troisQuart);
+
+        } else if( getPercentage() <= 100) {
+
+            c.add(Calendar.DATE, diffDays);
+
+        }
+
+
+        //System.out.println("getDateEcheanceIntermediaire : " + c.getTime().getDate());
+
+        return c;
 
 
     }

@@ -3,7 +3,9 @@ package View;
 import Controller.MenuListener;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.EventListener;
 
 /**
  * @author gkueny
@@ -17,7 +19,7 @@ class MenuView extends JMenuBar
  
 
 
-    MenuView(ArrayList<ArrayList<String>> menusTitle, Class listener)
+    MenuView(ArrayList<ArrayList<String>> menusTitle, ActionListener listener)
     { 
 
         this.menus      = new ArrayList<>();
@@ -28,7 +30,7 @@ class MenuView extends JMenuBar
 
     } 
 
-    private void initMenuView(Class listener)
+    private void initMenuView(ActionListener listener)
     {
 
         int size = this.menusTitle.size();
@@ -47,7 +49,7 @@ class MenuView extends JMenuBar
 
                 try {
 
-                     item.addActionListener( (MenuListener)listener.newInstance() );
+                     item.addActionListener( listener );
 
                 } catch(Exception e) {
                    e.printStackTrace();

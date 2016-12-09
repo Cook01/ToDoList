@@ -50,7 +50,7 @@ public class MainController
         ArrayList<ArrayList<String>> menu = getMenu();
         tachesView	= getTachesView(allTachesFilter);
 
-        f 			= new MainView(title, tachesView, menu, MenuListener.class);
+        f = new MainView(title, tachesView, menu, new MenuListener(), new SortListener());
 
         f.setVisible(true);
     }
@@ -80,6 +80,22 @@ public class MainController
 
 	    return menu;
 
+    }
+
+    static void changeSort(String typeSort)
+    {
+            System.out.println(typeSort);
+        switch (typeSort) {
+            case "simple" :
+                sortTache = new SortTachesByNewest();
+                break;
+
+            case "intermediaire" :
+                sortTache = new SortTachesByIntermediaire();
+                break;
+        }
+
+        update();
     }
 
     private static void update()

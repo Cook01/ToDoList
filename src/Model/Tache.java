@@ -166,4 +166,6 @@ public abstract class Tache implements Serializable{
      */
     public abstract Boolean isLate();
 
+    public abstract Calendar getDateEcheanceIntermediaire();
+
 }
