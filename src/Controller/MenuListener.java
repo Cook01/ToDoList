@@ -56,7 +56,6 @@ public class MenuListener implements ActionListener
 
 	private void categorie()
 	{
-		System.out.println("manage Categorie");
 		MainController.editCategorie();
 	}
 

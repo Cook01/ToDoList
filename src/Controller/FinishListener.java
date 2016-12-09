@@ -3,12 +3,14 @@ package Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FinishListener implements ActionListener
+import static Controller.MainController.updateProgressTache;
+
+class FinishListener implements ActionListener
 {
 
 	private int id;
 
-	public FinishListener(int id) 
+	FinishListener(int id)
 	{
 		this.id = id;
 	}
@@ -16,7 +18,7 @@ public class FinishListener implements ActionListener
 	public void actionPerformed(ActionEvent e) 
 	{
 
-		MainController.updateProgressTache(id);
+		updateProgressTache(id);
 
 
 	}

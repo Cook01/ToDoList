@@ -90,8 +90,15 @@ public class AuLongCours extends Tache {
      * @param percentage nouveau avancement de la tache
      */
     public void setPercentage(int percentage) {
-        if(percentage <= 100)
+
+        if(percentage == 100) {
+            this.setAchieve(true);
+        }
+
+        if(percentage <= 100) {
             this.percentage = percentage;
+        }
+
     }
 
     /**

@@ -20,7 +20,7 @@ public abstract class Tache {
     /**
      * Boolean permettant de savoir si la tache est termine ou pas
      */
-    protected Boolean achieve;
+    private Boolean achieve;
 
     /**
      * Fin de la Tache
@@ -35,7 +35,7 @@ public abstract class Tache {
     /**
     * Date de creation de la tache
     */
-    protected Calendar dateCreation;
+    private Calendar dateCreation;
 
 
 

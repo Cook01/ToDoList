@@ -119,7 +119,6 @@ public class TacheView extends JPanel{
 
     public void addListenerOnFinishButton(ActionListener listener){
         try{
-            System.out.println("addListenerOnFinishButton");
             this.finish.addActionListener(listener);
         }catch(Exception e){
             e.printStackTrace();

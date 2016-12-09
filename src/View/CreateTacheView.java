@@ -34,8 +34,7 @@ public class CreateTacheView extends JFrame
 	{
 		super();
 
-        System.out.println("id : " + id);
-        this.id = id; 
+        this.id = id;
 
         this.type = type;
 

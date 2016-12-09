@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import Model.*;
 
-public class SortTachesByNewest implements SortTaches
+class SortTachesByNewest implements SortTaches
 {
 	public ArrayList<Tache> sort(ArrayList<Tache> allTaches)
 	{

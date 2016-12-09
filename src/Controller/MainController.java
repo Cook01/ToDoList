@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class MainController
@@ -46,7 +47,7 @@ public class MainController
         ArrayList<ArrayList<String>> menu = getMenu();
         tachesView	= getTachesView(allTaches);
 
-        f 			= new MainView(title, tachesView, menu, MenuListener.class); 
+        f 			= new MainView(title, tachesView, menu, MenuListener.class);
 
         f.setVisible(true);
     }
@@ -81,12 +82,13 @@ public class MainController
     private static void update()
     {
 
-        System.out.println("update");
+        allTaches = sortTache.sort(allTaches);
 
-	    allTaches = sortTache.sort(allTaches);
+        List<Tache> allTachesFilter =  allTaches.stream()
+                .filter(tache -> !tache.getAchieve()).collect(Collectors.toList());
 
-	    tachesView	= reOrderTacheView(allTaches, tachesView);
-
+	    tachesView	= reOrderTacheView((ArrayList<Tache>) allTachesFilter, tachesView);
+        
     	updateView();
     }
 
@@ -187,10 +189,13 @@ public class MainController
             if (allTaches.get(i).getId() == id) {
 
                 if(allTaches.get(i) instanceof Ponctuelle) {
-                    System.out.println("updateProgressTache Ponctuelle");
-                }else if(allTaches.get(i) instanceof AuLongCours) {
-                    System.out.println("updateProgressTache AuLongCours");
+
+                    allTaches.get(i).setAchieve(true);
+
+                } else if(allTaches.get(i) instanceof AuLongCours) {
+
                     ((AuLongCours)allTaches.get(i)).setPercentage(((AuLongCours)allTaches.get(i)).getPercentage() + 10);
+
                 }
 
                 find = true;
@@ -201,7 +206,7 @@ public class MainController
             i++;
         }
 
-      
+
 
     }
 
