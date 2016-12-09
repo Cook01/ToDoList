@@ -72,7 +72,7 @@ public class AuLongCours extends Tache {
      * @return int percentage
      */
     public int getPercentage() {
-        return percentage;
+        return this.percentage;
     }
 
     /**
@@ -90,7 +90,8 @@ public class AuLongCours extends Tache {
      * @param percentage nouveau avancement de la tache
      */
     public void setPercentage(int percentage) {
-        this.percentage = percentage;
+        if(percentage <= 100)
+            this.percentage = percentage;
     }
 
     /**

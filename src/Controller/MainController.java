@@ -179,6 +179,36 @@ public class MainController
         }
     }
 
+    public static void updateProgressTache(int id)
+    {
+
+        int i = 0;
+        int size = allTaches.size();
+        boolean find = false;
+
+        while(!find && i < size) {
+
+            if (allTaches.get(i).getId() == id) {
+
+                if(allTaches.get(i) instanceof Ponctuelle) {
+                    System.out.println("updateProgressTache Ponctuelle");
+                }else if(allTaches.get(i) instanceof AuLongCours) {
+                    System.out.println("updateProgressTache AuLongCours");
+                    ((AuLongCours)allTaches.get(i)).setPercentage(((AuLongCours)allTaches.get(i)).getPercentage() + 10);
+                }
+
+                find = true;
+
+                updateOneTache(allTaches.get(i));
+
+            }
+            i++;
+        }
+
+      
+
+    }
+
     public static void createTache(Boolean ponctuelle)
     {
         ArrayList<String> stringList = new ArrayList<>();
@@ -270,6 +300,7 @@ public class MainController
                 TacheView tacheView = new TacheView(createTache.getId(), tache.getTitle(), dateFormated,catTache.getAbreviation(), tache.isLate());
                 tacheView.addListenerOnEditButton(new EditTacheListener(createTache.getId()));
                 tacheView.addListenerOnSuppButton(new SuppTacheListener(createTache.getId()));
+                tacheView.addListenerOnFinishButton(new FinishListener(createTache.getId()));
 
 
                 tachesView.add(tacheView);
@@ -282,6 +313,7 @@ public class MainController
                 TacheAuLongCourView tacheView = new TacheAuLongCourView(createTache.getId(), tache.getTitle(), dateFormated,catTache.getAbreviation(), tache.isLate(), tache.getPercentage());
                 tacheView.addListenerOnEditButton(new EditTacheListener(createTache.getId()));
                 tacheView.addListenerOnSuppButton(new SuppTacheListener(createTache.getId()));
+                tacheView.addListenerOnFinishButton(new FinishListener(createTache.getId()));
 
 
                 tachesView.add(tacheView);
@@ -301,6 +333,34 @@ public class MainController
         
     }
 
+    public static void updateOneTache(Tache t)
+    {
+        for(JPanel jp : tachesView){
+            if(jp instanceof TacheView){
+                if( ((TacheView)jp).getId() == t.getId()) {
+                    if(t instanceof Ponctuelle){
+                        TacheView tw = new TacheView(t.getId(), t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getCategorie().getAbreviation(), t.isLate());
+                        tw.addListenerOnSuppButton(new SuppTacheListener(t.getId()));
+                        tw.addListenerOnEditButton(new EditTacheListener(t.getId()));
+                        tw.addListenerOnFinishButton(new FinishListener(t.getId()));
+
+                        int index = tachesView.indexOf(jp);
+                        tachesView.set(index, tw);
+                    } else if(t instanceof  AuLongCours){
+                        TacheAuLongCourView tw = new TacheAuLongCourView(t.getId(), t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getCategorie().getAbreviation(), t.isLate(), ((AuLongCours) t).getPercentage());
+                        tw.addListenerOnSuppButton(new SuppTacheListener(t.getId()));
+                        tw.addListenerOnEditButton(new EditTacheListener(t.getId()));
+                        tw.addListenerOnFinishButton(new FinishListener(t.getId()));
+
+                        int index = tachesView.indexOf(jp);
+                        tachesView.set(index, tw);
+                    }
+                }
+            }
+        }
+
+        update();
+    }
     public static void saveTache(int id)
     {
     	for(Tache t : allTaches){
@@ -330,6 +390,7 @@ public class MainController
                                 TacheView tw = new TacheView(t.getId(), t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getCategorie().getAbreviation(), t.isLate());
                                 tw.addListenerOnSuppButton(new SuppTacheListener(id));
                                 tw.addListenerOnEditButton(new EditTacheListener(id));
+                                tw.addListenerOnFinishButton(new FinishListener(id));
 
                                 int index = tachesView.indexOf(jp);
                                 tachesView.set(index, tw);
@@ -337,6 +398,7 @@ public class MainController
                                 TacheAuLongCourView tw = new TacheAuLongCourView(t.getId(), t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getCategorie().getAbreviation(), t.isLate(), ((AuLongCours) t).getPercentage());
                                 tw.addListenerOnSuppButton(new SuppTacheListener(id));
                                 tw.addListenerOnEditButton(new EditTacheListener(id));
+                                tw.addListenerOnFinishButton(new FinishListener(id));
 
                                 int index = tachesView.indexOf(jp);
                                 tachesView.set(index, tw);
@@ -426,10 +488,12 @@ public class MainController
     		if(tachesView.get(i) instanceof TacheView){
     			((TacheView)tachesView.get(i)).addListenerOnEditButton(new EditTacheListener(allTaches.get(i).getId()));
     			((TacheView)tachesView.get(i)).addListenerOnSuppButton(new SuppTacheListener(allTaches.get(i).getId()));
-    		} else if(tachesView.get(i) instanceof EditTacheView){
+                ((TacheView)tachesView.get(i)).addListenerOnFinishButton(new FinishListener(allTaches.get(i).getId()));
+    		      
+            } else if(tachesView.get(i) instanceof EditTacheView){
     			((EditTacheView)tachesView.get(i)).addListenerOnSaveButton(new SaveTacheListener(allTaches.get(i).getId()));
-    			((EditTacheView)tachesView.get(i)).addListenerOnSuppButton(new SuppTacheListener(allTaches.get(i).getId()));
-    		}
+    			((EditTacheView)tachesView.get(i)).addListenerOnSuppButton(new SuppTacheListener(allTaches.get(i).getId()));  
+            }
     	}
 
         return tachesView;
