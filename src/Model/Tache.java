@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -8,7 +9,7 @@ import java.util.Date;
  *
  * @author  gkueny
  */
-public abstract class Tache {
+public abstract class Tache implements Serializable{
 
     protected int id;
 

@@ -9,6 +9,7 @@ import View.*;
 
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -245,12 +246,17 @@ public class MainController
                 ArrayList<String> stringList = new ArrayList<>();
                 int indexCat = 0;
 
-                for(Categorie cat : catList){
-                    stringList.add(cat.getTitre());
+                if(catList.size() != 0){
+                    for(Categorie cat : catList){
+                        stringList.add(cat.getTitre());
 
-                    if(t.getCategorie().getTitre().equals(cat.getTitre())){
-                        indexCat = catList.indexOf(cat);
+                        if(t.getCategorie().getTitre().equals(cat.getTitre())){
+                            indexCat = catList.indexOf(cat);
+                        }
                     }
+                } else {
+                    stringList.add("");
+                    indexCat = 0;
                 }
 
                 EditTacheView edit = new EditTacheView(id, t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getEnd().getTime(), stringList.toArray(new String[stringList.size()]), indexCat, t.isLate(), t.getDateCreation());
@@ -353,12 +359,17 @@ public class MainController
         ArrayList<String> stringList = new ArrayList<>();
         int indexCat = 0;
 
-        for(Categorie cat : catList){
-            stringList.add(cat.getTitre());
+        if(catList.size() != 0){
+            for(Categorie cat : catList){
+                stringList.add(cat.getTitre());
 
-            if(t.getCategorie().getTitre().equals(cat.getTitre())){
-                indexCat = catList.indexOf(cat);
+                if(t.getCategorie().getTitre().equals(cat.getTitre())){
+                    indexCat = catList.indexOf(cat);
+                }
             }
+        } else {
+            stringList.add(" ");
+            indexCat = 0;
         }
 
         final int id = indexCat;
@@ -425,13 +436,10 @@ public class MainController
     private static ArrayList<Categorie> getCategorie(){
         Categorie travail = new Categorie("Travail", "work");
         Categorie personnel = new Categorie("Personnel", "perso");
-        Categorie vide = new Categorie("", "");
 
         ArrayList<Categorie> ret = new ArrayList<>();
         ret.add(travail);
         ret.add(personnel);
-
-        ret.add(vide);
 
         return ret;
     }
@@ -548,5 +556,34 @@ public class MainController
         }
 
         return newTacheView;
+    }
+
+    public static void saveAll() {
+        saveCategorieInFile("res/catSave.sav");
+        saveTachesInFile("res/tacheSave.sav");
+    }
+
+    private static void saveTachesInFile(String file) {
+        try{
+            FileOutputStream fileOut = new FileOutputStream(file);
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(allTaches);
+            objectOut.close();
+            fileOut.close();
+        }catch(IOException ioe){
+            ioe.printStackTrace();
+        }
+    }
+
+    private static void saveCategorieInFile(String file) {
+        try{
+            FileOutputStream fileOut= new FileOutputStream(file);
+            ObjectOutputStream objectOut= new ObjectOutputStream(fileOut);
+            objectOut.writeObject(catList);
+            objectOut.close();
+            fileOut.close();
+        }catch(IOException ioe){
+            ioe.printStackTrace();
+        }
     }
 }
