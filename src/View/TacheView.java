@@ -12,12 +12,14 @@ public class TacheView extends JPanel{
     private int id;
 
     protected JPanel canvas;
+    protected JPanel center;
 
     private JLabel title;
     private JLabel endDate;
     private JLabel categorie;
     private JButton editButton;
     private JButton deleteButton;
+    private JButton finish;
 
     private final int rows = 2;
     private final int cols = 3;
@@ -36,6 +38,9 @@ public class TacheView extends JPanel{
         this.categorie = new JLabel();
         this.editButton = new JButton("Edit");
         this.deleteButton = new JButton("X");
+        this.finish = new JButton("Terminer");
+
+        //this.finish.setPreferredSize(new Dimension(25, 100));
 
         initTacheView(title, endDate, categorie, isLate);
     }
@@ -62,7 +67,17 @@ public class TacheView extends JPanel{
 
         this.add(canvas, BorderLayout.NORTH);
 
+        this.center = new JPanel();
+        this.center.add(this.finish);
+
+        this.add(this.center, BorderLayout.CENTER);
+
         updateView(title, endDate, categorie, isLate);
+    }
+
+    protected void setFinisButtonText(String text)
+    {
+        this.finish.setText(text);
     }
 
     public void updateView(String title, String endDate, String categorie, boolean isLate){
@@ -97,6 +112,15 @@ public class TacheView extends JPanel{
     public void addListenerOnSuppButton(ActionListener listener){
         try{
             this.deleteButton.addActionListener(listener);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void addListenerOnFinishButton(ActionListener listener){
+        try{
+            System.out.println("addListenerOnFinishButton");
+            this.finish.addActionListener(listener);
         }catch(Exception e){
             e.printStackTrace();
         }

@@ -20,6 +20,7 @@ public class TacheAuLongCourView extends TacheView{
     public void initTacheAuLongCourView(String title, String endDate, String categorie, boolean isLate, int pourcentage){
 
         super.add(this.progressBar, BorderLayout.SOUTH);
+        super.setFinisButtonText("Avancer");
 
         updateView(title, endDate, categorie, isLate, pourcentage);
     }
