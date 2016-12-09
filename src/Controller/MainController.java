@@ -250,12 +250,17 @@ public class MainController
                 ArrayList<String> stringList = new ArrayList<>();
                 int indexCat = 0;
 
-                for(Categorie cat : catList){
-                    stringList.add(cat.getTitre());
+                if(catList.size() != 0){
+                    for(Categorie cat : catList){
+                        stringList.add(cat.getTitre());
 
-                    if(t.getCategorie().getTitre().equals(cat.getTitre())){
-                        indexCat = catList.indexOf(cat);
+                        if(t.getCategorie().getTitre().equals(cat.getTitre())){
+                            indexCat = catList.indexOf(cat);
+                        }
                     }
+                } else {
+                    stringList.add("");
+                    indexCat = 0;
                 }
 
                 EditTacheView edit = new EditTacheView(id, t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getEnd().getTime(), stringList.toArray(new String[stringList.size()]), indexCat, t.isLate(), t.getDateCreation());
@@ -358,12 +363,17 @@ public class MainController
         ArrayList<String> stringList = new ArrayList<>();
         int indexCat = 0;
 
-        for(Categorie cat : catList){
-            stringList.add(cat.getTitre());
+        if(catList.size() != 0){
+            for(Categorie cat : catList){
+                stringList.add(cat.getTitre());
 
-            if(t.getCategorie().getTitre().equals(cat.getTitre())){
-                indexCat = catList.indexOf(cat);
+                if(t.getCategorie().getTitre().equals(cat.getTitre())){
+                    indexCat = catList.indexOf(cat);
+                }
             }
+        } else {
+            stringList.add(" ");
+            indexCat = 0;
         }
 
         final int id = indexCat;
@@ -432,13 +442,10 @@ public class MainController
     private static ArrayList<Categorie> getCategorie(){
         Categorie travail = new Categorie("Travail", "work");
         Categorie personnel = new Categorie("Personnel", "perso");
-        Categorie vide = new Categorie("", "");
 
         ArrayList<Categorie> ret = new ArrayList<>();
         ret.add(travail);
         ret.add(personnel);
-
-        ret.add(vide);
 
         return ret;
     }
