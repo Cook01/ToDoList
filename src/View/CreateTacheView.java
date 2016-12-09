@@ -16,8 +16,11 @@ public class CreateTacheView extends JFrame
 
     private Boolean type;
 
-	private JTextField title;
+    private JPanel center;
+
+    private JTextField title;
 	private JSpinner endDate;
+    private JSpinner beginDate;
 	private JComboBox<String> categorie;
     private JButton saveButton;
     private JButton cancelButton;
@@ -26,6 +29,51 @@ public class CreateTacheView extends JFrame
     private final int rows = 2;
     private final int cols = 3;
     private JPanel[][] panelHolder = new JPanel[rows][cols];
+
+
+    private void updateView(Date endValue)
+    {
+
+        Date beginValue =  (Date)this.beginDate.getValue();
+
+        if(beginValue.compareTo(endValue) > 0)
+            beginValue = endValue;
+
+        Calendar value = Calendar.getInstance();
+        value.setTime(new Date(System.currentTimeMillis()));
+        value.set(Calendar.HOUR_OF_DAY, 0);
+        value.set(Calendar.MINUTE, 0);
+        value.set(Calendar.SECOND, 0);
+        value.set(Calendar.MILLISECOND, 0);
+
+        SpinnerDateModel modelBegin 	= new SpinnerDateModel();
+        modelBegin.setValue(beginValue);
+        modelBegin.setStart(value.getTime());
+        modelBegin.setEnd(endValue);
+
+
+        this.beginDate = new JSpinner(modelBegin);
+
+        JSpinner.DateEditor editorBegin = new JSpinner.DateEditor(this.beginDate, "dd / MM / yyyy");
+        DateFormatter formatterBegin 	= (DateFormatter)editorBegin.getTextField().getFormatter();
+        formatterBegin.setAllowsInvalid(false);
+        formatterBegin.setOverwriteMode(true);
+
+        this.beginDate.setEditor(editorBegin);
+
+        JComponent editorDefaukt2 = this.beginDate.getEditor();
+        JFormattedTextField ftf2 = ((JSpinner.DefaultEditor) editorDefaukt2).getTextField();
+        ftf2.setColumns(8);
+
+        this.center.removeAll();
+
+        this.center.add(this.beginDate);
+
+        this.revalidate();
+        this.validate();
+        this.repaint();
+
+    }
 
 	public CreateTacheView(int id, String[] categories, ActionListener listener, Boolean type)
 	{
@@ -41,21 +89,56 @@ public class CreateTacheView extends JFrame
 		this.title.setColumns(20);
 
 		SpinnerDateModel model 	= new SpinnerDateModel();
-        model.setValue(new Date(System.currentTimeMillis() + (1 * 24 * 60 * 60 * 1000)));
-        model.setStart(new Date(System.currentTimeMillis() - (1 * 24 * 60 * 60 * 1000)));
 
-		this.endDate 			= new JSpinner(model);
+        Calendar value = Calendar.getInstance();
+        value.setTime(new Date(System.currentTimeMillis()));
+        value.set(Calendar.HOUR_OF_DAY, 0);
+        value.set(Calendar.MINUTE, 0);
+        value.set(Calendar.SECOND, 0);
+        value.set(Calendar.MILLISECOND, 0);
+
+        model.setValue(value.getTime());
+        model.setStart(value.getTime());
+
+        this.endDate 			= new JSpinner(model);
+
+        SpinnerDateModel modelBegin 	= new SpinnerDateModel();
+        modelBegin.setValue(value.getTime());
+        modelBegin.setStart(value.getTime());
+        modelBegin.setEnd(value.getTime());
+
+        this.beginDate          = new JSpinner(modelBegin);
+
+
+        this.endDate.addChangeListener(e -> {
+
+            this.updateView((Date)this.endDate.getModel().getValue());
+
+        });
+
+
 
 		JSpinner.DateEditor editor = new JSpinner.DateEditor(this.endDate, "dd / MM / yyyy");
         DateFormatter formatter 	= (DateFormatter)editor.getTextField().getFormatter();
         formatter.setAllowsInvalid(false);
         formatter.setOverwriteMode(true);
 
+        JSpinner.DateEditor editorBegin = new JSpinner.DateEditor(this.beginDate, "dd / MM / yyyy");
+        DateFormatter formatterBegin 	= (DateFormatter)editorBegin.getTextField().getFormatter();
+        formatterBegin.setAllowsInvalid(false);
+        formatterBegin.setOverwriteMode(true);
+
         this.endDate.setEditor(editor);
+
+        this.beginDate.setEditor(editorBegin);
 
         JComponent editorDefaukt = this.endDate.getEditor();
         JFormattedTextField ftf = ((JSpinner.DefaultEditor) editorDefaukt).getTextField();
         ftf.setColumns(8);
+
+        JComponent editorDefaukt2 = this.beginDate.getEditor();
+        JFormattedTextField ftf2 = ((JSpinner.DefaultEditor) editorDefaukt2).getTextField();
+        ftf2.setColumns(8);
 
 
         this.categorie = new JComboBox<>();
@@ -90,6 +173,12 @@ public class CreateTacheView extends JFrame
         panelHolder[1][2].add(this.categorie);
 
         this.add(canvas, BorderLayout.NORTH);
+
+        center = new JPanel();
+
+        center.add(this.beginDate);
+
+        this.add(center, BorderLayout.SOUTH);
 
         this.addListenerOnSaveButton(listener);
         this.addListenerOnCancelButton(listener);

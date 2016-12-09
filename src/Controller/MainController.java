@@ -225,15 +225,10 @@ public class MainController
             createTache = null;
         }
 
-        if(ponctuelle) {
-
+        if(ponctuelle)
             listener = new CreateTacheListener();
-
-        } else {
-
+        else
             listener = new CreateTacheAuLongCoursListener();
-
-        }
 
         int id = (int) (new Date().getTime()/1000);
         createTache = new CreateTacheView(id, stringList.toArray(new String[stringList.size()]), listener, ponctuelle);
@@ -381,9 +376,7 @@ public class MainController
     }
 
     static void updateAllTaches() {
-	    for(Tache t : allTaches){
-	        updateOneTache(t);
-        }
+        allTaches.forEach(MainController::updateOneTache);
         update();
     }
 
@@ -448,7 +441,7 @@ public class MainController
     {
 
         Calendar end = Calendar.getInstance();
-    	end.setTime(new Date(System.currentTimeMillis() - (1 * 24 * 60 * 60 * 1000)));
+    	end.setTime(new Date(System.currentTimeMillis() - (24 * 60 * 60 * 1000)));
 	    end.set(Calendar.HOUR_OF_DAY, 0);
 	    end.set(Calendar.MINUTE, 0);
 	    end.set(Calendar.SECOND, 0);
