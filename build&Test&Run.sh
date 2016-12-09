@@ -1,8 +1,7 @@
 #!/bin/bash
 
 #compile
-/usr/lib/jvm/java-8-oracle/bin/javac -cp ./src:./out:./Junit/junit.jar -d ./out ./src/View/*.java ./src/Controller/*.java ./src/Model/*.java ./test/Model/*.java
-
+javac -cp ./src:./out:./Junit/junit.jar -d ./out ./src/View/*.java ./src/Controller/*.java ./src/Model/*.java ./test/Model/*.java
 #executez test
 java -cp ./out:./Junit/junit.jar:./out/ Model.AuLongCoursTest
 java -cp ./out:./Junit/junit.jar:./out/ Model.CategorieTest
