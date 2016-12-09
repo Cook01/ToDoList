@@ -1,10 +1,14 @@
 package Controller;
 
-import Model.*;
+import Model.AuLongCours;
+import Model.MenuItems;
+import Model.Ponctuelle;
+import Model.Categorie;
+import Model.Tache;
 import View.*;
 
-import javax.swing.*;
 import java.awt.event.ActionListener;
+import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -87,7 +91,7 @@ public class MainController
     	updateView();
     }
 
-    private static void updateView()
+    static void updateView()
     {
         f.updateView(title, tachesView);
     }
@@ -107,7 +111,7 @@ public class MainController
         ecv.addListSelectionListener(ecv);
         ecv.addListenerOnAddButton(e -> CategorieController.addCategorie(ecv, catList));
         ecv.addListenerOnEditButton(e -> CategorieController.editCategorie(ecv, catList));
-        ecv.addListenerOnSuppButton(e -> CategorieController.removeCategorie(ecv, catList));
+        ecv.addListenerOnSuppButton(e -> CategorieController.removeCategorie(ecv, catList, allTaches));
 
         ecv.setVisible(true);
     }
@@ -194,12 +198,10 @@ public class MainController
 
                 }
 
-                if( allTaches.get(i).getAchieve())
-                    JOptionPane.showMessageDialog(f, "La tâche " +  allTaches.get(i).getTitle() + " est terminée");
-
                 find = true;
 
                 updateOneTache(allTaches.get(i));
+                update();
 
             }
             i++;
@@ -348,9 +350,15 @@ public class MainController
                 tachesView.set(index, tw);
             }
         });
+    }
 
+    static void updateAllTaches() {
+	    for(Tache t : allTaches){
+	        updateOneTache(t);
+        }
         update();
     }
+
     static void saveTache(int id)
     {
         allTaches.stream().filter(t -> t.getId() == id).forEach(t -> tachesView.stream().filter(jp -> jp instanceof EditTacheView).forEach(jp -> {
