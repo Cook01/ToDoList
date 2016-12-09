@@ -441,12 +441,20 @@ public class MainController
 
 
     private static ArrayList<Categorie> getCategorie(){
-        Categorie travail = new Categorie("Travail", "work");
-        Categorie personnel = new Categorie("Personnel", "perso");
+	    ArrayList<Categorie> ret = new ArrayList<>();
+        try{
+            FileInputStream fis = new FileInputStream("res/catSave.sav");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            ret = (ArrayList<Categorie>) ois.readObject();
+            ois.close();
+            fis.close();
+        }catch(IOException ioe){
+            ioe.printStackTrace();
 
-        ArrayList<Categorie> ret = new ArrayList<>();
-        ret.add(travail);
-        ret.add(personnel);
+        }catch(ClassNotFoundException c){
+            System.out.println("Class not found");
+            c.printStackTrace();
+        }
 
         return ret;
     }
@@ -454,47 +462,21 @@ public class MainController
 
     private static ArrayList<Tache> getTaches()
     {
+        ArrayList<Tache> allTaches = new ArrayList<>();
 
-        Calendar end = Calendar.getInstance();
-    	end.setTime(new Date(System.currentTimeMillis() - (1 * 24 * 60 * 60 * 1000)));
-	    end.set(Calendar.HOUR_OF_DAY, 0);
-	    end.set(Calendar.MINUTE, 0);
-	    end.set(Calendar.SECOND, 0);
-	    end.set(Calendar.MILLISECOND, 0);
+        try{
+            FileInputStream fis = new FileInputStream("res/tacheSave.sav");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            allTaches = (ArrayList<Tache>) ois.readObject();
+            ois.close();
+            fis.close();
+        }catch(IOException ioe){
+            ioe.printStackTrace();
 
-        Calendar end2 = Calendar.getInstance();
-    	end2.setTime(new Date(System.currentTimeMillis() - (2 * 24 * 60 * 60 * 1000)));
-	    end2.set(Calendar.HOUR_OF_DAY, 0);
-	    end2.set(Calendar.MINUTE, 0);
-	    end2.set(Calendar.SECOND, 0);
-	    end2.set(Calendar.MILLISECOND, 0);
-
-        Calendar end3 = Calendar.getInstance();
-    	end3.setTime(new Date(System.currentTimeMillis() + (24 * 60 * 60 * 1000)));
-	    end3.set(Calendar.HOUR_OF_DAY, 0);
-	    end3.set(Calendar.MINUTE, 0);
-	    end3.set(Calendar.SECOND, 0);
-	    end3.set(Calendar.MILLISECOND, 0);
-
-        Calendar end4 = Calendar.getInstance();
-        end4.setTime(new Date(System.currentTimeMillis() + (2 * 24 * 60 * 60 * 1000)));
-        end4.set(Calendar.HOUR_OF_DAY, 0);
-        end4.set(Calendar.MINUTE, 0);
-        end4.set(Calendar.SECOND, 0);
-        end4.set(Calendar.MILLISECOND, 0);
-
-    	ArrayList<Tache> allTaches = new ArrayList<>();
-
-        allTaches.add(new Ponctuelle(1, "TachePonctuelle1", end, catList.get(0)));
-		allTaches.add(new Ponctuelle(2, "TachePonctuelle2", end2, catList.get(1)));
-		allTaches.add(new Ponctuelle(3, "TachePonctuelle3", end, catList.get(1)));
-		allTaches.add(new Ponctuelle(4, "TachePonctuelle4", end3, catList.get(0)));
-
-		allTaches.add(new AuLongCours(5, "TacheAuLongCours5", end2, catList.get(1)));
-		
-        AuLongCours aloLongCour = new AuLongCours(6, "TacheAuLongCours6", end4, catList.get(0));
-        aloLongCour.setPercentage(40);
-        allTaches.add(aloLongCour);
+        }catch(ClassNotFoundException c){
+            System.out.println("Class not found");
+            c.printStackTrace();
+        }
 
         return allTaches;
     }
