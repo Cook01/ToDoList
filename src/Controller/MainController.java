@@ -31,10 +31,10 @@ public class MainController
 
 
 	private static SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-	
 
-	public static void main(String args[])  
-    { 
+
+	public static void main(String args[])
+    {
 
     	sortTache = new SortTachesByNewest();
 
@@ -151,8 +151,8 @@ public class MainController
             if(tachesView.get(i) instanceof EditTacheView){
                 EditTacheView tache = (EditTacheView)tachesView.get(i);
                 myId = tache.getId();
-            } 
-            
+            }
+
 
             if ( myId == id) {
 
@@ -198,6 +198,9 @@ public class MainController
 
                 }
 
+                if( allTaches.get(i).getAchieve())
+                    JOptionPane.showMessageDialog(f, "La tâche " +  allTaches.get(i).getTitle() + " est terminée");
+
                 find = true;
 
                 updateOneTache(allTaches.get(i));
@@ -225,7 +228,7 @@ public class MainController
         if(ponctuelle) {
 
             listener = new CreateTacheListener();
-            
+
         } else {
 
             listener = new CreateTacheAuLongCoursListener();
@@ -235,7 +238,7 @@ public class MainController
         int id = (int) (new Date().getTime()/1000);
         createTache = new CreateTacheView(id, stringList.toArray(new String[stringList.size()]), listener, ponctuelle);
         createTache.setVisible(true);
-        
+
     }
 
     static void editTache(int id)
@@ -315,18 +318,18 @@ public class MainController
                 tachesView.add(tacheView);
             }
 
-            
+
 
             createTache.dispose();
             createTache = null;
 
         }
 
-        
+
 
 
         update();
-        
+
     }
 
     private static void updateOneTache(Tache t)
