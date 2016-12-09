@@ -62,7 +62,7 @@ public class AuLongCours extends Tache {
      *
      * @return {@link Calendar} begin
      */
-    Calendar getBegin() {
+    public Calendar getBegin() {
         return begin;
     }
 
@@ -119,23 +119,26 @@ public class AuLongCours extends Tache {
         currentCalendar.set(Calendar.MILLISECOND, 0);
 
 
-
         long dImpartie  = this.end.getTime().getTime() - this.begin.getTime().getTime() ;
         long d          = this.end.getTime().getTime() - currentCalendar.getTime().getTime();
 
         if ( (dImpartie - d) >= dImpartie ) {
+            System.out.println("isLate : " + getTitle() + " => this.percentage < 100 : " + (this.percentage < 100));
             return this.percentage < 100;
         }
 
         if ( (dImpartie - d) >= ( 3 * dImpartie / 4) ) {
+            System.out.println("isLate : " + getTitle() + " => this.percentage < 75 : " + (this.percentage < 75));
             return this.percentage < 75;
         }
 
         if ( (dImpartie - d) >=  ( dImpartie / 2) ) {
+            System.out.println("isLate : " + getTitle() + " => this.percentage < 50 " + (this.percentage < 50));
             return this.percentage < 50;
         }
 
         if ( (dImpartie - d) >=  ( dImpartie / 4) ) {
+            System.out.println("isLate : " + getTitle() + " => this.percentage < 25 " + (this.percentage < 25));
             return this.percentage < 25;
         }
 

@@ -17,8 +17,6 @@ public class CreateTacheListener implements ActionListener
 				MainController.cancelCreateTache();
 				break;
 		}
-		//MainController.addTache();
-
 
 	}
 }

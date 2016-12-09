@@ -3,16 +3,15 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Created by Vincent on 21/11/2016.
- */
 public class TacheAuLongCourView extends TacheView{
     private JProgressBar progressBar;
+    private JLabel beginDate;
 
-    public TacheAuLongCourView(int id, String title, String endDate, String categorie, boolean isLate, int pourcentage){
+    public TacheAuLongCourView(int id, String title, String beginDate, String endDate, String categorie, boolean isLate, int pourcentage){
         super(id, title, endDate, categorie, isLate);
 
         this.progressBar = new JProgressBar(0, 100);
+
 
         initTacheAuLongCourView(title, endDate, categorie, isLate, pourcentage);
     }

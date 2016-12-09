@@ -44,8 +44,11 @@ public class MainController
 
 	    allTaches = sortTache.sort(allTaches);
 
+        ArrayList<Tache> allTachesFilter =  allTaches.stream()
+                .filter(tache -> !tache.getAchieve()).collect(Collectors.toCollection(ArrayList::new));
+
         ArrayList<ArrayList<String>> menu = getMenu();
-        tachesView	= getTachesView(allTaches);
+        tachesView	= getTachesView(allTachesFilter);
 
         f 			= new MainView(title, tachesView, menu, MenuListener.class);
 
@@ -226,15 +229,7 @@ public class MainController
             createTache = null;
         }
 
-        if(ponctuelle) {
-
-            listener = new CreateTacheListener();
-
-        } else {
-
-            listener = new CreateTacheAuLongCoursListener();
-
-        }
+        listener = new CreateTacheListener();
 
         int id = (int) (new Date().getTime()/1000);
         createTache = new CreateTacheView(id, stringList.toArray(new String[stringList.size()]), listener, ponctuelle);
@@ -311,11 +306,12 @@ public class MainController
                 tachesView.add(tacheView);
 
             } else {
-                AuLongCours tache = new AuLongCours(createTache.getId(), createTache.getTitle(), createTache.getEndDate(), catTache);
+                AuLongCours tache = new AuLongCours(createTache.getId(), createTache.getTitle(), createTache.getBeginDate(), createTache.getEndDate(), catTache);
                 allTaches.add(tache);
 
-                String dateFormated = formatDate.format(createTache.getEndDate().getTime());
-                TacheAuLongCourView tacheView = new TacheAuLongCourView(createTache.getId(), tache.getTitle(), dateFormated,catTache.getAbreviation(), tache.isLate(), tache.getPercentage());
+                String dateFormatedEnd      = formatDate.format(createTache.getEndDate().getTime());
+                String dateFormatedBegin    = formatDate.format(createTache.getBeginDate().getTime());
+                TacheAuLongCourView tacheView = new TacheAuLongCourView(createTache.getId(), tache.getTitle(), dateFormatedBegin, dateFormatedEnd,catTache.getAbreviation(), tache.isLate(), tache.getPercentage());
                 tacheView.addListenerOnEditButton(new EditTacheListener(createTache.getId()));
                 tacheView.addListenerOnSuppButton(new SuppTacheListener(createTache.getId()));
                 tacheView.addListenerOnFinishButton(new FinishListener(createTache.getId()));
@@ -350,7 +346,8 @@ public class MainController
                 int index = tachesView.indexOf(jp);
                 tachesView.set(index, tw);
             } else if (t instanceof AuLongCours) {
-                TacheAuLongCourView tw = new TacheAuLongCourView(t.getId(), t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getCategorie().getAbreviation(), t.isLate(), ((AuLongCours) t).getPercentage());
+
+                TacheAuLongCourView tw = new TacheAuLongCourView(t.getId(), t.getTitle(),formatDate.format(((AuLongCours)t).getBegin().getTime()), formatDate.format(t.getEnd().getTime()), t.getCategorie().getAbreviation(), t.isLate(), ((AuLongCours) t).getPercentage());
                 tw.addListenerOnSuppButton(new SuppTacheListener(t.getId()));
                 tw.addListenerOnEditButton(new EditTacheListener(t.getId()));
                 tw.addListenerOnFinishButton(new FinishListener(t.getId()));
@@ -392,9 +389,7 @@ public class MainController
     }
 
     static void updateAllTaches() {
-	    for(Tache t : allTaches){
-	        updateOneTache(t);
-        }
+        allTaches.forEach(MainController::updateOneTache);
         update();
     }
 
@@ -425,7 +420,7 @@ public class MainController
                     int index = tachesView.indexOf(jp);
                     tachesView.set(index, tw);
                 } else if (t instanceof AuLongCours) {
-                    TacheAuLongCourView tw = new TacheAuLongCourView(t.getId(), t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getCategorie().getAbreviation(), t.isLate(), ((AuLongCours) t).getPercentage());
+                    TacheAuLongCourView tw = new TacheAuLongCourView(t.getId(), t.getTitle(), formatDate.format(((AuLongCours)t).getBegin().getTime()), formatDate.format(t.getEnd().getTime()), t.getCategorie().getAbreviation(), t.isLate(), ((AuLongCours) t).getPercentage());
                     tw.addListenerOnSuppButton(new SuppTacheListener(id));
                     tw.addListenerOnEditButton(new EditTacheListener(id));
                     tw.addListenerOnFinishButton(new FinishListener(id));
@@ -491,12 +486,15 @@ public class MainController
     	for (int i = 0; i < size ; i++ ) {
 
 
-    		String dateFormated = formatDate.format(allTaches.get(i).getEnd().getTime());
+    		String dateFormatedEnd = formatDate.format(allTaches.get(i).getEnd().getTime());
 
     		if(allTaches.get(i) instanceof Ponctuelle)
-				tachesView.add(new TacheView(allTaches.get(i).getId(), allTaches.get(i).getTitle(), dateFormated, allTaches.get(i).getCategorie().getAbreviation(), allTaches.get(i).isLate()));
-    		else if (allTaches.get(i) instanceof AuLongCours)
-                tachesView.add(new TacheAuLongCourView(allTaches.get(i).getId(), allTaches.get(i).getTitle(), dateFormated, allTaches.get(i).getCategorie().getAbreviation(), allTaches.get(i).isLate(), ((AuLongCours)allTaches.get(i)).getPercentage()));
+				tachesView.add(new TacheView(allTaches.get(i).getId(), allTaches.get(i).getTitle(), dateFormatedEnd, allTaches.get(i).getCategorie().getAbreviation(), allTaches.get(i).isLate()));
+    		else if (allTaches.get(i) instanceof AuLongCours) {
+                String dateFormatedBegin = formatDate.format((((AuLongCours) allTaches.get(i)).getBegin().getTime()));
+                tachesView.add(new TacheAuLongCourView(allTaches.get(i).getId(), allTaches.get(i).getTitle(), dateFormatedBegin, dateFormatedEnd, allTaches.get(i).getCategorie().getAbreviation(), allTaches.get(i).isLate(), ((AuLongCours)allTaches.get(i)).getPercentage()));
+
+            }
 
     		if(tachesView.get(i) instanceof TacheView){
     			((TacheView)tachesView.get(i)).addListenerOnEditButton(new EditTacheListener(allTaches.get(i).getId()));
@@ -547,28 +545,25 @@ public class MainController
         return newTacheView;
     }
 
-    public static void saveAll() {
+    static void saveAll() {
         saveCategorieInFile("res/catSave.sav");
         saveTachesInFile("res/tacheSave.sav");
     }
 
     private static void saveTachesInFile(String file) {
-        try{
-            FileOutputStream fileOut = new FileOutputStream(file);
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-            objectOut.writeObject(allTaches);
-            objectOut.close();
-            fileOut.close();
-        }catch(IOException ioe){
-            ioe.printStackTrace();
-        }
+        saveInFIle(file, allTaches);
     }
 
     private static void saveCategorieInFile(String file) {
+        saveInFIle(file, catList);
+    }
+
+    private static void saveInFIle(String file, Object o)
+    {
         try{
             FileOutputStream fileOut= new FileOutputStream(file);
             ObjectOutputStream objectOut= new ObjectOutputStream(fileOut);
-            objectOut.writeObject(catList);
+            objectOut.writeObject(o);
             objectOut.close();
             fileOut.close();
         }catch(IOException ioe){

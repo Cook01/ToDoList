@@ -1,5 +1,6 @@
 package View;
 
+import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
 import javax.swing.*;
 import javax.swing.text.DateFormatter;
 import java.awt.*;
@@ -14,7 +15,7 @@ public class CreateTacheView extends JFrame
 
     private int id;
 
-    private Boolean type;
+    private Boolean ponctuelle;
 
     private JPanel center;
 
@@ -31,57 +32,13 @@ public class CreateTacheView extends JFrame
     private JPanel[][] panelHolder = new JPanel[rows][cols];
 
 
-    private void updateView(Date endValue)
-    {
-
-        Date beginValue =  (Date)this.beginDate.getValue();
-
-        if(beginValue.compareTo(endValue) > 0)
-            beginValue = endValue;
-
-        Calendar value = Calendar.getInstance();
-        value.setTime(new Date(System.currentTimeMillis()));
-        value.set(Calendar.HOUR_OF_DAY, 0);
-        value.set(Calendar.MINUTE, 0);
-        value.set(Calendar.SECOND, 0);
-        value.set(Calendar.MILLISECOND, 0);
-
-        SpinnerDateModel modelBegin 	= new SpinnerDateModel();
-        modelBegin.setValue(beginValue);
-        modelBegin.setStart(value.getTime());
-        modelBegin.setEnd(endValue);
-
-
-        this.beginDate = new JSpinner(modelBegin);
-
-        JSpinner.DateEditor editorBegin = new JSpinner.DateEditor(this.beginDate, "dd / MM / yyyy");
-        DateFormatter formatterBegin 	= (DateFormatter)editorBegin.getTextField().getFormatter();
-        formatterBegin.setAllowsInvalid(false);
-        formatterBegin.setOverwriteMode(true);
-
-        this.beginDate.setEditor(editorBegin);
-
-        JComponent editorDefaukt2 = this.beginDate.getEditor();
-        JFormattedTextField ftf2 = ((JSpinner.DefaultEditor) editorDefaukt2).getTextField();
-        ftf2.setColumns(8);
-
-        this.center.removeAll();
-
-        this.center.add(this.beginDate);
-
-        this.revalidate();
-        this.validate();
-        this.repaint();
-
-    }
-
-	public CreateTacheView(int id, String[] categories, ActionListener listener, Boolean type)
+    public CreateTacheView(int id, String[] categories, ActionListener listener, Boolean ponctuelle)
 	{
 		super();
 
         this.id = id;
 
-        this.type = type;
+        this.ponctuelle = ponctuelle;
 
 		this.canvas = new JPanel();
 
@@ -102,43 +59,49 @@ public class CreateTacheView extends JFrame
 
         this.endDate 			= new JSpinner(model);
 
-        SpinnerDateModel modelBegin 	= new SpinnerDateModel();
-        modelBegin.setValue(value.getTime());
-        modelBegin.setStart(value.getTime());
-        modelBegin.setEnd(value.getTime());
-
-        this.beginDate          = new JSpinner(modelBegin);
-
-
-        this.endDate.addChangeListener(e -> {
-
-            this.updateView((Date)this.endDate.getModel().getValue());
-
-        });
-
-
-
-		JSpinner.DateEditor editor = new JSpinner.DateEditor(this.endDate, "dd / MM / yyyy");
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(this.endDate, "dd / MM / yyyy");
         DateFormatter formatter 	= (DateFormatter)editor.getTextField().getFormatter();
         formatter.setAllowsInvalid(false);
         formatter.setOverwriteMode(true);
 
-        JSpinner.DateEditor editorBegin = new JSpinner.DateEditor(this.beginDate, "dd / MM / yyyy");
-        DateFormatter formatterBegin 	= (DateFormatter)editorBegin.getTextField().getFormatter();
-        formatterBegin.setAllowsInvalid(false);
-        formatterBegin.setOverwriteMode(true);
 
         this.endDate.setEditor(editor);
 
-        this.beginDate.setEditor(editorBegin);
+        if( !this.ponctuelle ) {
+
+            SpinnerDateModel modelBegin 	= new SpinnerDateModel();
+            modelBegin.setValue(value.getTime());
+            modelBegin.setStart(value.getTime());
+            modelBegin.setEnd(value.getTime());
+
+            this.beginDate          = new JSpinner(modelBegin);
+
+
+            this.endDate.addChangeListener(e -> {
+
+                this.updateView((Date)this.endDate.getModel().getValue());
+
+            });
+
+            JSpinner.DateEditor editorBegin = new JSpinner.DateEditor(this.beginDate, "dd / MM / yyyy");
+            DateFormatter formatterBegin 	= (DateFormatter)editorBegin.getTextField().getFormatter();
+            formatterBegin.setAllowsInvalid(false);
+            formatterBegin.setOverwriteMode(true);
+
+            this.beginDate.setEditor(editorBegin);
+
+            JComponent editorDefaukt2 = this.beginDate.getEditor();
+            JFormattedTextField ftf2 = ((JSpinner.DefaultEditor) editorDefaukt2).getTextField();
+            ftf2.setColumns(8);
+        }
+
+
 
         JComponent editorDefaukt = this.endDate.getEditor();
         JFormattedTextField ftf = ((JSpinner.DefaultEditor) editorDefaukt).getTextField();
         ftf.setColumns(8);
 
-        JComponent editorDefaukt2 = this.beginDate.getEditor();
-        JFormattedTextField ftf2 = ((JSpinner.DefaultEditor) editorDefaukt2).getTextField();
-        ftf2.setColumns(8);
+
 
 
         this.categorie = new JComboBox<>();
@@ -149,6 +112,55 @@ public class CreateTacheView extends JFrame
         initCreateTacheView(categories, listener);
 
 	}
+
+    private void updateView(Date endValue) {
+
+
+        if (this.ponctuelle)
+            return;
+
+        Date beginValue = (Date) this.beginDate.getValue();
+
+        if (beginValue.compareTo(endValue) > 0)
+            beginValue = endValue;
+
+        Calendar value = Calendar.getInstance();
+        value.setTime(new Date(System.currentTimeMillis()));
+        value.set(Calendar.HOUR_OF_DAY, 0);
+        value.set(Calendar.MINUTE, 0);
+        value.set(Calendar.SECOND, 0);
+        value.set(Calendar.MILLISECOND, 0);
+
+        SpinnerDateModel modelBegin = new SpinnerDateModel();
+        modelBegin.setValue(beginValue);
+        modelBegin.setStart(value.getTime());
+        modelBegin.setEnd(endValue);
+
+
+        this.beginDate = new JSpinner(modelBegin);
+
+        JSpinner.DateEditor editorBegin = new JSpinner.DateEditor(this.beginDate, "dd / MM / yyyy");
+        DateFormatter formatterBegin = (DateFormatter) editorBegin.getTextField().getFormatter();
+        formatterBegin.setAllowsInvalid(false);
+        formatterBegin.setOverwriteMode(true);
+
+        this.beginDate.setEditor(editorBegin);
+
+        JComponent editorDefaukt2 = this.beginDate.getEditor();
+        JFormattedTextField ftf2 = ((JSpinner.DefaultEditor) editorDefaukt2).getTextField();
+        ftf2.setColumns(8);
+
+        this.center.removeAll();
+
+        center.add(new JLabel("Début : "));
+        this.center.add(this.beginDate);
+
+        this.revalidate();
+        this.validate();
+        this.repaint();
+
+
+    }
 
 	private void initCreateTacheView(String[] categories, ActionListener listener)
 	{
@@ -169,16 +181,23 @@ public class CreateTacheView extends JFrame
         panelHolder[0][1].add(this.title);
         panelHolder[0][2].add(this.cancelButton);
 
-        panelHolder[1][0].add(this.endDate);
+        JPanel end = new JPanel();
+        end.add(new JLabel("fin : "));
+        end.add(this.endDate);
+        panelHolder[1][0].add(end);
         panelHolder[1][2].add(this.categorie);
 
         this.add(canvas, BorderLayout.NORTH);
 
-        center = new JPanel();
+        if( !this.ponctuelle ) {
+            center = new JPanel();
 
-        center.add(this.beginDate);
+            center.add(new JLabel("Début : "));
+            center.add(this.beginDate);
 
-        this.add(center, BorderLayout.SOUTH);
+            this.add(center, BorderLayout.SOUTH);
+        }
+
 
         this.addListenerOnSaveButton(listener);
         this.addListenerOnCancelButton(listener);
@@ -232,13 +251,21 @@ public class CreateTacheView extends JFrame
         return endDateCalendar;
     }
 
+    public Calendar getBeginDate() {
+        Calendar beginDateCalendar = Calendar.getInstance();
+
+        beginDateCalendar.setTime((Date) beginDate.getValue());
+
+        return beginDateCalendar;
+    }
+
     public String getCategorie() {
         return categorie.getSelectedItem().toString();
     }
 
     public Boolean getIsPonctuelle()
     {
-        return this.type;
+        return this.ponctuelle;
     }
 
 
