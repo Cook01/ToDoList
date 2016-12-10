@@ -60,7 +60,41 @@ public class MainController
         ArrayList<ArrayList<String>> menu = getMenu();
         tachesView	= getTachesView(allTachesFilter);
 
-        f = new MainView(title, tachesView, menu, new MenuListener(), new SortListener());
+
+        ActionListener menuListener = (e -> {
+            String id = e.getActionCommand();
+
+            if(id.equals(MenuItems.CARTEPONCTUELLE.toString())){
+                createTache(true);
+            }
+            if(id.equals(MenuItems.CARTEAULONGCOURS.toString())){
+                createTache(false);
+            }
+            if(id.equals(MenuItems.CATEGORIE.toString())){
+                editCategorie();
+            }
+            if(id.equals(MenuItems.SAUVEGARDER.toString())){
+                saveAll();
+            }
+            if(id.equals(MenuItems.BILAN.toString())){
+                bilan();
+            }
+        });
+
+        ActionListener sortListener = (e -> {
+            switch (e.getActionCommand()){
+                case "simple" :
+                    changeSort("simple");
+                    break;
+
+                case "intermediaire" :
+                    changeSort("intermediaire");
+                    break;
+            }
+        });
+
+
+        f = new MainView(title, tachesView, menu, menuListener, sortListener);
 
         f.setVisible(true);
 
@@ -139,12 +173,12 @@ public class MainController
             labelList.add(c.getAbreviation());
         }
 
-        EditCategorieView ecv = new EditCategorieView(titleList, labelList);
+        CategorieManagerView ecv = new CategorieManagerView(titleList, labelList);
 
         ecv.addListSelectionListener(ecv);
-        ecv.addListenerOnAddButton(e -> CategorieController.addCategorie(ecv, catList));
-        ecv.addListenerOnEditButton(e -> CategorieController.editCategorie(ecv, catList));
-        ecv.addListenerOnSuppButton(e -> CategorieController.removeCategorie(ecv, catList, allTaches));
+        ecv.addListenerOnAddButton(e -> CategorieManagerController.addCategorie(ecv, catList));
+        ecv.addListenerOnEditButton(e -> CategorieManagerController.editCategorie(ecv, catList));
+        ecv.addListenerOnSuppButton(e -> CategorieManagerController.removeCategorie(ecv, catList, allTaches));
 
         ecv.setVisible(true);
     }
@@ -300,8 +334,8 @@ public class MainController
 
                 EditTacheView edit = new EditTacheView(id, t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getEnd().getTime(), stringList.toArray(new String[stringList.size()]), indexCat, t.isLate(), t.getDateCreation());
 
-                edit.addListenerOnSuppButton(new SuppTacheListener(id));
-                edit.addListenerOnSaveButton(new SaveTacheListener(id));
+                edit.addListenerOnSuppButton(new TacheListener(id, "Suppression"));
+                edit.addListenerOnSaveButton(new TacheListener(id, "Sauvegarde"));
 
                 tachesView.stream().filter(jp -> jp instanceof TacheView).forEach(jp -> {
                     TacheView tv = (TacheView) jp;
@@ -343,9 +377,9 @@ public class MainController
                 String dateBeginFormated = formatDate.format(currentCalendar.getTime().getTime());
                 String dateEndFormated = formatDate.format(createTache.getEndDate().getTime());
                 TacheView tacheView = new TacheView(createTache.getId(), tache.getTitle(), dateBeginFormated, dateEndFormated, interval, catTache.getAbreviation(), tache.isLate());
-                tacheView.addListenerOnEditButton(new EditTacheListener(createTache.getId()));
-                tacheView.addListenerOnSuppButton(new SuppTacheListener(createTache.getId()));
-                tacheView.addListenerOnFinishButton(new FinishListener(createTache.getId()));
+                tacheView.addListenerOnEditButton(new TacheListener(createTache.getId(), "Edition"));
+                tacheView.addListenerOnSuppButton(new TacheListener(createTache.getId(), "Suppression"));
+                tacheView.addListenerOnFinishButton(new TacheListener(createTache.getId(), "Finish"));
 
 
                 tachesView.add(tacheView);
@@ -360,9 +394,9 @@ public class MainController
                 String dateFormatedEnd      = formatDate.format(createTache.getEndDate().getTime());
                 String dateFormatedBegin    = formatDate.format(createTache.getBeginDate().getTime());
                 TacheAuLongCourView tacheView = new TacheAuLongCourView(createTache.getId(), tache.getTitle(), dateFormatedBegin, dateFormatedEnd, interval,catTache.getAbreviation(), tache.isLate(), tache.getPercentage());
-                tacheView.addListenerOnEditButton(new EditTacheListener(createTache.getId()));
-                tacheView.addListenerOnSuppButton(new SuppTacheListener(createTache.getId()));
-                tacheView.addListenerOnFinishButton(new FinishListener(createTache.getId()));
+                tacheView.addListenerOnEditButton(new TacheListener(createTache.getId(), "Edition"));
+                tacheView.addListenerOnSuppButton(new TacheListener(createTache.getId(), "Suppression"));
+                tacheView.addListenerOnFinishButton(new TacheListener(createTache.getId(), "Finish"));
 
 
                 tachesView.add(tacheView);
@@ -391,9 +425,9 @@ public class MainController
                 int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
 
                 TacheView tw = new TacheView(t.getId(), t.getTitle(),formatDate.format(t.getDateCreation().getTime()) , formatDate.format(t.getEnd().getTime()), interval, t.getCategorie().getAbreviation(), t.isLate());
-                tw.addListenerOnSuppButton(new SuppTacheListener(t.getId()));
-                tw.addListenerOnEditButton(new EditTacheListener(t.getId()));
-                tw.addListenerOnFinishButton(new FinishListener(t.getId()));
+                tw.addListenerOnEditButton(new TacheListener(t.getId(), "Edition"));
+                tw.addListenerOnSuppButton(new TacheListener(t.getId(), "Suppression"));
+                tw.addListenerOnFinishButton(new TacheListener(t.getId(), "Finish"));
 
                 int index = tachesView.indexOf(jp);
                 tachesView.set(index, tw);
@@ -403,9 +437,9 @@ public class MainController
                 int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
 
                 TacheAuLongCourView tw = new TacheAuLongCourView(t.getId(), t.getTitle(),formatDate.format(((AuLongCours)t).getBegin().getTime()), formatDate.format(t.getEnd().getTime()), interval, t.getCategorie().getAbreviation(), t.isLate(), ((AuLongCours) t).getPercentage());
-                tw.addListenerOnSuppButton(new SuppTacheListener(t.getId()));
-                tw.addListenerOnEditButton(new EditTacheListener(t.getId()));
-                tw.addListenerOnFinishButton(new FinishListener(t.getId()));
+                tw.addListenerOnEditButton(new TacheListener(t.getId(), "Edition"));
+                tw.addListenerOnSuppButton(new TacheListener(t.getId(), "Suppression"));
+                tw.addListenerOnFinishButton(new TacheListener(t.getId(), "Finish"));
 
                 int index = tachesView.indexOf(jp);
                 tachesView.set(index, tw);
@@ -433,12 +467,12 @@ public class MainController
 
         tachesView.stream().filter(jp -> jp instanceof EditTacheView).filter(jp -> ((EditTacheView) jp).getId() == t.getId()).forEach(jp -> {
 
-            EditTacheView tw = new EditTacheView(t.getId(), t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getEnd().getTime(),stringList.toArray(new String[stringList.size()]) , id, t.isLate(), t.getDateCreation());
-            tw.addListenerOnSuppButton(new SuppTacheListener(t.getId()));
-            tw.addListenerOnSaveButton(new SaveTacheListener(t.getId()));
+            EditTacheView edit = new EditTacheView(t.getId(), t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getEnd().getTime(),stringList.toArray(new String[stringList.size()]) , id, t.isLate(), t.getDateCreation());
+            edit.addListenerOnSuppButton(new TacheListener(id, "Suppression"));
+            edit.addListenerOnSaveButton(new TacheListener(id, "Sauvegarde"));
 
             int index = tachesView.indexOf(jp);
-            tachesView.set(index, tw);
+            tachesView.set(index, edit);
 
         });
     }
@@ -472,9 +506,9 @@ public class MainController
                     int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
 
                     TacheView tw = new TacheView(t.getId(), t.getTitle(), formatDate.format(t.getDateCreation().getTime()) ,formatDate.format(t.getEnd().getTime()), interval, t.getCategorie().getAbreviation(), t.isLate());
-                    tw.addListenerOnSuppButton(new SuppTacheListener(id));
-                    tw.addListenerOnEditButton(new EditTacheListener(id));
-                    tw.addListenerOnFinishButton(new FinishListener(id));
+                    tw.addListenerOnEditButton(new TacheListener(t.getId(), "Edition"));
+                    tw.addListenerOnSuppButton(new TacheListener(t.getId(), "Suppression"));
+                    tw.addListenerOnFinishButton(new TacheListener(t.getId(), "Finish"));
 
                     int index = tachesView.indexOf(jp);
                     tachesView.set(index, tw);
@@ -484,9 +518,9 @@ public class MainController
                     int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
 
                     TacheAuLongCourView tw = new TacheAuLongCourView(t.getId(), t.getTitle(), formatDate.format(((AuLongCours)t).getBegin().getTime()), formatDate.format(t.getEnd().getTime()), interval,  t.getCategorie().getAbreviation(), t.isLate(), ((AuLongCours) t).getPercentage());
-                    tw.addListenerOnSuppButton(new SuppTacheListener(id));
-                    tw.addListenerOnEditButton(new EditTacheListener(id));
-                    tw.addListenerOnFinishButton(new FinishListener(id));
+                    tw.addListenerOnEditButton(new TacheListener(t.getId(), "Edition"));
+                    tw.addListenerOnSuppButton(new TacheListener(t.getId(), "Suppression"));
+                    tw.addListenerOnFinishButton(new TacheListener(t.getId(), "Finish"));
 
                     int index = tachesView.indexOf(jp);
                     tachesView.set(index, tw);
@@ -578,13 +612,13 @@ public class MainController
             }
 
     		if(tachesView.get(i) instanceof TacheView){
-    			((TacheView)tachesView.get(i)).addListenerOnEditButton(new EditTacheListener(allTaches.get(i).getId()));
-    			((TacheView)tachesView.get(i)).addListenerOnSuppButton(new SuppTacheListener(allTaches.get(i).getId()));
-                ((TacheView)tachesView.get(i)).addListenerOnFinishButton(new FinishListener(allTaches.get(i).getId()));
+    			((TacheView)tachesView.get(i)).addListenerOnEditButton(new TacheListener(allTaches.get(i).getId(), "Edition"));
+    			((TacheView)tachesView.get(i)).addListenerOnSuppButton(new TacheListener(allTaches.get(i).getId(), "Suppression"));
+                ((TacheView)tachesView.get(i)).addListenerOnFinishButton(new TacheListener(allTaches.get(i).getId(), "Finish"));
     		      
             } else if(tachesView.get(i) instanceof EditTacheView){
-    			((EditTacheView)tachesView.get(i)).addListenerOnSaveButton(new SaveTacheListener(allTaches.get(i).getId()));
-    			((EditTacheView)tachesView.get(i)).addListenerOnSuppButton(new SuppTacheListener(allTaches.get(i).getId()));  
+    			((EditTacheView)tachesView.get(i)).addListenerOnSaveButton(new TacheListener(allTaches.get(i).getId(), "Sauvegarde"));
+    			((EditTacheView)tachesView.get(i)).addListenerOnSuppButton(new TacheListener(allTaches.get(i).getId(), "Suppression"));
             }
     	}
 

@@ -2,7 +2,7 @@ package Controller;
 
 import Model.Categorie;
 import Model.Tache;
-import View.EditCategorieView;
+import View.CategorieManagerView;
 
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author  Vincent THOMAS
  */
-class CategorieController {
+class CategorieManagerController {
 
     /**
      * Ajoute une Categorie en se basant sur les champs de textes du Categorie Manager
@@ -21,7 +21,7 @@ class CategorieController {
      * @param ecv Instance du Categorie Manager
      * @param catList Liste des Categories
      */
-    static void addCategorie(EditCategorieView ecv, ArrayList<Categorie> catList) {
+    static void addCategorie(CategorieManagerView ecv, ArrayList<Categorie> catList) {
 
         //Recuperation des Titres et Abreviation depuis les textesFields du Categorie Manager
         String title = ecv.getTitre();
@@ -70,7 +70,7 @@ class CategorieController {
      * @param ecv Instance du Categorie Manager
      * @param catList Liste des Categories
      */
-    static void editCategorie(EditCategorieView ecv, ArrayList<Categorie> catList) {
+    static void editCategorie(CategorieManagerView ecv, ArrayList<Categorie> catList) {
 
         //Recuperation des Titres et Abreviation depuis les textesFields du Categorie Manager
         String title = ecv.getTitre();
@@ -130,7 +130,7 @@ class CategorieController {
      * @param catList Liste des Categories
      * @param tacheList Liste des Taches
      */
-    static void removeCategorie(EditCategorieView ecv, ArrayList<Categorie> catList, ArrayList<Tache> tacheList) {
+    static void removeCategorie(CategorieManagerView ecv, ArrayList<Categorie> catList, ArrayList<Tache> tacheList) {
 
         //Initialisation d'un pointeur sur la Categorie a supprimer
         Categorie catToRemove = null;

@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class EditCategorieView extends JFrame implements ListSelectionListener{
+public class CategorieManagerView extends JFrame implements ListSelectionListener{
 
 	private ArrayList<String> catNameList;
 	private ArrayList<String> catLabelList;
@@ -36,7 +36,7 @@ public class EditCategorieView extends JFrame implements ListSelectionListener{
     private final int cols = 1;
     private JPanel[][] panelHolder = new JPanel[rows][cols];
 
-	public EditCategorieView(ArrayList<String> catNameList, ArrayList<String> catLabelList){
+	public CategorieManagerView(ArrayList<String> catNameList, ArrayList<String> catLabelList){
 		super();
 
 		this.canvas = new JPanel();
