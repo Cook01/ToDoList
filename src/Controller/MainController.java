@@ -174,7 +174,7 @@ public class MainController
     /**
      * Récupère les items du menu
      *
-     * @return ArrayList<ArrayList<String>> items du menu ( 1 er argument de ArrayList<String> = titre du menu déroulant )
+     * @return ArrayList&lt;ArrayList&lt;String&gt;&gt; items du menu ( 1 er argument de ArrayList<String> = titre du menu déroulant )
      */
     private static ArrayList<ArrayList<String>> getMenu()
     {
@@ -504,7 +504,7 @@ public class MainController
 
 
                 //Instanciation de la vue d'edition de la Tache
-                EditTacheView edit = new EditTacheView(id, t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getEnd().getTime(), stringList.toArray(new String[stringList.size()]), indexCat, t.isLate(), t.getDateCreation());
+                EditTacheView edit = new EditTacheView(id, t.getTitle(), t.getEnd().getTime(), stringList.toArray(new String[stringList.size()]), indexCat, t.isLate(), t.getDateCreation());
 
 
                 //Ajout des Listeners sur les boutons de cette nouvelle vue
@@ -667,7 +667,7 @@ public class MainController
         tachesView.stream().filter(jp -> jp instanceof EditTacheView).filter(jp -> ((EditTacheView) jp).getId() == t.getId()).forEach(jp -> {
 
             // On crée l'EditTacheView
-            EditTacheView edit = new EditTacheView(t.getId(), t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getEnd().getTime(),stringList.toArray(new String[stringList.size()]) , id, t.isLate(), t.getDateCreation());
+            EditTacheView edit = new EditTacheView(t.getId(), t.getTitle(), t.getEnd().getTime(),stringList.toArray(new String[stringList.size()]) , id, t.isLate(), t.getDateCreation());
             edit.addListenerOnSuppButton(new TacheListener(id, "Suppression"));
             edit.addListenerOnSaveButton(new TacheListener(id, "Sauvegarde"));
 
