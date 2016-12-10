@@ -189,6 +189,11 @@ public class AuLongCours extends Tache {
 
     }
 
+    /**
+     * Retourne la date d'échéance intermédiaire
+     *
+     * @return Calendar calendar of intermediaire date
+     */
     public Calendar getDateEcheanceIntermediaire()
     {
         long interval = getEnd().getTime().getTime() - getBegin().getTime().getTime();

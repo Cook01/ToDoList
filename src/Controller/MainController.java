@@ -30,12 +30,22 @@ public class MainController
 
     private static CreateTacheView createTache;
 
+    private static Calendar currentCalendar = Calendar.getInstance();
+
+
+
 
 	private static SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
 
 
 	public static void main(String args[])
     {
+
+        currentCalendar.setTime(new Date());
+        currentCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        currentCalendar.set(Calendar.MINUTE, 0);
+        currentCalendar.set(Calendar.SECOND, 0);
+        currentCalendar.set(Calendar.MILLISECOND, 0);
 
     	sortTache = new SortTachesByNewest();
 
@@ -72,7 +82,7 @@ public class MainController
 
 	    submenu3.add("Autres");
 	    submenu3.add(MenuItems.SAUVEGARDER.toString());
-	    submenu3.add(MenuItems.QUITTER.toString());
+	    submenu3.add(MenuItems.BILAN.toString());
 
 	    menu.add(submenu);
 	    menu.add(submenu2);
@@ -84,7 +94,7 @@ public class MainController
 
     static void changeSort(String typeSort)
     {
-            System.out.println(typeSort);
+
         switch (typeSort) {
             case "simple" :
                 sortTache = new SortTachesByNewest();
@@ -312,8 +322,14 @@ public class MainController
                 Ponctuelle tache = new Ponctuelle(createTache.getId(), createTache.getTitle(), createTache.getEndDate(), catTache);
                 allTaches.add(tache);
 
-                String dateFormated = formatDate.format(createTache.getEndDate().getTime());
-                TacheView tacheView = new TacheView(createTache.getId(), tache.getTitle(), dateFormated,catTache.getAbreviation(), tache.isLate());
+
+
+                long diff = createTache.getEndDate().getTime().getTime() - currentCalendar.getTime().getTime();
+                int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
+
+                String dateBeginFormated = formatDate.format(createTache.getBeginDate().getTime());
+                String dateEndFormated = formatDate.format(createTache.getEndDate().getTime());
+                TacheView tacheView = new TacheView(createTache.getId(), tache.getTitle(), dateBeginFormated, dateEndFormated, interval, catTache.getAbreviation(), tache.isLate());
                 tacheView.addListenerOnEditButton(new EditTacheListener(createTache.getId()));
                 tacheView.addListenerOnSuppButton(new SuppTacheListener(createTache.getId()));
                 tacheView.addListenerOnFinishButton(new FinishListener(createTache.getId()));
@@ -325,9 +341,12 @@ public class MainController
                 AuLongCours tache = new AuLongCours(createTache.getId(), createTache.getTitle(), createTache.getBeginDate(), createTache.getEndDate(), catTache);
                 allTaches.add(tache);
 
+                long diff = createTache.getEndDate().getTime().getTime() - currentCalendar.getTime().getTime();
+                int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
+
                 String dateFormatedEnd      = formatDate.format(createTache.getEndDate().getTime());
                 String dateFormatedBegin    = formatDate.format(createTache.getBeginDate().getTime());
-                TacheAuLongCourView tacheView = new TacheAuLongCourView(createTache.getId(), tache.getTitle(), dateFormatedBegin, dateFormatedEnd,catTache.getAbreviation(), tache.isLate(), tache.getPercentage());
+                TacheAuLongCourView tacheView = new TacheAuLongCourView(createTache.getId(), tache.getTitle(), dateFormatedBegin, dateFormatedEnd, interval,catTache.getAbreviation(), tache.isLate(), tache.getPercentage());
                 tacheView.addListenerOnEditButton(new EditTacheListener(createTache.getId()));
                 tacheView.addListenerOnSuppButton(new SuppTacheListener(createTache.getId()));
                 tacheView.addListenerOnFinishButton(new FinishListener(createTache.getId()));
@@ -354,7 +373,11 @@ public class MainController
     {
         tachesView.stream().filter(jp -> jp instanceof TacheView).filter(jp -> ((TacheView) jp).getId() == t.getId()).forEach(jp -> {
             if (t instanceof Ponctuelle) {
-                TacheView tw = new TacheView(t.getId(), t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getCategorie().getAbreviation(), t.isLate());
+
+                long diff = t.getEnd().getTime().getTime() - currentCalendar.getTime().getTime();
+                int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
+
+                TacheView tw = new TacheView(t.getId(), t.getTitle(),formatDate.format(t.getDateCreation().getTime()) , formatDate.format(t.getEnd().getTime()), interval, t.getCategorie().getAbreviation(), t.isLate());
                 tw.addListenerOnSuppButton(new SuppTacheListener(t.getId()));
                 tw.addListenerOnEditButton(new EditTacheListener(t.getId()));
                 tw.addListenerOnFinishButton(new FinishListener(t.getId()));
@@ -363,7 +386,10 @@ public class MainController
                 tachesView.set(index, tw);
             } else if (t instanceof AuLongCours) {
 
-                TacheAuLongCourView tw = new TacheAuLongCourView(t.getId(), t.getTitle(),formatDate.format(((AuLongCours)t).getBegin().getTime()), formatDate.format(t.getEnd().getTime()), t.getCategorie().getAbreviation(), t.isLate(), ((AuLongCours) t).getPercentage());
+                long diff = t.getEnd().getTime().getTime() - currentCalendar.getTime().getTime();
+                int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
+
+                TacheAuLongCourView tw = new TacheAuLongCourView(t.getId(), t.getTitle(),formatDate.format(((AuLongCours)t).getBegin().getTime()), formatDate.format(t.getEnd().getTime()), interval, t.getCategorie().getAbreviation(), t.isLate(), ((AuLongCours) t).getPercentage());
                 tw.addListenerOnSuppButton(new SuppTacheListener(t.getId()));
                 tw.addListenerOnEditButton(new EditTacheListener(t.getId()));
                 tw.addListenerOnFinishButton(new FinishListener(t.getId()));
@@ -428,7 +454,11 @@ public class MainController
 
             if (edit.getId() == id) {
                 if (t instanceof Ponctuelle) {
-                    TacheView tw = new TacheView(t.getId(), t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getCategorie().getAbreviation(), t.isLate());
+
+                    long diff =  t.getEnd().getTime().getTime() - currentCalendar.getTime().getTime();
+                    int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
+
+                    TacheView tw = new TacheView(t.getId(), t.getTitle(), formatDate.format(t.getDateCreation().getTime()) ,formatDate.format(t.getEnd().getTime()), interval, t.getCategorie().getAbreviation(), t.isLate());
                     tw.addListenerOnSuppButton(new SuppTacheListener(id));
                     tw.addListenerOnEditButton(new EditTacheListener(id));
                     tw.addListenerOnFinishButton(new FinishListener(id));
@@ -436,7 +466,11 @@ public class MainController
                     int index = tachesView.indexOf(jp);
                     tachesView.set(index, tw);
                 } else if (t instanceof AuLongCours) {
-                    TacheAuLongCourView tw = new TacheAuLongCourView(t.getId(), t.getTitle(), formatDate.format(((AuLongCours)t).getBegin().getTime()), formatDate.format(t.getEnd().getTime()), t.getCategorie().getAbreviation(), t.isLate(), ((AuLongCours) t).getPercentage());
+
+                    long diff = t.getEnd().getTime().getTime() - currentCalendar.getTime().getTime();
+                    int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
+
+                    TacheAuLongCourView tw = new TacheAuLongCourView(t.getId(), t.getTitle(), formatDate.format(((AuLongCours)t).getBegin().getTime()), formatDate.format(t.getEnd().getTime()), interval,  t.getCategorie().getAbreviation(), t.isLate(), ((AuLongCours) t).getPercentage());
                     tw.addListenerOnSuppButton(new SuppTacheListener(id));
                     tw.addListenerOnEditButton(new EditTacheListener(id));
                     tw.addListenerOnFinishButton(new FinishListener(id));
@@ -503,12 +537,23 @@ public class MainController
 
 
     		String dateFormatedEnd = formatDate.format(allTaches.get(i).getEnd().getTime());
+            String dateFormatedBegin = formatDate.format(allTaches.get(i).getDateCreation().getTime());
 
-    		if(allTaches.get(i) instanceof Ponctuelle)
-				tachesView.add(new TacheView(allTaches.get(i).getId(), allTaches.get(i).getTitle(), dateFormatedEnd, allTaches.get(i).getCategorie().getAbreviation(), allTaches.get(i).isLate()));
-    		else if (allTaches.get(i) instanceof AuLongCours) {
-                String dateFormatedBegin = formatDate.format((((AuLongCours) allTaches.get(i)).getBegin().getTime()));
-                tachesView.add(new TacheAuLongCourView(allTaches.get(i).getId(), allTaches.get(i).getTitle(), dateFormatedBegin, dateFormatedEnd, allTaches.get(i).getCategorie().getAbreviation(), allTaches.get(i).isLate(), ((AuLongCours)allTaches.get(i)).getPercentage()));
+
+    		if(allTaches.get(i) instanceof Ponctuelle) {
+
+                long diff =  allTaches.get(i).getEnd().getTime().getTime() - currentCalendar.getTime().getTime();
+                int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
+
+                tachesView.add(new TacheView(allTaches.get(i).getId(), allTaches.get(i).getTitle(), dateFormatedBegin, dateFormatedEnd, interval, allTaches.get(i).getCategorie().getAbreviation(), allTaches.get(i).isLate()));
+
+            } else if (allTaches.get(i) instanceof AuLongCours) {
+
+                long diff = allTaches.get(i).getEnd().getTime().getTime() - currentCalendar.getTime().getTime();
+                int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
+
+                dateFormatedBegin = formatDate.format((((AuLongCours) allTaches.get(i)).getBegin().getTime()));
+                tachesView.add(new TacheAuLongCourView(allTaches.get(i).getId(), allTaches.get(i).getTitle(), dateFormatedBegin, dateFormatedEnd, interval, allTaches.get(i).getCategorie().getAbreviation(), allTaches.get(i).isLate(), ((AuLongCours)allTaches.get(i)).getPercentage()));
 
             }
 
@@ -585,5 +630,11 @@ public class MainController
         }catch(IOException ioe){
             ioe.printStackTrace();
         }
+    }
+
+    static void bilan()
+    {
+        BilanView bilan = new BilanView();
+        bilan.setVisible(true);
     }
 }

@@ -6,7 +6,7 @@ public enum MenuItems {
 	CARTEAULONGCOURS("Carte AuLongCours"),
 	CATEGORIE("Catégorie"),
 	SAUVEGARDER("Sauvegarder"),
-	QUITTER("Quitter");
+    BILAN("Bilan");
 
 	private final String text;
 

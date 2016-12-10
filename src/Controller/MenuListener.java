@@ -37,9 +37,9 @@ public class MenuListener implements ActionListener
 
 		}
 
-		if( id.equals( MenuItems.QUITTER.toString() ) ) {
+		if( id.equals( MenuItems.BILAN.toString() ) ) {
 
-				quitter();
+				bilan();
 
 		}
 
@@ -65,9 +65,10 @@ public class MenuListener implements ActionListener
 		MainController.saveAll();
 	}
 
-	private void quitter()
+	private void bilan()
 	{
-		System.out.println("quitter");
+
+		MainController.bilan();
 	}
 
 
