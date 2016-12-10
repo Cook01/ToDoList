@@ -258,7 +258,17 @@ public class MainController
             createTache = null;
         }
 
-        listener = new CreateTacheListener();
+        listener = (e ->
+        {
+            switch (e.getActionCommand()) {
+                case "Save":
+                    MainController.addTache();
+                    break;
+                case "Cancel":
+                    MainController.cancelCreateTache();
+                    break;
+            }
+        });
 
         int id = (int) (new Date().getTime()/1000);
         createTache = new CreateTacheView(id, stringList.toArray(new String[stringList.size()]), listener, ponctuelle);
