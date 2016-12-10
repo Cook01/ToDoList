@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import Model.*;
 
 /**
- * Implémentation du trie par date de fin
+ * <h1> Implémentation du trie par date de fin</h1>
+ *
+ * @author Gaëtan KUENY
  */
 class SortTachesByNewest implements SortTaches
 {

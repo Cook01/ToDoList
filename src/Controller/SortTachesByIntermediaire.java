@@ -7,7 +7,9 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * Implémentation du trie par échéance intermédiaire
+ * <h1> Implémentation du trie par échéance intermédiaire</h1>
+ *
+ * @author Gaëtan KUENY
  */
 class SortTachesByIntermediaire implements SortTaches
 {

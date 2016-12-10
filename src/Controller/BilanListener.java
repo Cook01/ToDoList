@@ -6,7 +6,10 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 
 /**
- * Lister of Bilan view
+ * <h1>Contient les methodes appellé par les boutons des BilanListener</h1>
+ * Appel les methodes du MainController correspondantes a l'action voulu
+ *
+ * @author Gaëtan KUENY
  */
 public class BilanListener implements ActionListener {
 

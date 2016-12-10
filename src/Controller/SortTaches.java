@@ -5,7 +5,9 @@ import Model.Tache;
 import java.util.ArrayList;
 
 /**
- * Interface pour les types de tries
+ * <h1> Interface pour les types de tries</h1>
+ *
+ * @author Gaëtan KUENY
  */
 interface SortTaches
 {
