@@ -330,7 +330,7 @@ public class MainController
                 long diff = createTache.getEndDate().getTime().getTime() - currentCalendar.getTime().getTime();
                 int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
 
-                String dateBeginFormated = formatDate.format(createTache.getBeginDate().getTime());
+                String dateBeginFormated = formatDate.format(currentCalendar.getTime().getTime());
                 String dateEndFormated = formatDate.format(createTache.getEndDate().getTime());
                 TacheView tacheView = new TacheView(createTache.getId(), tache.getTitle(), dateBeginFormated, dateEndFormated, interval, catTache.getAbreviation(), tache.isLate());
                 tacheView.addListenerOnEditButton(new EditTacheListener(createTache.getId()));
