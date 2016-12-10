@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.AuLongCours;
-import Model.MenuItems;
 import Model.Ponctuelle;
 import Model.Categorie;
 import Model.Tache;
@@ -243,7 +242,7 @@ public class MainController
         ecv.addListSelectionListener(ecv);
         ecv.addListenerOnAddButton(e -> CategorieManagerController.addCategorie(ecv, catList));
         ecv.addListenerOnEditButton(e -> CategorieManagerController.editCategorie(ecv, catList));
-        ecv.addListenerOnSuppButton(e -> CategorieManagerController.removeCategorie(ecv, catList, allTaches));
+        ecv.addListenerOnRemoveButton(e -> CategorieManagerController.removeCategorie(ecv, catList, allTaches));
 
 
         //Affichage de la fenetre du Categorie Manager
