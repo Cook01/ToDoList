@@ -75,7 +75,7 @@ public class CategorieManagerView extends JFrame implements ListSelectionListene
 	 */
 	private JButton suppButton;
     /**
-     * Bouton d'ajout
+     * Bouton d'Ajout
      */
     private JButton addButton;
     /**
@@ -196,9 +196,9 @@ public class CategorieManagerView extends JFrame implements ListSelectionListene
 
 
         //Placement des 3 Panel dans canvas
-        panelHolder[0][0].add(listScroller); // 1ere ligne
-        panelHolder[1][0].add(textFieldPanel); // 2eme ligne
-        panelHolder[2][0].add(buttonPanel); // 3eme ligne
+        panelHolder[0][0].add(listScroller);    //Ligne 1 - Colone 1
+        panelHolder[1][0].add(textFieldPanel);  //Ligne 2 - Colone 1
+        panelHolder[2][0].add(buttonPanel);     //Ligne 3 - Colone 1
 
 
         //Mise a jour du contenue des composants
