@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * <h1>Contien les methodes appellé par les boutons des TacheView</h1>
+ * <h1>Contient les methodes appellé par les boutons des TacheView</h1>
  * Appel les methodes du MainController correspondantes a l'action voulu
  *
  * @author Vincent THOMAS

@@ -1,6 +1,5 @@
 package View;
 
-import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
 import javax.swing.*;
 import javax.swing.text.DateFormatter;
 import java.awt.*;
@@ -8,6 +7,11 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * <h1>Vue correspondant à la création du tache</h1>
+ *
+ * @author Gaëtan KUENY
+ */
 public class CreateTacheView extends JFrame 
 {
 
@@ -31,22 +35,22 @@ public class CreateTacheView extends JFrame
     private final int cols = 3;
     private JPanel[][] panelHolder = new JPanel[rows][cols];
 
-
+    /**
+     * CreateTacheView constructor
+     *
+     * @param id id de la tache
+     * @param categories liste des différentes carégories
+     * @param listener listener des bouttons
+     * @param ponctuelle Boolean indiquant si la tache à créer est une tache ponctuelle ou pas
+     */
     public CreateTacheView(int id, String[] categories, ActionListener listener, Boolean ponctuelle)
 	{
 		super();
 
-        this.id = id;
-
+        this.id         = id;
         this.ponctuelle = ponctuelle;
 
-		this.canvas = new JPanel();
-
-		this.title 	= new JTextField();
-		this.title.setColumns(20);
-
-		SpinnerDateModel model 	= new SpinnerDateModel();
-
+        // Définition de notre calendar
         Calendar value = Calendar.getInstance();
         value.setTime(new Date(System.currentTimeMillis()));
         value.set(Calendar.HOUR_OF_DAY, 0);
@@ -54,34 +58,50 @@ public class CreateTacheView extends JFrame
         value.set(Calendar.SECOND, 0);
         value.set(Calendar.MILLISECOND, 0);
 
+        // JPanel principal
+        this.canvas = new JPanel();
+
+        // JTextField du titre de la future tache
+		this.title 	= new JTextField();
+		this.title.setColumns(20);
+
+         /*-----------------------------------------------------------------------------*/
+        /*------------------------------ Spiner date end ------------------------------*/
+        /*-----------------------------------------------------------------------------*/
+        // On définit le modèle du spinner
+		SpinnerDateModel model 	= new SpinnerDateModel();
         model.setValue(value.getTime());
         model.setStart(value.getTime());
 
-        this.endDate 			= new JSpinner(model);
+        // On crée notre spinner à partir du modèle
+        this.endDate = new JSpinner(model);
 
-        JSpinner.DateEditor editor = new JSpinner.DateEditor(this.endDate, "dd / MM / yyyy");
-        DateFormatter formatter 	= (DateFormatter)editor.getTextField().getFormatter();
-        formatter.setAllowsInvalid(false);
-        formatter.setOverwriteMode(true);
+        // On crée un nouvelle éditeur pour notre spinner
+        JSpinner.DateEditor editor  = new JSpinner.DateEditor(this.endDate, "dd / MM / yyyy");
+        DateFormatter formatter     = (DateFormatter)editor.getTextField().getFormatter();
+        formatter.setAllowsInvalid(false);formatter.setOverwriteMode(true);
 
-
+        // On update l'éditeur
         this.endDate.setEditor(editor);
 
+        // On met à jour le nombre de colonne de notre spinner
+        JComponent editorDefaukt = this.endDate.getEditor();
+        JFormattedTextField ftf = ((JSpinner.DefaultEditor) editorDefaukt).getTextField();
+        ftf.setColumns(8);
+
+        // Si la nouvelle tache n'est pas ponctulle, on ajoute le spinner beginDate
         if( !this.ponctuelle ) {
 
+             /*-----------------------------------------------------------------------------*/
+            /*----------------------------- Spiner date begin -----------------------------*/
+            /*-----------------------------------------------------------------------------*/
+            // pareil que plus haut
             SpinnerDateModel modelBegin 	= new SpinnerDateModel();
             modelBegin.setValue(value.getTime());
             modelBegin.setStart(value.getTime());
             modelBegin.setEnd(value.getTime());
 
             this.beginDate          = new JSpinner(modelBegin);
-
-
-            this.endDate.addChangeListener(e -> {
-
-                this.updateView((Date)this.endDate.getModel().getValue());
-
-            });
 
             JSpinner.DateEditor editorBegin = new JSpinner.DateEditor(this.beginDate, "dd / MM / yyyy");
             DateFormatter formatterBegin 	= (DateFormatter)editorBegin.getTextField().getFormatter();
@@ -90,39 +110,40 @@ public class CreateTacheView extends JFrame
 
             this.beginDate.setEditor(editorBegin);
 
+            // On met à jour le nombre de colonne de notre spinner
             JComponent editorDefaukt2 = this.beginDate.getEditor();
             JFormattedTextField ftf2 = ((JSpinner.DefaultEditor) editorDefaukt2).getTextField();
             ftf2.setColumns(8);
+
+            // On ajoute un listener afin de mettre a jour le champ beginDate (on appelle updateView pour cela)
+            this.endDate.addChangeListener(e -> this.updateView((Date)this.endDate.getModel().getValue()));
         }
-
-
-
-        JComponent editorDefaukt = this.endDate.getEditor();
-        JFormattedTextField ftf = ((JSpinner.DefaultEditor) editorDefaukt).getTextField();
-        ftf.setColumns(8);
-
 
 
 
         this.categorie = new JComboBox<>();
 
+        // définission des bouttons
         this.saveButton = new JButton("Save");
         this.cancelButton = new JButton("Cancel");
 
+        // On initialise notre vue
         initCreateTacheView(categories, listener);
 
 	}
 
+    /**
+     * Dans le cas ou la tache n'est pas ponctuelle
+     *
+     * Mise à jour de la vue lorsque le SPiner endDate est modifié
+     *
+     * @param endValue Date endDate
+     */
     private void updateView(Date endValue) {
 
-
+        // au cas ou la tache est ponctuelle, on ne fais rien
         if (this.ponctuelle)
             return;
-
-        Date beginValue = (Date) this.beginDate.getValue();
-
-        if (beginValue.compareTo(endValue) > 0)
-            beginValue = endValue;
 
         Calendar value = Calendar.getInstance();
         value.setTime(new Date(System.currentTimeMillis()));
@@ -131,11 +152,18 @@ public class CreateTacheView extends JFrame
         value.set(Calendar.SECOND, 0);
         value.set(Calendar.MILLISECOND, 0);
 
+        /*-----------On met à jour beginDate s'il le faut------------*/
+
+        Date beginValue = (Date) this.beginDate.getValue();
+
+        if (beginValue.compareTo(endValue) > 0)
+            beginValue = endValue;
+
+
         SpinnerDateModel modelBegin = new SpinnerDateModel();
         modelBegin.setValue(beginValue);
         modelBegin.setStart(value.getTime());
         modelBegin.setEnd(endValue);
-
 
         this.beginDate = new JSpinner(modelBegin);
 
@@ -233,16 +261,33 @@ public class CreateTacheView extends JFrame
         }
     }
 
+    /**
+     * getter de l'attribut id
+     *
+     * @return Int id de la nouvelle tache
+     */
     public int getId()
     {
         return this.id;
     }
 
-    public String getTitle() {
+    /**
+     * getter de l'attribut title
+     *
+     * @return String titre de la nouvelle tache
+     */
+    public String getTitle()
+    {
         return this.title.getText();
     }
 
-    public Calendar getEndDate() {
+    /**
+     * getter de l'attribut endDate
+     *
+     * @return Calendar date de fin de la nouvelle tache
+     */
+    public Calendar getEndDate()
+    {
         Calendar endDateCalendar = Calendar.getInstance();
 
         endDateCalendar.setTime((Date) endDate.getValue());
@@ -250,7 +295,13 @@ public class CreateTacheView extends JFrame
         return endDateCalendar;
     }
 
-    public Calendar getBeginDate() {
+    /**
+     * getter de l'attribut beginDate
+     *
+     * @return Calendar date de début de la nouvelle tache
+     */
+    public Calendar getBeginDate()
+    {
         Calendar beginDateCalendar = Calendar.getInstance();
 
         beginDateCalendar.setTime((Date) beginDate.getValue());
@@ -258,10 +309,21 @@ public class CreateTacheView extends JFrame
         return beginDateCalendar;
     }
 
-    public String getCategorie() {
+    /**
+     * getter de l'attribut categorie
+     *
+     * @return Calendar categorie de la nouvelle tache
+     */
+    public String getCategorie()
+    {
         return categorie.getSelectedItem().toString();
     }
 
+    /**
+     * getter de l'attribut ponctuelle
+     *
+     * @return Boolean true : si la nouvelle tache est ponctuelle, false sinon
+     */
     public Boolean getIsPonctuelle()
     {
         return this.ponctuelle;
