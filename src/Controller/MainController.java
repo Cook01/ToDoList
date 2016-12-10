@@ -491,13 +491,18 @@ public class MainController
     private static ArrayList<Categorie> getCategorie(){
 	    ArrayList<Categorie> ret = new ArrayList<>();
         try{
-            FileInputStream fis = new FileInputStream("res/catSave.sav");
+            FileInputStream fis = new FileInputStream(".CatSave.sav");
             ObjectInputStream ois = new ObjectInputStream(fis);
             ret = (ArrayList<Categorie>) ois.readObject();
             ois.close();
             fis.close();
+
+            JOptionPane.showMessageDialog(null, "Sauvegardes trouvés. Chargement des catégories sauvegardées ...", "Chargement des categories", JOptionPane.INFORMATION_MESSAGE);
         }catch(IOException ioe){
-            ioe.printStackTrace();
+            ret.add(new Categorie("Personnel", "Perso"));
+            ret.add(new Categorie("Travail", "Trav."));
+
+            JOptionPane.showMessageDialog(null, "Aucunes sauvegardes trouvés. Chargement des catégories par defaut ...", "Chargement des categories", JOptionPane.WARNING_MESSAGE);
 
         }catch(ClassNotFoundException c){
             System.out.println("Class not found");
@@ -513,14 +518,16 @@ public class MainController
         ArrayList<Tache> allTaches = new ArrayList<>();
 
         try{
-            FileInputStream fis = new FileInputStream("res/tacheSave.sav");
+            FileInputStream fis = new FileInputStream(".TacheSave.sav");
             ObjectInputStream ois = new ObjectInputStream(fis);
             allTaches = (ArrayList<Tache>) ois.readObject();
             ois.close();
             fis.close();
-        }catch(IOException ioe){
-            ioe.printStackTrace();
 
+            JOptionPane.showMessageDialog(null, "Sauvegardes trouvés. Chargement des taches sauvegardées ...", "Chargement des taches", JOptionPane.INFORMATION_MESSAGE);
+        }catch(IOException ioe){
+
+            JOptionPane.showMessageDialog(null, "Aucunes sauvegardes trouvés. Chargement d'un environement vierge ...", "Chargement des taches", JOptionPane.WARNING_MESSAGE);
         }catch(ClassNotFoundException c){
             System.out.println("Class not found");
             c.printStackTrace();
@@ -610,8 +617,8 @@ public class MainController
     }
 
     static void saveAll() {
-        saveCategorieInFile("res/catSave.sav");
-        saveTachesInFile("res/tacheSave.sav");
+        saveCategorieInFile(".CatSave.sav");
+        saveTachesInFile(".TacheSave.sav");
     }
 
     private static void saveTachesInFile(String file) {
