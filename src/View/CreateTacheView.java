@@ -15,24 +15,69 @@ import java.util.Date;
 public class CreateTacheView extends JFrame 
 {
 
+    /**
+     * Jpanel principal
+     */
 	private JPanel canvas;
 
+    /**
+     * id de la tache crée
+     */
     private int id;
 
+    /**
+     * La taches est elle ponctuelle ou pas ?
+     */
     private Boolean ponctuelle;
 
+    /**
+     * JPanel au centre
+     */
     private JPanel center;
 
+    /**
+     * titre de la futur Tache
+     */
     private JTextField title;
-	private JSpinner endDate;
+
+    /**
+     * Date de fin de la futur Tache
+     */
+    private JSpinner endDate;
+
+    /**
+     * Date de début de la futur Tache
+     */
     private JSpinner beginDate;
-	private JComboBox<String> categorie;
+
+    /**
+     * Liste des catégories
+     */
+    private JComboBox<String> categorie;
+
+    /**
+     * Button de sauvegare de la nouvelle tache
+     */
     private JButton saveButton;
+
+    /**
+     * Boutton d'annulation
+     */
     private JButton cancelButton;
 
-
+    /**
+     * Nombre de ligne
+     */
     private final int rows = 2;
+
+    /**
+     * Nombre de colonnes
+     */
     private final int cols = 3;
+
+    /**
+     * Tableau de JPanel correspondant aux emplacement dans le layout du JPanel canvas
+     */
     private JPanel[][] panelHolder = new JPanel[rows][cols];
 
     /**
@@ -152,14 +197,16 @@ public class CreateTacheView extends JFrame
         value.set(Calendar.SECOND, 0);
         value.set(Calendar.MILLISECOND, 0);
 
-        /*-----------On met à jour beginDate s'il le faut------------*/
+
 
         Date beginValue = (Date) this.beginDate.getValue();
 
+         /*-----------On met à jour beginDate s'il le faut------------*/
         if (beginValue.compareTo(endValue) > 0)
             beginValue = endValue;
 
 
+        // on crée un nouveau model pour notre JSpinner
         SpinnerDateModel modelBegin = new SpinnerDateModel();
         modelBegin.setValue(beginValue);
         modelBegin.setStart(value.getTime());
@@ -167,6 +214,7 @@ public class CreateTacheView extends JFrame
 
         this.beginDate = new JSpinner(modelBegin);
 
+        // On créé un nouvelle éditeur  pour notre JSpinner
         JSpinner.DateEditor editorBegin = new JSpinner.DateEditor(this.beginDate, "dd / MM / yyyy");
         DateFormatter formatterBegin = (DateFormatter) editorBegin.getTextField().getFormatter();
         formatterBegin.setAllowsInvalid(false);
@@ -178,11 +226,14 @@ public class CreateTacheView extends JFrame
         JFormattedTextField ftf2 = ((JSpinner.DefaultEditor) editorDefaukt2).getTextField();
         ftf2.setColumns(8);
 
+        // On remove tout les composant du JPanel center
         this.center.removeAll();
 
-        center.add(new JLabel("Début : "));
+        // On ajoute le JLabel et notre JSpinner
+        this.center.add(new JLabel("Début : "));
         this.center.add(this.beginDate);
 
+        // On revalide le tout pour forcer les modifications
         this.revalidate();
         this.validate();
         this.repaint();
@@ -190,11 +241,19 @@ public class CreateTacheView extends JFrame
 
     }
 
+    /**
+     * Initialisation de la vue
+     *
+     * @param categories list des catégories
+     * @param listener ActionListener des bouttons
+     */
 	private void initCreateTacheView(String[] categories, ActionListener listener)
 	{
 
+        // Mise a jour du layout de notre canvas
 		canvas.setLayout(new GridLayout(rows, cols));
 
+        //Initialisation des paneHolder
         for(int row = 0; row < rows; row++) {
             for(int col = 0; col < cols; col++) {
 
@@ -204,19 +263,23 @@ public class CreateTacheView extends JFrame
             }
         }
 
-        panelHolder[0][0].add(this.saveButton);
-        panelHolder[0][1].add(this.title);
-        panelHolder[0][2].add(this.cancelButton);
-
         JPanel end = new JPanel();
         end.add(new JLabel("fin : "));
         end.add(this.endDate);
+
+        // On ajoute les éléments dans notre panelHolder
+        panelHolder[0][0].add(this.saveButton);
+        panelHolder[0][1].add(this.title);
+        panelHolder[0][2].add(this.cancelButton);
         panelHolder[1][0].add(end);
         panelHolder[1][2].add(this.categorie);
 
         this.add(canvas, BorderLayout.NORTH);
 
+        // Si la tache n'est pas ponctuelle
         if( !this.ponctuelle ) {
+
+            // On ajoute un JPanel pour la date de début supplémentaire
             center = new JPanel();
 
             center.add(new JLabel("Début : "));
@@ -225,18 +288,24 @@ public class CreateTacheView extends JFrame
             this.add(center, BorderLayout.SOUTH);
         }
 
-
+        // On ajoute les listeners
         this.addListenerOnSaveButton(listener);
         this.addListenerOnCancelButton(listener);
 
+        // On met à jour la catégorie
         this.setCategorie(categories);
 
         this.pack();
 
-        
     }
 
-    public void setCategorie(String[] categories){
+    /**
+     * Mise à jour de la JComboBox des catégories
+     *
+     * @param categories list des catégories
+     */
+    public void setCategorie(String[] categories)
+    {
 
         for(String categorie : categories){
             this.categorie.addItem(categorie);
@@ -244,7 +313,13 @@ public class CreateTacheView extends JFrame
 
     }
 
-    private void addListenerOnSaveButton(ActionListener listener){
+    /**
+     * Ajout du listener sur le bouton save
+     *
+     * @param listener listener des boutons
+     */
+    private void addListenerOnSaveButton(ActionListener listener)
+    {
         try{
             this.saveButton.addActionListener(listener);
         }catch(Exception e){
@@ -252,8 +327,14 @@ public class CreateTacheView extends JFrame
         }
         
     }
-    
-    private void addListenerOnCancelButton(ActionListener listener){
+
+    /**
+     * Ajout du listener sur le bouton cancel
+     *
+     * @param listener listener des boutons
+     */
+    private void addListenerOnCancelButton(ActionListener listener)
+    {
         try{
             this.cancelButton.addActionListener(listener);
         }catch(Exception e){
