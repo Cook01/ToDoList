@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * <h1>Contien les methodes appellé par les boutons du Categorie Manager</h1>
  * Implemente les fonctionnalitée "Ajout d'une Categorie", "Edition d'une Categorie" et "Suppression d'une categorie"
  *
- * @author  Vincent THOMAS
+ * @author Vincent THOMAS
  */
 class CategorieManagerController {
 
@@ -60,7 +60,7 @@ class CategorieManagerController {
 
         //On force la fermeture-reouverture du Categorie Manager pour mettre a jour la liste des Categories affichées
         ecv.dispatchEvent(new WindowEvent(ecv, WindowEvent.WINDOW_CLOSING));
-        MainController.editCategorie();
+        MainController.getCategorieManager();
     }
 
 
@@ -115,7 +115,7 @@ class CategorieManagerController {
 
         //On force la fermeture-reouverture du Categorie Manager pour mettre a jour la liste des Categories affichées
         ecv.dispatchEvent(new WindowEvent(ecv, WindowEvent.WINDOW_CLOSING));
-        MainController.editCategorie();
+        MainController.getCategorieManager();
 
 
         //Mise a jour de l'affichage de la fenetre principale
@@ -165,7 +165,7 @@ class CategorieManagerController {
 
         //On force la fermeture-reouverture du Categorie Manager pour mettre a jour la liste des Categories affichées
         ecv.dispatchEvent(new WindowEvent(ecv, WindowEvent.WINDOW_CLOSING));
-        MainController.editCategorie();
+        MainController.getCategorieManager();
 
 
         //Mise a jour de l'affichage de la fenetre principale

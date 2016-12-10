@@ -16,31 +16,55 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+/**
+ * <h1>Point central de l'application</h1>
+ * Contient le main()
+ *
+ * @author Gaëtan KUENY
+ * @author Vincent THOMAS
+ */
 public class MainController
 {
-	public static MainView f;
-	private static String title = "ToDo List";
+    /**
+     * Instance de la fenetre principale
+     */
+    private static MainView f;
+    /**
+     * Titre de la fenetre
+     */
+    private static String title = "ToDo List";
 
 	private static SortTaches sortTache;
 
+    /**
+     * Liste des Vue des Taches
+     */
     private static ArrayList<JPanel> tachesView;
 
+    /**
+     * Liste des Taches
+     */
     private static ArrayList<Tache> allTaches;
+    /**
+     * Liste des Categories
+     */
     private static ArrayList<Categorie> catList;
 
     private static CreateTacheView createTache;
 
     public static Calendar currentCalendar = Calendar.getInstance();
 
-    private static int width;
-
     private static BilanView bilan;
-
 
 	private static SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
 
 
-	public static void main(String args[])
+    /**
+     * Fonction lancer a l'execution du programe.
+     *
+     * @param args Eventuels arguments passer au lancement du programme. Inutiles ici.
+     */
+    public static void main(String args[])
     {
 
         currentCalendar.setTime(new Date());
@@ -51,58 +75,85 @@ public class MainController
 
     	sortTache = new SortTachesByNewest();
 
+
+    	//Recuperation des Categories, puis des Taches
         catList = getCategorie();
 	    allTaches = getTaches();
 
+
+	    //Tris des Taches
 	    allTaches = sortTache.sort(allTaches);
 
         ArrayList<Tache> allTachesFilter =  allTaches.stream()
                 .filter(tache -> !tache.getAchieve()).collect(Collectors.toCollection(ArrayList::new));
 
+
+        //Creation du menu
         ArrayList<ArrayList<String>> menu = getMenu();
+
+
+        //Creation des vues des Taches
         tachesView	= getTachesView(allTachesFilter);
 
 
+        //Creation du listener pour le menu à l'aide d'une Lambda
         ActionListener menuListener = (e -> {
             String id = e.getActionCommand();
 
             if(id.equals(MenuItems.CARTEPONCTUELLE.toString())){
+
+                //Appel de la methode de creation de tache, située dans le MainController
                 createTache(true);
             }
             if(id.equals(MenuItems.CARTEAULONGCOURS.toString())){
+
+                //Appel de la methode de creation de tache, située dans le MainController
                 createTache(false);
             }
             if(id.equals(MenuItems.CATEGORIE.toString())){
-                editCategorie();
+
+                //Appel de la methode de d'affichage du Categorie Manager, située dans le MainController
+                getCategorieManager();
             }
             if(id.equals(MenuItems.SAUVEGARDER.toString())){
+
+                //Appel de la methode de sauvegarde des Categories et des Taches, située dans le MainController
                 saveAll();
             }
             if(id.equals(MenuItems.BILAN.toString())){
+
+                //Appel de la methode de d'affichage de la fenetre d'edition de bilan, située dans le MainController
                 bilan();
             }
         });
 
+
+        //Creation du listener pour les boutons de tris à l'aide d'une Lambda
         ActionListener sortListener = (e -> {
             switch (e.getActionCommand()){
                 case "simple" :
+
+                    //Appel de la methode de tris des Taches, située dans le MainController
                     changeSort("simple");
                     break;
 
                 case "intermediaire" :
+
+                    //Appel de la methode de tris des Taches, située dans le MainController
                     changeSort("intermediaire");
                     break;
             }
         });
 
 
+        //Instantiation de la fenetre principale
         f = new MainView(title, tachesView, menu, menuListener, sortListener);
 
+
+        //Affichage de la fenetre principale
         f.setVisible(true);
-
-        width = f.getWidth();
-
     }
+
 
     private static ArrayList<ArrayList<String>> getMenu()
     {
@@ -131,7 +182,7 @@ public class MainController
 
     }
 
-    static void changeSort(String typeSort)
+    private static void changeSort(String typeSort)
     {
 
         switch (typeSort) {
@@ -165,28 +216,41 @@ public class MainController
         f.updateView(title, tachesView);
     }
 
-    static void editCategorie()
-    {
+
+
+    /**
+     * Ouvre le Categorie Manager
+     */
+    static void getCategorieManager(){
+
+        //Declaration des listes des Titres et Abreviation de Categories
         ArrayList<String> titleList = new ArrayList<>();
         ArrayList<String> labelList = new ArrayList<>();
 
+
+        //Affectation des listes des Titres et Abreviation de Categories
         for(Categorie c : catList){
             titleList.add(c.getTitre());
             labelList.add(c.getAbreviation());
         }
 
+
+        //Instantition de la fenetre du Categorie Manager
         CategorieManagerView ecv = new CategorieManagerView(titleList, labelList);
 
+
+        //Ajout d'un listener sur les boutons et la JList du CategorieManager
         ecv.addListSelectionListener(ecv);
         ecv.addListenerOnAddButton(e -> CategorieManagerController.addCategorie(ecv, catList));
         ecv.addListenerOnEditButton(e -> CategorieManagerController.editCategorie(ecv, catList));
         ecv.addListenerOnSuppButton(e -> CategorieManagerController.removeCategorie(ecv, catList, allTaches));
 
+
+        //Affichage de la fenetre du Categorie Manager
         ecv.setVisible(true);
     }
 
-    static void removeTache(int id)
-    {
+    static void removeTache(int id){
         int i = 0;
     	int size = allTaches.size();
     	boolean find = false;
@@ -237,7 +301,7 @@ public class MainController
         update();
     }
 
-    static void cancelCreateTache()
+    private static void cancelCreateTache()
     {
         if(createTache != null) {
 
@@ -283,7 +347,7 @@ public class MainController
 
     }
 
-    static void createTache(Boolean ponctuelle)
+    private static void createTache(Boolean ponctuelle)
     {
         ArrayList<String> stringList = catList.stream().map(Categorie::getTitre).collect(Collectors.toCollection(ArrayList::new));
 
@@ -312,33 +376,56 @@ public class MainController
 
     }
 
-    static void editTache(int id)
-    {
+
+    /**
+     * Change la vue de la Tache selectionner pour une vue permetant la modification
+     *
+     * @param id ID de la Tache a modifier
+     */
+    static void editTache(int id){
+
+        //Recherche de la Tache a modifier dans la liste des Taches
     	for(Tache t : allTaches){
             if(t.getId() == id){
 
 
+                //Declaration de la liste des Titres des Categories et de l'index de la Categorie actuel de la Tache dans cette liste
                 ArrayList<String> stringList = new ArrayList<>();
                 int indexCat = 0;
 
+
+                //On verifi que la liste des Categories n'est pas vide
                 if(catList.size() != 0){
+
+
+                    //On ajoutes tous les Titres des Categories a la liste des Titres
                     for(Categorie cat : catList){
                         stringList.add(cat.getTitre());
 
+
+                        //Si le Titre correspond a celui de la Tache a modifier, on enregistre son index
                         if(t.getCategorie().getTitre().equals(cat.getTitre())){
                             indexCat = catList.indexOf(cat);
                         }
                     }
-                } else {
+
+
+                } else { //Si la liste des categories est vide, on ajoute un champ vide pour empecher une erreur du a la creation d'une JCombobox vide
                     stringList.add("");
                     indexCat = 0;
                 }
 
+
+                //Instanciation de la vue d'edition de la Tache
                 EditTacheView edit = new EditTacheView(id, t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getEnd().getTime(), stringList.toArray(new String[stringList.size()]), indexCat, t.isLate(), t.getDateCreation());
 
+
+                //Ajout des Listeners sur les boutons de cette nouvelle vue
                 edit.addListenerOnSuppButton(new TacheListener(id, "Suppression"));
                 edit.addListenerOnSaveButton(new TacheListener(id, "Sauvegarde"));
 
+
+                //On remplace l'ancienne vue par la nouvelle dans la liste des vues
                 tachesView.stream().filter(jp -> jp instanceof TacheView).forEach(jp -> {
                     TacheView tv = (TacheView) jp;
 
@@ -350,10 +437,13 @@ public class MainController
             }
         }
 
-       updateView();
+
+        //On met a jours l'affichage
+        updateView();
     }
 
-    static void addTache()
+
+    private static void addTache()
     {
 
         if(createTache != null) {
@@ -484,8 +574,14 @@ public class MainController
         update();
     }
 
-    static void saveTache(int id)
-    {
+
+    /**
+     * Sauvegarde les changement sur la Tache selectionner et remet sa vue par defaut
+     *
+     * @param id ID de la Tache a sauvegarder
+     */
+    static void saveTache(int id){
+
         allTaches.stream().filter(t -> t.getId() == id).forEach(t -> tachesView.stream().filter(jp -> jp instanceof EditTacheView).forEach(jp -> {
             EditTacheView edit = (EditTacheView) jp;
 
@@ -534,51 +630,99 @@ public class MainController
     }
 
 
+    /**
+     * Charge les Categories enregistrées sur le fichier ".CatSave.sav". Si le fichier n'existe pas, charge les categories par defaut : "Travail" et "Personnel"
+     *
+     * @return ArrayList&lt;Categorie&gt; Liste des Categories chargées
+     */
     private static ArrayList<Categorie> getCategorie(){
+
+        //Declaration de la liste des Categories a retourner
 	    ArrayList<Categorie> ret = new ArrayList<>();
+
+
+	    //Essai d'ouvrir le fichier et en recuperer les données sauvegardé dessus
         try{
+
+            //Ouverture du fichier
             FileInputStream fis = new FileInputStream(".CatSave.sav");
             ObjectInputStream ois = new ObjectInputStream(fis);
+
+            //Recuperation des données
             ret = (ArrayList<Categorie>) ois.readObject();
+
+            //Fermeture du fichier
             ois.close();
             fis.close();
 
+
+            //Affichage d'un message indiquant que le chargement a reussi
             JOptionPane.showMessageDialog(null, "Sauvegardes trouvés. Chargement des catégories sauvegardées ...", "Chargement des categories", JOptionPane.INFORMATION_MESSAGE);
-        }catch(IOException ioe){
+
+        }catch(Exception e){ //Si une erreur se produit
+
+            //Chargement des Categories par defaut
             ret.add(new Categorie("Personnel", "Perso"));
             ret.add(new Categorie("Travail", "Trav."));
 
-            JOptionPane.showMessageDialog(null, "Aucunes sauvegardes trouvés. Chargement des catégories par defaut ...", "Chargement des categories", JOptionPane.WARNING_MESSAGE);
 
-        }catch(ClassNotFoundException c){
-            System.out.println("Class not found");
-            c.printStackTrace();
+            //Affichage d'un message indiquant que le chargement a échoué
+            JOptionPane.showMessageDialog(null, "Aucunes sauvegardes trouvées, ou fichier coromput. Chargement des catégories par defaut ...", "Chargement des categories", JOptionPane.WARNING_MESSAGE);
+
+
+            //Affichage de l'erreur en console pour un eventuel débugage
+            e.printStackTrace();
         }
 
+        //On renvoi la liste chargée
         return ret;
     }
-    
 
+
+    /**
+     * Charge les Taches enregistrées sur le fichier ".TacheSave.sav". Si le fichier n'existe pas, charge une liste vide
+     *
+     * @return ArrayList&lt;Tache&gt; Liste des Taches chargées
+     */
     private static ArrayList<Tache> getTaches()
     {
+        //Declaration de la liste des Taches a retourner
         ArrayList<Tache> allTaches = new ArrayList<>();
 
+
+        //Essai d'ouvrir le fichier et en recuperer les données sauvegardé dessus
         try{
+
+            //Ouverture du fichier
             FileInputStream fis = new FileInputStream(".TacheSave.sav");
             ObjectInputStream ois = new ObjectInputStream(fis);
+
+            //Recuperation des données
             allTaches = (ArrayList<Tache>) ois.readObject();
+
+            //Fermeture du fichier
             ois.close();
             fis.close();
 
-            JOptionPane.showMessageDialog(null, "Sauvegardes trouvés. Chargement des taches sauvegardées ...", "Chargement des taches", JOptionPane.INFORMATION_MESSAGE);
-        }catch(IOException ioe){
 
-            JOptionPane.showMessageDialog(null, "Aucunes sauvegardes trouvés. Chargement d'un environement vierge ...", "Chargement des taches", JOptionPane.WARNING_MESSAGE);
-        }catch(ClassNotFoundException c){
-            System.out.println("Class not found");
-            c.printStackTrace();
+            //Affichage d'un message indiquant que le chargement a reussi
+            JOptionPane.showMessageDialog(null, "Sauvegardes trouvés. Chargement des taches sauvegardées ...", "Chargement des taches", JOptionPane.INFORMATION_MESSAGE);
+
+        }catch(Exception e){ //Si une erreur se produit
+
+            //On laisse la liste vide
+
+
+            //Affichage d'un message indiquant que le chargement a échoué
+            JOptionPane.showMessageDialog(null, "Aucunes sauvegardes trouvées, ou fichier coromput. Chargement d'un environement vierge ...", "Chargement des taches", JOptionPane.WARNING_MESSAGE);
+
+
+            //Affichage de l'erreur en console pour un eventuel débugage
+            e.printStackTrace();
         }
 
+
+        //On renvoi la liste chargée
         return allTaches;
     }
 
@@ -662,33 +806,81 @@ public class MainController
         return newTacheView;
     }
 
-    static void saveAll() {
+
+    /**
+     * Sauvegarde sucessivement la liste des Categories et la liste des Taches dans, respectivement, les fichiers ".CatSave.sav" et ".TacheSave.sav"
+     */
+    private static void saveAll() {
+
+        //Sauvegarde des Categories
         saveCategorieInFile(".CatSave.sav");
+
+
+        //Sauvegarde des Taches
         saveTachesInFile(".TacheSave.sav");
     }
 
+
+    /**
+     * Sauvegarde la liste des Taches dans le fichier specifié
+     *
+     * @param file Chemin vers le fichier dans lequel sauvegarder les Taches
+     */
     private static void saveTachesInFile(String file) {
+
+        //Sauvegarde les Taches dans le fichier
         saveInFIle(file, allTaches);
     }
 
+
+    /**
+     * Sauvegarde la liste des Categories dans le fichier specifié
+     *
+     * @param file Chemin vers le fichier dans lequel sauvegarder les Categories
+     */
     private static void saveCategorieInFile(String file) {
+
+        //Sauvegarde les Taches dans le fichier
         saveInFIle(file, catList);
     }
 
-    private static void saveInFIle(String file, Object o)
-    {
+    /**
+     * Serialize et enregistre dans le fichier specifier l'Object passer en parametre
+     *
+     * @param file chemin vers le fichier dans lequel sauvegarder l'Object
+     * @param o Object a sauvegarder
+     */
+    private static void saveInFIle(String file, Object o){
+
+        //Essai d'ouvrir le fichier et d'y inscrire les donné de o
         try{
+
+            //Ouverture du fichier
             FileOutputStream fileOut= new FileOutputStream(file);
             ObjectOutputStream objectOut= new ObjectOutputStream(fileOut);
+
+            //Ecriture des données de o
             objectOut.writeObject(o);
+
+            //Fermeture du fichier
             objectOut.close();
             fileOut.close();
-        }catch(IOException ioe){
-            ioe.printStackTrace();
+
+            //Affichage d'un message indiquant que la sauvegarde a reussi
+            JOptionPane.showMessageDialog(null, "Sauvegardes Réussi", "Sauvegardes Réussi", JOptionPane.INFORMATION_MESSAGE);
+
+        }catch(Exception e){ //Si une erreur se produit
+
+            //Affichage d'un message indiquant que la sauvegarde a echoue
+            JOptionPane.showMessageDialog(null, "Sauvegardes Réussi", "Sauvegardes Réussi", JOptionPane.ERROR_MESSAGE);
+
+
+            //Affichage de l'erreur en console pour un eventuel débugage
+            e.printStackTrace();
         }
     }
 
-    static void bilan()
+    private static void bilan()
     {
         bilan = new BilanView();
         bilan.setVisible(true);

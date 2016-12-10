@@ -9,7 +9,7 @@ import java.util.Comparator;
 class SortTachesByIntermediaire implements SortTaches
 {
 
-    private Comparator<Tache> comparator = (left, right) -> left.getDateEcheanceIntermediaire().getTime().compareTo(right.getDateEcheanceIntermediaire().getTime());
+    private Comparator<Tache> comparator = Comparator.comparing(left -> left.getDateEcheanceIntermediaire().getTime());
 
     public ArrayList<Tache> sort(ArrayList<Tache> allTaches)
     {
