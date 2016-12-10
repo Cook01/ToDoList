@@ -38,6 +38,11 @@ public abstract class Tache implements Serializable{
     */
     private Calendar dateCreation;
 
+    /**
+     * Date de creation de la tache
+     */
+    private Calendar achieveDate;
+
 
 
     /**
@@ -61,6 +66,14 @@ public abstract class Tache implements Serializable{
         dateCreation.set(Calendar.MINUTE, 0);
         dateCreation.set(Calendar.SECOND, 0);
         dateCreation.set(Calendar.MILLISECOND, 0);
+
+        achieveDate = Calendar.getInstance();
+        achieveDate.setTime(end.getTime());
+
+        achieveDate.set(Calendar.HOUR_OF_DAY, 0);
+        achieveDate.set(Calendar.MINUTE, 0);
+        achieveDate.set(Calendar.SECOND, 0);
+        achieveDate.set(Calendar.MILLISECOND, 0);
 
     }
 
@@ -90,6 +103,17 @@ public abstract class Tache implements Serializable{
      * @param achieve boolean indiquant si la Tache est termine ou pas
      */
     public void setAchieve(Boolean achieve) {
+        Calendar now = Calendar.getInstance();
+        now.setTime(new Date(System.currentTimeMillis()));
+
+        now.set(Calendar.HOUR_OF_DAY, 0);
+        now.set(Calendar.MINUTE, 0);
+        now.set(Calendar.SECOND, 0);
+        now.set(Calendar.MILLISECOND, 0);
+
+        if(achieve)
+            this.setAchieveDate(now);
+
         this.achieve = achieve;
     }
 
@@ -100,6 +124,10 @@ public abstract class Tache implements Serializable{
      */
     public void setEnd(Calendar end) {
         this.end = end;
+    }
+
+    private void setAchieveDate(Calendar achieveDate) {
+        this.achieveDate = achieveDate;
     }
 
 
@@ -158,6 +186,12 @@ public abstract class Tache implements Serializable{
     public Calendar getEnd() {
         return end;
     }
+
+    public Calendar getAchieveDate() {
+        return achieveDate;
+    }
+
+
 
     /**
      * Savoir si la tache est en retard ou pas

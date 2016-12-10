@@ -2,18 +2,18 @@ package View;
 
 import Controller.BilanListener;
 import Controller.MainController;
+import Model.Tache;
 
 import javax.swing.*;
 import javax.swing.text.DateFormatter;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class BilanView extends JFrame {
 
     private JPanel canvas;
-    private JPanel center;
+    private JPanel title;
 
     private JLabel datechoice;
     private JLabel beginLabel;
@@ -38,7 +38,7 @@ public class BilanView extends JFrame {
 
         //initialisation des panel
         this.canvas = new JPanel();
-        JPanel title = new JPanel();
+        title = new JPanel();
 
         // Initialisation des labels
         this.datechoice = new JLabel("Choisissez la période");
@@ -119,6 +119,71 @@ public class BilanView extends JFrame {
     }
 
     /**
+     * Update View to present Bilan
+     *
+     * @param allTachesFilter taches dans l'intervale
+     * @param pourcentageRealiseInTime pourcentage des taches realisees dans les temps
+     * @param pourcentageRealiseNotInTime pourcentage des taches non realisees dans les temps (mais finit)
+     * @param pourcentageNotRealiser pourcentage des taches non finit
+     */
+    public void updateView(ArrayList<Tache> allTachesFilter, int pourcentageRealiseInTime, int pourcentageRealiseNotInTime, int pourcentageNotRealiser)
+    {
+        //this.removeAll();
+
+        JPanel updateCanvas = new JPanel();
+
+
+        JProgressBar pourcentageRealiseInTimeBar    = new JProgressBar(0, 100);
+        pourcentageRealiseInTimeBar.setValue(pourcentageRealiseInTime);
+        pourcentageRealiseInTimeBar.setStringPainted(true);
+
+        JProgressBar pourcentageRealiseNotInTimeBar = new JProgressBar(0, 100);
+        pourcentageRealiseNotInTimeBar.setValue(pourcentageRealiseNotInTime);
+        pourcentageRealiseNotInTimeBar.setStringPainted(true);
+
+        JProgressBar pourcentageNotRealiserBar      = new JProgressBar(0, 100);
+        pourcentageNotRealiserBar.setValue(pourcentageNotRealiser);
+        pourcentageNotRealiserBar.setStringPainted(true);
+
+
+        JLabel pourcentageRealiseInTimeLabel     = new JLabel("Réalisé dans les temps");
+        JLabel pourcentageRealiseNotInTimeLabel  = new JLabel("Non réalisé dans les temps");
+        JLabel pourcentageNotRealiserLabel       = new JLabel("Non finit");
+
+        int rows = 2;
+        int cols = 3;
+        JPanel[][] panelHolder = new JPanel[rows][cols];
+        updateCanvas.setLayout(new GridLayout(rows, cols));
+        for(int row = 0; row < rows; row++) {
+            for(int col = 0; col < cols; col++) {
+
+                panelHolder[row][col] = new JPanel();
+                updateCanvas.add(panelHolder[row][col]);
+
+            }
+        }
+
+        panelHolder[0][0].add(pourcentageRealiseInTimeLabel);
+        panelHolder[0][1].add(pourcentageRealiseNotInTimeLabel);
+        panelHolder[0][2].add(pourcentageNotRealiserLabel);
+
+        panelHolder[1][0].add(pourcentageRealiseInTimeBar);
+        panelHolder[1][1].add(pourcentageRealiseNotInTimeBar);
+        panelHolder[1][2].add(pourcentageNotRealiserBar);
+
+        this.remove(canvas);
+        this.remove(title);
+        this.remove(bilan);
+        this.add(updateCanvas, "Center");
+
+        this.invalidate();
+        this.validate();
+        this.repaint();
+
+
+    }
+
+    /**
      * Add event to Spinner Date
      *
      * if begin date > end date : update end Date to begin value
@@ -132,7 +197,6 @@ public class BilanView extends JFrame {
             if(begin.compareTo(end) > 0) {
                 this.endDate.setValue(begin);
             }
-            System.out.println("begin dat change = " + this.beginDate.getValue());
         });
 
         this.endDate.addChangeListener(e -> {
@@ -142,9 +206,6 @@ public class BilanView extends JFrame {
             if(end.compareTo(begin) < 0) {
                 this.beginDate.setValue(end);
             }
-            System.out.println("endDate dat change = " + this.endDate.getValue());
         });
     }
-
-
 }
