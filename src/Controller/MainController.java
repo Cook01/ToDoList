@@ -30,9 +30,11 @@ public class MainController
 
     private static CreateTacheView createTache;
 
-    private static Calendar currentCalendar = Calendar.getInstance();
+    public static Calendar currentCalendar = Calendar.getInstance();
 
     private static int width;
+
+    private static BilanView bilan;
 
 
 	private static SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
@@ -688,7 +690,74 @@ public class MainController
 
     static void bilan()
     {
-        BilanView bilan = new BilanView();
+        bilan = new BilanView();
         bilan.setVisible(true);
+    }
+
+    static void generateBilan(Date begin, Date end)
+    {
+        ArrayList<Tache> allTachesFilter = allTaches.stream()
+                .filter( tache ->  tache.getEnd().getTime().compareTo(begin) > 0 && tache.getEnd().getTime().compareTo(end) <= 0 && !tache.getAchieve())
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        int pourcentageRealiseInTime = getPourcentageRealiserInTime(allTachesFilter);
+        int pourcentageRealiseNotInTime = getPourcentageRealiserNotInTime(allTachesFilter);
+        int pourcentageNotRealiser = getPourcentageNotRealiser(allTachesFilter);
+
+        bilan.updateView(allTachesFilter, pourcentageRealiseInTime, pourcentageRealiseNotInTime, pourcentageNotRealiser);
+    }
+
+    private static int getPourcentageRealiserInTime(ArrayList<Tache> taches)
+    {
+        int realise =  0;
+        int notRealiser = 0;
+
+        for (Tache t : taches) {
+            if(t.getAchieve() && t.getAchieveDate().compareTo(t.getEnd()) <= 0)
+                realise++;
+            else
+                notRealiser++;
+        }
+
+        if(realise + notRealiser == 0)
+            return 0;
+
+        return ((realise * 100) / (realise + notRealiser));
+    }
+
+    private static int getPourcentageRealiserNotInTime(ArrayList<Tache> taches)
+    {
+        int realise =  0;
+        int notRealiser = 0;
+
+        for (Tache t : taches) {
+            if(t.getAchieve() && t.getAchieveDate().compareTo(t.getEnd()) > 0)
+                realise++;
+            else
+                notRealiser++;
+        }
+
+        if(realise + notRealiser == 0)
+            return 0;
+
+        return ((realise * 100) / (realise + notRealiser));
+    }
+
+    private static int getPourcentageNotRealiser(ArrayList<Tache> taches)
+    {
+        int realise =  0;
+        int notRealiser = 0;
+
+        for (Tache t : taches) {
+            if(t.getAchieve())
+                realise++;
+            else
+                notRealiser++;
+        }
+
+        if(realise + notRealiser == 0)
+            return 0;
+
+        return ((notRealiser * 100) / (realise + notRealiser));
     }
 }
