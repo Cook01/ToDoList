@@ -662,17 +662,13 @@ public class MainController
 
     static void generateBilan(Date begin, Date end)
     {
-        ArrayList<Tache> allTachesFilter = allTaches.stream().filter( tache -> tache.getEnd().getTime().compareTo(end) <= 0).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Tache> allTachesFilter = allTaches.stream()
+                .filter( tache ->  tache.getEnd().getTime().compareTo(begin) > 0 && tache.getEnd().getTime().compareTo(end) <= 0 && !tache.getAchieve())
+                .collect(Collectors.toCollection(ArrayList::new));
 
         int pourcentageRealiseInTime = getPourcentageRealiserInTime(allTachesFilter);
         int pourcentageRealiseNotInTime = getPourcentageRealiserNotInTime(allTachesFilter);
         int pourcentageNotRealiser = getPourcentageNotRealiser(allTachesFilter);
-
-        System.out.println("pourcentageRealiseInTime : " + pourcentageRealiseInTime);
-        System.out.println("pourcentageRealiseNotInTime : " + pourcentageRealiseNotInTime);
-        System.out.println("pourcentageNotRealiser : " + pourcentageNotRealiser);
-
-
 
         bilan.updateView(allTachesFilter, pourcentageRealiseInTime, pourcentageRealiseNotInTime, pourcentageNotRealiser);
     }

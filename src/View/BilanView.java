@@ -9,6 +9,7 @@ import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.stream.Collector;
 
 public class BilanView extends JFrame {
 
@@ -150,6 +151,17 @@ public class BilanView extends JFrame {
         JLabel pourcentageRealiseNotInTimeLabel  = new JLabel("Non réalisé dans les temps");
         JLabel pourcentageNotRealiserLabel       = new JLabel("Non finit");
 
+        String[] listName = allTachesFilter.stream().map(Tache::getTitle).toArray(String[]::new);
+
+        JLabel titleList = new JLabel("Liste des taches à terminer : ");
+        JList<String> jlistName = new JList<String>(listName);
+
+        JPanel center = new JPanel();
+
+        center.add(titleList, "West");
+        center.add(jlistName, "Center");
+
+
         int rows = 2;
         int cols = 3;
         JPanel[][] panelHolder = new JPanel[rows][cols];
@@ -171,10 +183,14 @@ public class BilanView extends JFrame {
         panelHolder[1][1].add(pourcentageRealiseNotInTimeBar);
         panelHolder[1][2].add(pourcentageNotRealiserBar);
 
+
+
+
         this.remove(canvas);
         this.remove(title);
         this.remove(bilan);
-        this.add(updateCanvas, "Center");
+        this.add(updateCanvas, "North");
+        this.add(center, "Center");
 
         this.invalidate();
         this.validate();
