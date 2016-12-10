@@ -30,7 +30,7 @@ public class MainController
 
     private static CreateTacheView createTache;
 
-    private static Calendar currentCalendar = Calendar.getInstance();
+    public static Calendar currentCalendar = Calendar.getInstance();
 
     private static int width;
 
@@ -646,5 +646,10 @@ public class MainController
     {
         BilanView bilan = new BilanView();
         bilan.setVisible(true);
+    }
+
+    static void generateBilan(Date begin, Date end)
+    {
+        System.out.println("generateBilan : " + begin + " to " + end);
     }
 }

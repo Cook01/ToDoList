@@ -213,17 +213,25 @@ public class AuLongCours extends Tache {
 
             c.add(Calendar.DATE, unQuart);
 
+            System.out.println(getTitle() + " : " + c.getTime());
+
         } else if( getPercentage() <= 50) {
 
             c.add(Calendar.DATE, deuxQuart);
+
+            System.out.println(getTitle() + " : " + c.getTime());
 
         } else if( getPercentage() <= 75) {
 
             c.add(Calendar.DATE, troisQuart);
 
+            System.out.println(getTitle() + " : " + c.getTime());
+
         } else if( getPercentage() <= 100) {
 
             c.add(Calendar.DATE, diffDays);
+
+            System.out.println(getTitle() + " : " + c.getTime());
 
         }
 
