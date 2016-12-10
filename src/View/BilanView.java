@@ -20,12 +20,29 @@ import java.util.Date;
  */
 public class BilanView extends JFrame {
 
+    /**
+     * Jpanel principal
+     */
     private JPanel canvas;
+
+    /**
+     * Jpanel contenant le titre
+     */
     private JPanel title;
 
+    /**
+     * JSpiner de la date de début
+     */
     private JSpinner beginDate;
+
+    /**
+     * JSpiner de la date de fin
+     */
     private JSpinner endDate;
 
+    /**
+     * JButton permettant d'accédant au bilan
+     */
     private JButton bilan;
 
 

@@ -49,13 +49,30 @@ public class MainController
      */
     private static ArrayList<Categorie> catList;
 
+    /**
+     * Instance de la fenetre "CreateTache"
+     */
     private static CreateTacheView createTache;
 
+    /**
+     * date actuel
+     */
     public static Calendar currentCalendar = Calendar.getInstance();
 
+    /**
+     * Instance de la vue Bilan
+     */
     private static BilanView bilan;
 
+    /**
+     * Format des dates
+     */
 	private static SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+
+    /**
+     * étape en pourcentage d'avancement d'une tache
+     */
+    private static int avancement = 5;
 
 
     /**
@@ -154,6 +171,11 @@ public class MainController
     }
 
 
+    /**
+     * Récupère les items du menu
+     *
+     * @return ArrayList<ArrayList<String>> items du menu ( 1 er argument de ArrayList<String> = titre du menu déroulant )
+     */
     private static ArrayList<ArrayList<String>> getMenu()
     {
 
@@ -162,7 +184,9 @@ public class MainController
 	    ArrayList<String> submenu2          = new ArrayList<>();
 	    ArrayList<String> submenu3          = new ArrayList<>();
 
+        // On ajoute le titre du menu déroulant
 	    submenu.add("Créer");
+        // On ajoute les items de notre menu
 	    submenu.add(MenuItems.CARTEPONCTUELLE.toString());
 	    submenu.add(MenuItems.CARTEAULONGCOURS.toString());
 
@@ -181,10 +205,16 @@ public class MainController
 
     }
 
+    /**
+     * Change le type de tri
+     *
+     * @param typeSort String du nouveau type de tri
+     */
     private static void changeSort(String typeSort)
     {
 
         switch (typeSort) {
+
             case "simple" :
                 sortTache = new SortTachesByNewest();
                 break;
@@ -192,26 +222,39 @@ public class MainController
             case "intermediaire" :
                 sortTache = new SortTachesByIntermediaire();
                 break;
+
         }
 
+        // On update afin de voir les changements
         update();
     }
 
+    /**
+     * Mise a jours des des TachesView et mise à jour de la fenetre
+     */
     private static void update()
     {
 
+        // On tri nos taches
         allTaches = sortTache.sort(allTaches);
 
+        // On ne garde que celle qui ne sont pas fini
         ArrayList<Tache> allTachesFilter =  allTaches.stream()
                 .filter(tache -> !tache.getAchieve()).collect(Collectors.toCollection(ArrayList::new));
 
+        // On ré-ordonne nos TachesView
 	    tachesView	= reOrderTacheView(allTachesFilter, tachesView);
 
+        // On met à jour la vue
     	updateView();
     }
 
+    /**
+     * Mise à jour de la vue principal
+     */
     static void updateView()
     {
+        // On appel la fonctio de mise a jour de notre fenetre principal
         f.updateView(title, tachesView);
     }
 
@@ -220,7 +263,8 @@ public class MainController
     /**
      * Ouvre le Categorie Manager
      */
-    static void getCategorieManager(){
+    static void getCategorieManager()
+    {
 
         //Declaration des listes des Titres et Abreviation de Categories
         ArrayList<String> titleList = new ArrayList<>();
@@ -249,15 +293,23 @@ public class MainController
         ecv.setVisible(true);
     }
 
-    static void removeTache(int id){
+    /**
+     * Suppression d'une tache par son id
+     *
+     * @param id int id de la tache
+     */
+    static void removeTache(int id)
+    {
         int i = 0;
     	int size = allTaches.size();
     	boolean find = false;
 
+        // On cherche notre tache dans la list des taches
     	while(!find && i < size) {
 
     		if (allTaches.get(i).getId() == id) {
 
+                // On la supprime de l'ArrayList stockant toutes les taches.
     			allTaches.remove(i);
     			find = true;
 
@@ -268,6 +320,8 @@ public class MainController
         size = tachesView.size();
         find = false;
         i = 0;
+
+        // On cherche notre tache dans la list des TacheView
         while(!find && i < size) {
 
             int myId = -1;
@@ -277,7 +331,7 @@ public class MainController
                 myId = tache.getId();
             }
             if(tachesView.get(i) instanceof TacheAuLongCourView){
-                 TacheAuLongCourView tache = (TacheAuLongCourView)tachesView.get(i);
+                TacheAuLongCourView tache = (TacheAuLongCourView)tachesView.get(i);
                 myId = tache.getId();
             }
             if(tachesView.get(i) instanceof EditTacheView){
@@ -288,6 +342,7 @@ public class MainController
 
             if ( myId == id) {
 
+                // On la supprime de l'ArrayList stockant toutes les TacheViex.
                 tachesView.remove(i);
                 find = true;
 
@@ -297,18 +352,30 @@ public class MainController
 
         }
 
+        // On met le tout à jour
         update();
     }
 
+    /**
+     * Annulation de la création d'une tache
+     */
     private static void cancelCreateTache()
     {
+        // SI la fenetre createTache existe
         if(createTache != null) {
-
+            // On ne l'affiche plus
             createTache.dispose();
+
+            // on indique qu'elle n'existe plus
             createTache = null;
         }
     }
 
+    /**
+     * Mise à jour de l'avancement d'une tache
+     *
+     * @param id id de la tache
+     */
     static void updateProgressTache(int id)
     {
 
@@ -316,26 +383,33 @@ public class MainController
         int size = allTaches.size();
         boolean find = false;
 
+        // On cherche notre tache
         while(!find && i < size) {
 
             if (allTaches.get(i).getId() == id) {
 
                 if(allTaches.get(i) instanceof Ponctuelle) {
 
+                    // Si c'est une tache ponctuelle on indique qu'elle est terminé
                     allTaches.get(i).setAchieve(true);
 
                 } else if(allTaches.get(i) instanceof AuLongCours) {
 
-                    ((AuLongCours)allTaches.get(i)).setPercentage(((AuLongCours)allTaches.get(i)).getPercentage() + 10);
+                    // Si c'est une tache AuLongCours, on met à jour son pourcentage
+                    ((AuLongCours)allTaches.get(i)).setPercentage(((AuLongCours)allTaches.get(i)).getPercentage() + avancement);
 
                 }
 
-                if( allTaches.get(i).getAchieve())
+                // SI la tache est fini après l'avoir modifié
+                if( allTaches.get(i).getAchieve()) // On affiche une fenetre d'information
                     JOptionPane.showMessageDialog(f, "La tâche " +  allTaches.get(i).getTitle() + " est terminée");
 
                 find = true;
 
+                // mise a jour de la tache concerné
                 updateOneTache(allTaches.get(i));
+
+                // Mise a jour global
                 update();
 
             }
@@ -346,17 +420,26 @@ public class MainController
 
     }
 
+    /**
+     * Ouvre la fenetre de création de tache
+     *
+     * @param ponctuelle Boolean true : si la tache est ponctuelle, false sinon
+     */
     private static void createTache(Boolean ponctuelle)
     {
+
+        // On récupère le liste des titres de chaque tache
         ArrayList<String> stringList = catList.stream().map(Categorie::getTitre).collect(Collectors.toCollection(ArrayList::new));
 
         ActionListener listener;
 
         if(createTache != null) {
+            // Si une fenetre createTache est déjà ouvert, on la ferme
             createTache.dispose();
             createTache = null;
         }
 
+        // On crée le listener de nos boutons
         listener = (e ->
         {
             switch (e.getActionCommand()) {
@@ -369,8 +452,13 @@ public class MainController
             }
         });
 
+        // On crée un id unique (utilisation d'un timestamp 👌🏻🤘🏻) [on divise pas 1000, car sinon cela est trop grand pour un int]
         int id = (int) (new Date().getTime()/1000);
+
+        // On récupere l'instance de notre fenetre CreateTacheView
         createTache = new CreateTacheView(id, stringList.toArray(new String[stringList.size()]), listener, ponctuelle);
+
+        // On l'affiche
         createTache.setVisible(true);
 
     }
@@ -393,7 +481,7 @@ public class MainController
                 int indexCat = 0;
 
 
-                //On verifi que la liste des Categories n'est pas vide
+                //On verifie que la liste des Categories n'est pas vide
                 if(catList.size() != 0){
 
 
@@ -416,7 +504,7 @@ public class MainController
 
 
                 //Instanciation de la vue d'edition de la Tache
-                EditTacheView edit = new EditTacheView(id, t.getTitle(), t.getEnd().getTime(), stringList.toArray(new String[stringList.size()]), indexCat, t.isLate(), t.getDateCreation());
+                EditTacheView edit = new EditTacheView(id, t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getEnd().getTime(), stringList.toArray(new String[stringList.size()]), indexCat, t.isLate(), t.getDateCreation());
 
 
                 //Ajout des Listeners sur les boutons de cette nouvelle vue
@@ -441,107 +529,125 @@ public class MainController
         updateView();
     }
 
-
+    /**
+     * Ajout d'une nouvelle tache à partir de la fenetre createTache
+     */
     private static void addTache()
     {
 
-        if(createTache != null) {
+        // Si l'instance en n'existe pas , on stop tout
+        if(createTache == null)
+            return;
 
-            String cat = createTache.getCategorie();
-            Categorie catTache = new Categorie("", "");
+        // On récupère le texte de la catégorie
+        String cat = createTache.getCategorie();
 
-            for(Categorie c : catList){
-                if(c.getTitre().equals(cat)){
-                    catTache = c;
-                }
+        Categorie catTache = new Categorie("", "");
+
+        // On recherche notre catégorie dans la liste existante
+        for(Categorie c : catList){
+            if(c.getTitre().equals(cat)){
+                catTache = c;
             }
+        }
 
-            if(createTache.getIsPonctuelle()) {
-                Ponctuelle tache = new Ponctuelle(createTache.getId(), createTache.getTitle(), createTache.getEndDate(), catTache);
-                allTaches.add(tache);
+        long diff = createTache.getEndDate().getTime().getTime() - currentCalendar.getTime().getTime();
+        int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
 
+        if(createTache.getIsPonctuelle()) {
 
+            // On crée notre tache à partir de ce que nous fourni la fenetre createTache
+            Ponctuelle tache = new Ponctuelle(createTache.getId(), createTache.getTitle(), createTache.getEndDate(), catTache);
 
-                long diff = createTache.getEndDate().getTime().getTime() - currentCalendar.getTime().getTime();
-                int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
+            allTaches.add(tache);
 
-                String dateBeginFormated = formatDate.format(currentCalendar.getTime().getTime());
-                String dateEndFormated = formatDate.format(createTache.getEndDate().getTime());
-                TacheView tacheView = new TacheView(createTache.getId(), tache.getTitle(), dateBeginFormated, dateEndFormated, interval, catTache.getAbreviation(), tache.isLate());
-                tacheView.addListenerOnEditButton(new TacheListener(createTache.getId(), "Edition"));
-                tacheView.addListenerOnSuppButton(new TacheListener(createTache.getId(), "Suppression"));
-                tacheView.addListenerOnFinishButton(new TacheListener(createTache.getId(), "Finish"));
+            // On crée sa vue
+            String dateBeginFormated = formatDate.format(currentCalendar.getTime().getTime());
+            String dateEndFormated = formatDate.format(createTache.getEndDate().getTime());
+            TacheView tacheView = new TacheView(createTache.getId(), tache.getTitle(), dateBeginFormated, dateEndFormated, interval, catTache.getAbreviation(), tache.isLate());
+            tacheView.addListenerOnEditButton(new TacheListener(createTache.getId(), "Edition"));
+            tacheView.addListenerOnSuppButton(new TacheListener(createTache.getId(), "Suppression"));
+            tacheView.addListenerOnFinishButton(new TacheListener(createTache.getId(), "Finish"));
 
+            tachesView.add(tacheView);
 
-                tachesView.add(tacheView);
+        } else {
 
-            } else {
-                AuLongCours tache = new AuLongCours(createTache.getId(), createTache.getTitle(), createTache.getBeginDate(), createTache.getEndDate(), catTache);
-                allTaches.add(tache);
+            // On crée notre tache à partir de ce que nous fourni la fenetre createTache
+            AuLongCours tache = new AuLongCours(createTache.getId(), createTache.getTitle(), createTache.getBeginDate(), createTache.getEndDate(), catTache);
+            allTaches.add(tache);
 
-                long diff = createTache.getEndDate().getTime().getTime() - currentCalendar.getTime().getTime();
-                int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
-
-                String dateFormatedEnd      = formatDate.format(createTache.getEndDate().getTime());
-                String dateFormatedBegin    = formatDate.format(createTache.getBeginDate().getTime());
-                TacheAuLongCourView tacheView = new TacheAuLongCourView(createTache.getId(), tache.getTitle(), dateFormatedBegin, dateFormatedEnd, interval,catTache.getAbreviation(), tache.isLate(), tache.getPercentage());
-                tacheView.addListenerOnEditButton(new TacheListener(createTache.getId(), "Edition"));
-                tacheView.addListenerOnSuppButton(new TacheListener(createTache.getId(), "Suppression"));
-                tacheView.addListenerOnFinishButton(new TacheListener(createTache.getId(), "Finish"));
-
-
-                tachesView.add(tacheView);
-            }
+            // On crée sa vue
+            String dateFormatedEnd      = formatDate.format(createTache.getEndDate().getTime());
+            String dateFormatedBegin    = formatDate.format(createTache.getBeginDate().getTime());
+            TacheAuLongCourView tacheView = new TacheAuLongCourView(createTache.getId(), tache.getTitle(), dateFormatedBegin, dateFormatedEnd, interval,catTache.getAbreviation(), tache.isLate(), tache.getPercentage());
+            tacheView.addListenerOnEditButton(new TacheListener(createTache.getId(), "Edition"));
+            tacheView.addListenerOnSuppButton(new TacheListener(createTache.getId(), "Suppression"));
+            tacheView.addListenerOnFinishButton(new TacheListener(createTache.getId(), "Finish"));
 
 
-
-            createTache.dispose();
-            createTache = null;
-
+            tachesView.add(tacheView);
         }
 
 
+        // On ferme notre fenetre
+        createTache.dispose();
+        createTache = null;
 
-
+        // On met à jour le tout
         update();
 
     }
 
+    /**
+     * Mise à jour d'une seul tache
+     *
+     * @param t Tache, la tache à metre à jour
+     */
     private static void updateOneTache(Tache t)
     {
+        // On filtre afin de ne récuper que la TacheView d'id t.getId()
         tachesView.stream().filter(jp -> jp instanceof TacheView).filter(jp -> ((TacheView) jp).getId() == t.getId()).forEach(jp -> {
+
+            long diff = t.getEnd().getTime().getTime() - currentCalendar.getTime().getTime();
+            int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
+
+            int index = tachesView.indexOf(jp);
+
             if (t instanceof Ponctuelle) {
 
-                long diff = t.getEnd().getTime().getTime() - currentCalendar.getTime().getTime();
-                int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
-
+                // On crée un nouvelle tacheView à partir de la Tache t
                 TacheView tw = new TacheView(t.getId(), t.getTitle(),formatDate.format(t.getDateCreation().getTime()) , formatDate.format(t.getEnd().getTime()), interval, t.getCategorie().getAbreviation(), t.isLate());
                 tw.addListenerOnEditButton(new TacheListener(t.getId(), "Edition"));
                 tw.addListenerOnSuppButton(new TacheListener(t.getId(), "Suppression"));
                 tw.addListenerOnFinishButton(new TacheListener(t.getId(), "Finish"));
 
-                int index = tachesView.indexOf(jp);
+                // On met à jour la TacheView concerné
                 tachesView.set(index, tw);
+
+
             } else if (t instanceof AuLongCours) {
 
-                long diff = t.getEnd().getTime().getTime() - currentCalendar.getTime().getTime();
-                int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
-
+                // On crée un nouvelle tacheView à partir de la Tache t
                 TacheAuLongCourView tw = new TacheAuLongCourView(t.getId(), t.getTitle(),formatDate.format(((AuLongCours)t).getBegin().getTime()), formatDate.format(t.getEnd().getTime()), interval, t.getCategorie().getAbreviation(), t.isLate(), ((AuLongCours) t).getPercentage());
                 tw.addListenerOnEditButton(new TacheListener(t.getId(), "Edition"));
                 tw.addListenerOnSuppButton(new TacheListener(t.getId(), "Suppression"));
                 tw.addListenerOnFinishButton(new TacheListener(t.getId(), "Finish"));
 
-                int index = tachesView.indexOf(jp);
+                // On met à jour la TacheView concerné
                 tachesView.set(index, tw);
-            }
-        });
 
+            }
+
+        });
 
         ArrayList<String> stringList = new ArrayList<>();
         int indexCat = 0;
 
+        // On recherche notre catégororie à partir du titre de celle-ci
+        // Et on génère la liste des titres des catégories
         if(catList.size() != 0){
+
             for(Categorie cat : catList){
                 stringList.add(cat.getTitre());
 
@@ -549,6 +655,7 @@ public class MainController
                     indexCat = catList.indexOf(cat);
                 }
             }
+
         } else {
             stringList.add(" ");
             indexCat = 0;
@@ -556,19 +663,27 @@ public class MainController
 
         final int id = indexCat;
 
+        // Pourche chaque TacheView d'id t.getId() et d'instance EditTacheView
         tachesView.stream().filter(jp -> jp instanceof EditTacheView).filter(jp -> ((EditTacheView) jp).getId() == t.getId()).forEach(jp -> {
 
-            EditTacheView edit = new EditTacheView(t.getId(), t.getTitle(), t.getEnd().getTime(),stringList.toArray(new String[stringList.size()]) , id, t.isLate(), t.getDateCreation());
+            // On crée l'EditTacheView
+            EditTacheView edit = new EditTacheView(t.getId(), t.getTitle(), formatDate.format(t.getEnd().getTime()), t.getEnd().getTime(),stringList.toArray(new String[stringList.size()]) , id, t.isLate(), t.getDateCreation());
             edit.addListenerOnSuppButton(new TacheListener(id, "Suppression"));
             edit.addListenerOnSaveButton(new TacheListener(id, "Sauvegarde"));
 
             int index = tachesView.indexOf(jp);
+
+            // On met à jour la TacheView concerné
             tachesView.set(index, edit);
 
         });
     }
 
-    static void updateAllTaches() {
+    /**
+     * Mise à jour de toute les taches
+     */
+    static void updateAllTaches()
+    {
         allTaches.forEach(MainController::updateOneTache);
         update();
     }
@@ -581,51 +696,67 @@ public class MainController
      */
     static void saveTache(int id){
 
-        allTaches.stream().filter(t -> t.getId() == id).forEach(t -> tachesView.stream().filter(jp -> jp instanceof EditTacheView).forEach(jp -> {
-            EditTacheView edit = (EditTacheView) jp;
+        // Pour toute les tache d'id id et les taches view d'instance EditTacheView et d'id id
+        allTaches.stream()
+                .filter(t -> t.getId() == id)
+                .forEach(t -> tachesView.stream()
+                        .filter(jp -> jp instanceof EditTacheView)
+                        .filter(jp -> ((EditTacheView)jp).getId() == id)
+                        .forEach(jp -> {
 
-            t.setTitle(edit.getTitle());
+                            EditTacheView edit = (EditTacheView) jp;
 
-            Calendar endDate = edit.getEndDate();
-            endDate.set(Calendar.HOUR_OF_DAY, 0);
-            endDate.set(Calendar.MINUTE, 0);
-            endDate.set(Calendar.SECOND, 0);
-            endDate.set(Calendar.MILLISECOND, 0);
-            t.setEnd(endDate);
+                            // On met à jour le titre de la tache selon le titre de son editView
+                            t.setTitle(edit.getTitle());
 
-            String cat = edit.getCategorie();
-            catList.stream().filter(c -> c.getTitre().equals(cat)).forEach(t::setCategorie);
+                            Calendar endDate = edit.getEndDate();
+                            endDate.set(Calendar.HOUR_OF_DAY, 0);
+                            endDate.set(Calendar.MINUTE, 0);
+                            endDate.set(Calendar.SECOND, 0);
+                            endDate.set(Calendar.MILLISECOND, 0);
 
-            if (edit.getId() == id) {
-                if (t instanceof Ponctuelle) {
+                            // On met à jour la date de fin de la tache selon la date de fin de son editView
+                            t.setEnd(endDate);
 
-                    long diff =  t.getEnd().getTime().getTime() - currentCalendar.getTime().getTime();
-                    int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
+                            String cat = edit.getCategorie();
 
-                    TacheView tw = new TacheView(t.getId(), t.getTitle(), formatDate.format(t.getDateCreation().getTime()) ,formatDate.format(t.getEnd().getTime()), interval, t.getCategorie().getAbreviation(), t.isLate());
-                    tw.addListenerOnEditButton(new TacheListener(t.getId(), "Edition"));
-                    tw.addListenerOnSuppButton(new TacheListener(t.getId(), "Suppression"));
-                    tw.addListenerOnFinishButton(new TacheListener(t.getId(), "Finish"));
+                            // On met à jour le catégorie la catégorie
+                            catList.stream().filter(c -> c.getTitre().equals(cat)).forEach(t::setCategorie);
 
-                    int index = tachesView.indexOf(jp);
-                    tachesView.set(index, tw);
-                } else if (t instanceof AuLongCours) {
+                            long diff =  t.getEnd().getTime().getTime() - currentCalendar.getTime().getTime();
+                            int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
 
-                    long diff = t.getEnd().getTime().getTime() - currentCalendar.getTime().getTime();
-                    int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
+                            if (t instanceof Ponctuelle) {
 
-                    TacheAuLongCourView tw = new TacheAuLongCourView(t.getId(), t.getTitle(), formatDate.format(((AuLongCours)t).getBegin().getTime()), formatDate.format(t.getEnd().getTime()), interval,  t.getCategorie().getAbreviation(), t.isLate(), ((AuLongCours) t).getPercentage());
-                    tw.addListenerOnEditButton(new TacheListener(t.getId(), "Edition"));
-                    tw.addListenerOnSuppButton(new TacheListener(t.getId(), "Suppression"));
-                    tw.addListenerOnFinishButton(new TacheListener(t.getId(), "Finish"));
+                                // On crée un nouvelle tacheViec à partir de notre tache modifié
+                                TacheView tw = new TacheView(t.getId(), t.getTitle(), formatDate.format(t.getDateCreation().getTime()) ,formatDate.format(t.getEnd().getTime()), interval, t.getCategorie().getAbreviation(), t.isLate());
+                                tw.addListenerOnEditButton(new TacheListener(t.getId(), "Edition"));
+                                tw.addListenerOnSuppButton(new TacheListener(t.getId(), "Suppression"));
+                                tw.addListenerOnFinishButton(new TacheListener(t.getId(), "Finish"));
 
-                    int index = tachesView.indexOf(jp);
-                    tachesView.set(index, tw);
-                }
-            }
-        }));
+                                int index = tachesView.indexOf(jp);
 
-       update();
+                                // On met a jour le tacheView
+                                tachesView.set(index, tw);
+
+                            } else if (t instanceof AuLongCours) {
+
+                                // On crée un nouvelle tacheViec à partir de notre tache modifié
+                                TacheAuLongCourView tw = new TacheAuLongCourView(t.getId(), t.getTitle(), formatDate.format(((AuLongCours)t).getBegin().getTime()), formatDate.format(t.getEnd().getTime()), interval,  t.getCategorie().getAbreviation(), t.isLate(), ((AuLongCours) t).getPercentage());
+                                tw.addListenerOnEditButton(new TacheListener(t.getId(), "Edition"));
+                                tw.addListenerOnSuppButton(new TacheListener(t.getId(), "Suppression"));
+                                tw.addListenerOnFinishButton(new TacheListener(t.getId(), "Finish"));
+
+                                int index = tachesView.indexOf(jp);
+                                // On met a jour le tacheView
+                                tachesView.set(index, tw);
+                            }
+
+                        })
+                );
+
+        // On met à jour le tout
+        update();
     }
 
 
@@ -725,82 +856,99 @@ public class MainController
         return allTaches;
     }
 
-
+    /**
+     * Retourne toute les tachesView
+     *
+     * @param allTaches ArrayList<Tache> toutes les taches
+     * @return ArrayList<JPanel> toutes les tachesViex
+     */
     private static ArrayList<JPanel> getTachesView(ArrayList<Tache> allTaches)
     {
     	tachesView = new ArrayList<>();
 
-    	int size = allTaches.size();
+        // Pour toute nos taches
+        allTaches.forEach(tache -> {
+            
+            String dateFormatedEnd = formatDate.format(tache.getEnd().getTime());
+            String dateFormatedBegin = formatDate.format(tache.getDateCreation().getTime());
 
-    	for (int i = 0; i < size ; i++ ) {
+            if(tache instanceof Ponctuelle) {
 
-
-    		String dateFormatedEnd = formatDate.format(allTaches.get(i).getEnd().getTime());
-            String dateFormatedBegin = formatDate.format(allTaches.get(i).getDateCreation().getTime());
-
-
-    		if(allTaches.get(i) instanceof Ponctuelle) {
-
-                long diff =  allTaches.get(i).getEnd().getTime().getTime() - currentCalendar.getTime().getTime();
+                long diff =  tache.getEnd().getTime().getTime() - currentCalendar.getTime().getTime();
                 int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
 
-                tachesView.add(new TacheView(allTaches.get(i).getId(), allTaches.get(i).getTitle(), dateFormatedBegin, dateFormatedEnd, interval, allTaches.get(i).getCategorie().getAbreviation(), allTaches.get(i).isLate()));
+                // On ajoute une nouvelle TacheView avec les parametre de notre tache ponctuelle
+                tachesView.add(new TacheView(tache.getId(), tache.getTitle(), dateFormatedBegin, dateFormatedEnd, interval, tache.getCategorie().getAbreviation(), tache.isLate()));
 
-            } else if (allTaches.get(i) instanceof AuLongCours) {
+            } else if (tache instanceof AuLongCours) {
 
-                long diff = allTaches.get(i).getEnd().getTime().getTime() - currentCalendar.getTime().getTime();
+                long diff = tache.getEnd().getTime().getTime() - currentCalendar.getTime().getTime();
                 int interval = (int) ((diff) / (1000 * 60 * 60 * 24));
 
-                dateFormatedBegin = formatDate.format((((AuLongCours) allTaches.get(i)).getBegin().getTime()));
-                tachesView.add(new TacheAuLongCourView(allTaches.get(i).getId(), allTaches.get(i).getTitle(), dateFormatedBegin, dateFormatedEnd, interval, allTaches.get(i).getCategorie().getAbreviation(), allTaches.get(i).isLate(), ((AuLongCours)allTaches.get(i)).getPercentage()));
+                dateFormatedBegin = formatDate.format((((AuLongCours) tache).getBegin().getTime()));
+
+                // On ajoute une nouvelle TacheView avec les parametre de notre tache AuLongCours
+                tachesView.add(new TacheAuLongCourView(tache.getId(), tache.getTitle(), dateFormatedBegin, dateFormatedEnd, interval, tache.getCategorie().getAbreviation(), tache.isLate(), ((AuLongCours)tache).getPercentage()));
 
             }
 
-    		if(tachesView.get(i) instanceof TacheView){
-    			((TacheView)tachesView.get(i)).addListenerOnEditButton(new TacheListener(allTaches.get(i).getId(), "Edition"));
-    			((TacheView)tachesView.get(i)).addListenerOnSuppButton(new TacheListener(allTaches.get(i).getId(), "Suppression"));
-                ((TacheView)tachesView.get(i)).addListenerOnFinishButton(new TacheListener(allTaches.get(i).getId(), "Finish"));
-    		      
-            } else if(tachesView.get(i) instanceof EditTacheView){
-    			((EditTacheView)tachesView.get(i)).addListenerOnSaveButton(new TacheListener(allTaches.get(i).getId(), "Sauvegarde"));
-    			((EditTacheView)tachesView.get(i)).addListenerOnSuppButton(new TacheListener(allTaches.get(i).getId(), "Suppression"));
+            JPanel tacheView = tachesView.get(tachesView.size()-1);
+
+            // Ajout des listeners
+            if(tacheView instanceof TacheView){
+                ((TacheView)tacheView).addListenerOnEditButton(new TacheListener(tache.getId(), "Edition"));
+                ((TacheView)tacheView).addListenerOnSuppButton(new TacheListener(tache.getId(), "Suppression"));
+                ((TacheView)tacheView).addListenerOnFinishButton(new TacheListener(tache.getId(), "Finish"));
+
+            } else if(tacheView instanceof EditTacheView){
+                ((EditTacheView)tacheView).addListenerOnSaveButton(new TacheListener(tache.getId(), "Sauvegarde"));
+                ((EditTacheView)tacheView).addListenerOnSuppButton(new TacheListener(tache.getId(), "Suppression"));
             }
-    	}
+        });
 
         return tachesView;
     }
 
-    private static ArrayList<JPanel> reOrderTacheView(ArrayList<Tache> allTaches, ArrayList<JPanel> tacheView)
+    /**
+     * Mise a jour de l'ordonnancement des TachesView
+     *
+     * @param allTaches ArrayList de toute les tache à afficher
+     * @param tachesView ArrayList des tacheView courante
+     *
+     * @return ArrayList des tachesView ordonnées
+     */
+    private static ArrayList<JPanel> reOrderTacheView(ArrayList<Tache> allTaches, ArrayList<JPanel> tachesView)
     {
         ArrayList<JPanel> newTacheView = new ArrayList<>();
 
-        for (Tache allTache : allTaches) {
+        allTaches.forEach(t -> {
 
-            int tacheId = allTache.getId();
+            int tacheId = t.getId();
 
-            int tacheViewSize = tacheView.size();
-            for (int j = 0; j < tacheViewSize; j++) {
+            tachesView.forEach(tv -> {
 
                 int tacheViewId = -1;
 
-                if (tachesView.get(j) instanceof TacheView) {
-                    TacheView tache = (TacheView) tachesView.get(j);
+                // On regarde l'instanciation afin de choisir le bon cast
+                if (tv instanceof TacheView) {
+                    TacheView tache = (TacheView) tv;
                     tacheViewId = tache.getId();
                 }
-                if (tachesView.get(j) instanceof TacheAuLongCourView) {
-                    TacheAuLongCourView tache = (TacheAuLongCourView) tachesView.get(j);
+                if (tv instanceof TacheAuLongCourView) {
+                    TacheAuLongCourView tache = (TacheAuLongCourView) tv;
                     tacheViewId = tache.getId();
                 }
-                if (tachesView.get(j) instanceof EditTacheView) {
-                    EditTacheView tache = (EditTacheView) tachesView.get(j);
+                if (tv instanceof EditTacheView) {
+                    EditTacheView tache = (EditTacheView) tv;
                     tacheViewId = tache.getId();
                 }
 
+                // Si les id son égaux, on ajout a notre nouvelle tachesView list
                 if (tacheViewId == tacheId)
-                    newTacheView.add(tachesView.get(j));
+                    newTacheView.add(tv);
+            });
 
-            }
-        }
+        });
 
         return newTacheView;
     }
@@ -879,31 +1027,53 @@ public class MainController
         }
     }
 
+    /**
+     * Creation de la vue BilanView
+     */
     private static void bilan()
     {
         bilan = new BilanView();
         bilan.setVisible(true);
     }
 
+    /**
+     * Generation du bilan a partir de la date begin et end
+     *
+     * @param begin Date début de l'interval de temps
+     * @param end Date de fin de l'interval de temps
+     */
     static void generateBilan(Date begin, Date end)
     {
+        // On ne récuperes que les taches se terminant dans l'interval de temps définit
         ArrayList<Tache> allTachesFilter = allTaches.stream()
                 .filter( tache ->  tache.getEnd().getTime().compareTo(begin) > 0 && tache.getEnd().getTime().compareTo(end) <= 0 && !tache.getAchieve())
                 .collect(Collectors.toCollection(ArrayList::new));
 
+        // On récupère les différents pourcentages
         int pourcentageRealiseInTime = getPourcentageRealiserInTime(allTachesFilter);
         int pourcentageRealiseNotInTime = getPourcentageRealiserNotInTime(allTachesFilter);
         int pourcentageNotRealiser = getPourcentageNotRealiser(allTachesFilter);
 
+        // On update notre bilanView
         bilan.updateView(allTachesFilter, pourcentageRealiseInTime, pourcentageRealiseNotInTime, pourcentageNotRealiser);
     }
 
+    /**
+     * calcul le pourcentaghe de taches réalisé à temps
+     *
+     * @param taches list des taches
+     *
+     * @return int pourcentage des taches réalisé à temps
+     */
     private static int getPourcentageRealiserInTime(ArrayList<Tache> taches)
     {
         int realise =  0;
         int notRealiser = 0;
 
+        // Pour toutes les taches
         for (Tache t : taches) {
+
+            // Si la taches est achevé et que la date de finissione st inférieur à sa date de fin
             if(t.getAchieve() && t.getAchieveDate().compareTo(t.getEnd()) <= 0)
                 realise++;
             else
@@ -916,12 +1086,22 @@ public class MainController
         return ((realise * 100) / (realise + notRealiser));
     }
 
+    /**
+     * calcul le pourcentaghe de taches non réalisé à temps
+     *
+     * @param taches list des taches
+     *
+     * @return int pourcentage des taches non réalisé à temps
+     */
     private static int getPourcentageRealiserNotInTime(ArrayList<Tache> taches)
     {
         int realise =  0;
         int notRealiser = 0;
 
+        // Pour toutes les taches
         for (Tache t : taches) {
+
+            // Si la taches est achevé et que la date de finissione est supérieur à sa date de fin
             if(t.getAchieve() && t.getAchieveDate().compareTo(t.getEnd()) > 0)
                 realise++;
             else
@@ -934,12 +1114,21 @@ public class MainController
         return ((realise * 100) / (realise + notRealiser));
     }
 
+    /**
+     * calcul le pourcentaghe de taches non réalisé
+     *
+     * @param taches list des taches
+     *
+     * @return int pourcentage des taches non réalisé
+     */
     private static int getPourcentageNotRealiser(ArrayList<Tache> taches)
     {
         int realise =  0;
         int notRealiser = 0;
 
+        // Pour toutes les taches
         for (Tache t : taches) {
+            // Si la taches est achevé
             if(t.getAchieve())
                 realise++;
             else
