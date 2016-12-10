@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class MainController
 {
-	private static MainView f;
+	public static MainView f;
 	private static String title = "ToDo List";
 
 	private static SortTaches sortTache;
@@ -32,7 +32,7 @@ public class MainController
 
     private static Calendar currentCalendar = Calendar.getInstance();
 
-
+    private static int width;
 
 
 	private static SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
@@ -63,6 +63,9 @@ public class MainController
         f = new MainView(title, tachesView, menu, new MenuListener(), new SortListener());
 
         f.setVisible(true);
+
+        width = f.getWidth();
+
     }
 
     private static ArrayList<ArrayList<String>> getMenu()

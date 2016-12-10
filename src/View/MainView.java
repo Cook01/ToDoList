@@ -14,7 +14,6 @@ public class MainView extends JFrame
 
     private ArrayList<JPanel> tachesView;
     private JPanel pCenter;
-    private JPanel pNorth;
 
     private String title;
 
@@ -38,7 +37,7 @@ public class MainView extends JFrame
 
 
         pCenter = new JPanel();
-        pNorth = new JPanel();
+        JPanel pNorth = new JPanel();
 
         int space = 20;
         pCenter.setLayout(new GridLayout(0,3, space, space));
@@ -98,6 +97,5 @@ public class MainView extends JFrame
 
     }
 
-   
 
 }

@@ -1,5 +1,7 @@
 package View;
 
+import Controller.MainController;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -9,7 +11,6 @@ public class TacheView extends JPanel{
     private int id;
 
     private JPanel canvas;
-    private JPanel center;
 
     private JLabel interval;
     private JLabel title;
@@ -71,10 +72,10 @@ public class TacheView extends JPanel{
 
         this.add(canvas, BorderLayout.NORTH);
 
-        this.center = new JPanel();
-        this.center.add(this.finish);
+        JPanel center = new JPanel();
+        center.add(this.finish);
 
-        this.add(this.center, BorderLayout.CENTER);
+        this.add(center, BorderLayout.CENTER);
 
         updateView(title, beginDate,endDate, interval, categorie, isLate);
     }
@@ -140,8 +141,6 @@ public class TacheView extends JPanel{
             e.printStackTrace();
         }
     }
-
-
 
     public int getId(){
         return id;
