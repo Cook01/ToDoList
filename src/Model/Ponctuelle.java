@@ -16,7 +16,8 @@ public class Ponctuelle extends Tache {
      * @param title titre de la Tache
      * @param end   fin de la Tache
      */
-    public Ponctuelle(int id, String title, Calendar end, Categorie categorie) {
+    public Ponctuelle(int id, String title, Calendar end, Categorie categorie)
+    {
         super(id, title,end, categorie);
     }
 
@@ -26,7 +27,8 @@ public class Ponctuelle extends Tache {
      *
      * @return true if Tache is late, false if tache is not late
      */
-    public Boolean isLate() {
+    public Boolean isLate()
+    {
 
 
         Calendar currentCalendar    = Calendar.getInstance();
@@ -38,7 +40,7 @@ public class Ponctuelle extends Tache {
         currentCalendar.set(Calendar.SECOND, 0);
         currentCalendar.set(Calendar.MILLISECOND, 0);
 
-
+        // On retourne la comparaison entre la date du moment et la date de fin de la tache
         return ( currentCalendar.compareTo(this.end) > 0 );
 
     }
@@ -48,7 +50,7 @@ public class Ponctuelle extends Tache {
      *
      * @return true if Tache is late, false if tache is not late
      */
-    public Boolean isLate(Date todayForTheTest) {
+    Boolean isLate(Date todayForTheTest) {
 
         Calendar currentCalendar = Calendar.getInstance();
 
@@ -63,6 +65,11 @@ public class Ponctuelle extends Tache {
 
     }
 
+    /**
+     * Getter de l'échéance intermédiare
+     *
+     * @return {@link Calendar} échéance intermédiare de la tache
+     */
     public Calendar getDateEcheanceIntermediaire()
     {
         return getEnd();

@@ -15,8 +15,19 @@ import java.util.Date;
  */
 public class TacheTest extends TestCase {
 
+    /**
+     * totalAssertions
+     */
     private static int totalAssertions = 0;
+
+    /**
+     * bilanAssertions
+     */
     private static int bilanAssertions = 0;
+
+    /**
+     * Categorie
+     */
     private static Categorie cat = new Categorie("test", "tes");
 
 
@@ -399,7 +410,12 @@ public class TacheTest extends TestCase {
     }
 
 
-
+    /**
+     * main de la classe Test
+     *
+     * @param args arguments
+     *
+     */
     public static void main(String[] args) {
 
         junit.textui.TestRunner.run(new TestSuite(TacheTest.class));
