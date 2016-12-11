@@ -9,4 +9,4 @@ java -cp ./out:./Junit/junit.jar:./out/ Model.PonctuelleTest
 java -cp ./out:./Junit/junit.jar:./out/ Model.TacheTest
 
 #doc
-javadoc -encoding "utf8" -docencoding "utf8" -d doc/ -author ./src/View/*.java ./src/Controller/*.java ./src/Model/*.java ./test/Model/*.java
+javadoc -encoding "utf8" -docencoding "utf8" -d doc/ -author ./src/View/*.java ./src/Controller/*.java ./src/Model/*.java
