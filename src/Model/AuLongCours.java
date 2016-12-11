@@ -49,9 +49,11 @@ public class AuLongCours extends Tache {
     /**
      * Constructeur de la class
      *
-     * @param title titre de la Tache
-     * @param begin debut de la Tache
-     * @param end   fin de la Tache
+     * @param id id de la tache
+     * @param title debut de la Tache
+     * @param begin debut de la tache
+     * @param end fin de la Tache
+     * @param categorie categorie de la tache
      */
     public AuLongCours(int id, String title,Calendar begin, Calendar end, Categorie categorie)
     {

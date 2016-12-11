@@ -31,8 +31,6 @@ public class Ponctuelle extends Tache {
      */
     public Boolean isLate()
     {
-
-
         Calendar currentCalendar    = Calendar.getInstance();
         Date today                  = new Date();
 
