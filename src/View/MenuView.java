@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * <h1Menu</h1>
+ * <h1>Menu</h1>
  * Permet d'afficher le menu
  *
  * @author  Gaëtan KUENY

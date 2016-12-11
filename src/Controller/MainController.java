@@ -452,7 +452,7 @@ public class MainController
             }
         });
 
-        // On crée un id unique (utilisation d'un timestamp 👌🏻🤘🏻) [on divise pas 1000, car sinon cela est trop grand pour un int]
+        // On crée un id unique (utilisation d'un timestamp) [on divise pas 1000, car sinon cela est trop grand pour un int]
         int id = (int) (new Date().getTime()/1000);
 
         // On récupere l'instance de notre fenetre CreateTacheView
