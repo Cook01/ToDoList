@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * <h1>Class AuLongCours</h1>
  *
- * @author  gkueny
+ * @author  Gaëtan KUENY
  */
 public class AuLongCours extends Tache {
 

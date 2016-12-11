@@ -15,9 +15,9 @@ import java.util.Date;
  */
 public class AuLongCoursTest extends TestCase {
 
-    public static int totalAssertions = 0;
-    public static int bilanAssertions = 0;
-    public static Categorie cat = new Categorie("test", "tes");
+    private static int totalAssertions = 0;
+    private static int bilanAssertions = 0;
+    private static Categorie cat = new Categorie("test", "tes");
 
     /**
      * Test de la methode getBegin()

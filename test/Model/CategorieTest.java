@@ -12,8 +12,8 @@ import java.lang.reflect.Field;
  */
 public class CategorieTest extends TestCase {
 
-    public static int totalAssertions = 0;
-    public static int bilanAssertions = 0;
+    private static int totalAssertions = 0;
+    private static int bilanAssertions = 0;
 
 
     /**
