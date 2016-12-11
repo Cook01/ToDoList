@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="915.2932017543859" y="158.0">View.TacheAuLongCourView</node>
+    <node x="811.2932017543859" y="158.0">View.MainView</node>
+    <node x="809.2932017543859" y="79.0">View.MenuView</node>
+    <node x="707.4948380566798" y="317.0">Controller.MainController</node>
+    <node x="68.7405701754385" y="158.0">Model.Ponctuelle</node>
+    <node x="28.79320175438602" y="79.0">Controller.CategorieManagerController</node>
+    <node x="1092.2932017543858" y="158.0">Controller.TacheListener</node>
+    <node x="1216.2932017543858" y="158.0">View.CategorieManagerView</node>
+    <node x="231.79320175438596" y="79.0">Model.Tache</node>
+    <node x="27.79320175438602" y="0.0">Model.Categorie</node>
+    <node x="690.2932017543859" y="79.0">Controller.BilanListener</node>
+    <node x="335.79320175438596" y="158.0">Controller.SortTachesByNewest</node>
+    <node x="546.7587719298245" y="79.0">Controller.SortTaches</node>
+    <node x="1391.2932017543858" y="158.0">View.CreateTacheView</node>
+    <node x="496.7932017543859" y="158.0">Controller.SortTachesByIntermediaire</node>
+    <node x="1533.2932017543858" y="158.0">View.EditTacheView</node>
+    <node x="993.5432017543858" y="79.0">View.TacheView</node>
+    <node x="698.2932017543859" y="158.0">View.BilanView</node>
+    <node x="210.79320175438596" y="158.0">Model.AuLongCours</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Model.Tache" target="Model.Categorie">
+      <point x="0.0" y="-14.5" />
+      <point x="263.29320175438596" y="49.0" />
+      <point x="100.41820175438602" y="49.0" />
+      <point x="31.125" y="14.5" />
+    </edge>
+    <edge source="Controller.MainController" target="Model.Ponctuelle">
+      <point x="-35.36842105263156" y="-14.5" />
+      <point x="728.1264170040483" y="267.0" />
+      <point x="112.7405701754385" y="267.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="Controller.SortTachesByNewest" target="Controller.SortTaches">
+      <point x="35.25" y="-14.5" />
+      <point x="441.54320175438596" y="138.0" />
+      <point x="561.5921052631579" y="138.0" />
+      <point x="-29.66666666666663" y="14.5" />
+    </edge>
+    <edge source="Controller.MainController" target="View.TacheAuLongCourView">
+      <point x="17.684210526315837" y="-14.5" />
+      <point x="781.1790485829956" y="237.0" />
+      <point x="993.2932017543859" y="237.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="Controller.SortTachesByNewest" target="Model.Tache">
+      <point x="-35.25" y="-14.5" />
+      <point x="371.04320175438596" y="138.0" />
+      <point x="275.893201754386" y="138.0" />
+      <point x="12.600000000000023" y="14.5" />
+    </edge>
+    <edge source="View.BilanView" target="Controller.BilanListener">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="Controller.MainController" target="View.CreateTacheView">
+      <point x="41.26315789473688" y="-14.5" />
+      <point x="804.7579959514167" y="277.0" />
+      <point x="1421.7932017543858" y="277.0" />
+      <point x="-30.5" y="14.5" />
+    </edge>
+    <edge source="Controller.SortTachesByIntermediaire" target="Controller.SortTaches">
+      <point x="43.0" y="-14.5" />
+      <point x="625.7932017543859" y="138.0" />
+      <point x="591.2587719298245" y="138.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="Controller.MainController" target="Model.AuLongCours">
+      <point x="-29.473684210526244" y="-14.5" />
+      <point x="734.0211538461535" y="257.0" />
+      <point x="263.29320175438596" y="257.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="Controller.SortTachesByIntermediaire" target="Model.Tache">
+      <point x="-43.0" y="-14.5" />
+      <point x="539.7932017543859" y="128.0" />
+      <point x="288.49320175438595" y="128.0" />
+      <point x="25.19999999999999" y="14.5" />
+    </edge>
+    <edge source="Controller.MainController" target="Controller.SortTachesByNewest">
+      <point x="-23.57894736842104" y="-14.5" />
+      <point x="739.9158906882587" y="247.0" />
+      <point x="406.29320175438596" y="247.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="Controller.MainController" target="Controller.SortTachesByIntermediaire">
+      <point x="-17.684210526315837" y="-14.5" />
+      <point x="745.810627530364" y="237.0" />
+      <point x="582.7932017543859" y="237.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="Controller.MainController" target="Model.Categorie">
+      <point x="-47.15789473684208" y="-14.5" />
+      <point x="716.3369433198377" y="287.0" />
+      <point x="5.894736842105203" y="287.0" />
+      <point x="5.894736842105203" y="59.0" />
+      <point x="58.91820175438602" y="59.0" />
+      <point x="-10.375" y="14.5" />
+    </edge>
+    <edge source="Controller.MainController" target="View.MainView">
+      <point x="5.894736842105203" y="-14.5" />
+      <point x="769.389574898785" y="217.0" />
+      <point x="832.2932017543859" y="217.0" />
+      <point x="-21.0" y="14.5" />
+    </edge>
+    <edge source="Controller.CategorieManagerController" target="Model.Categorie">
+      <point x="0.0" y="-14.5" />
+      <point x="120.29320175438602" y="59.0" />
+      <point x="79.66820175438602" y="59.0" />
+      <point x="10.375" y="14.5" />
+    </edge>
+    <edge source="Controller.MainController" target="View.EditTacheView">
+      <point x="53.0526315789474" y="-14.5" />
+      <point x="816.5474696356273" y="297.0" />
+      <point x="1587.2932017543858" y="297.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="Controller.MainController" target="View.BilanView">
+      <point x="-5.894736842105203" y="-14.5" />
+      <point x="757.6001012145746" y="217.0" />
+      <point x="719.0432017543859" y="217.0" />
+      <point x="-20.75" y="14.5" />
+    </edge>
+    <edge source="Model.AuLongCours" target="Model.Tache">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="Controller.MainController" target="Controller.SortTaches">
+      <point x="-11.78947368421052" y="-14.5" />
+      <point x="751.7053643724694" y="227.0" />
+      <point x="683.5432017543859" y="227.0" />
+      <point x="683.5432017543859" y="128.0" />
+      <point x="620.9254385964912" y="128.0" />
+      <point x="29.66666666666663" y="14.5" />
+    </edge>
+    <edge source="Controller.MainController" target="Controller.TacheListener">
+      <point x="29.473684210526358" y="-14.5" />
+      <point x="792.9685222672063" y="257.0" />
+      <point x="1144.2932017543858" y="257.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="Controller.MainController" target="View.TacheView">
+      <point x="23.57894736842104" y="-14.5" />
+      <point x="787.0737854251008" y="247.0" />
+      <point x="1081.7932017543858" y="247.0" />
+      <point x="1081.7932017543858" y="138.0" />
+      <point x="1059.5432017543858" y="138.0" />
+      <point x="22.0" y="14.5" />
+    </edge>
+    <edge source="Controller.MainController" target="View.CategorieManagerView">
+      <point x="35.36842105263156" y="-14.5" />
+      <point x="798.8632591093115" y="267.0" />
+      <point x="1293.7932017543858" y="267.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="Controller.MainController" target="Model.Tache">
+      <point x="-41.26315789473688" y="-14.5" />
+      <point x="722.2316801619429" y="277.0" />
+      <point x="58.240570175438506" y="277.0" />
+      <point x="58.240570175438506" y="128.0" />
+      <point x="238.09320175438597" y="128.0" />
+      <point x="-25.19999999999999" y="14.5" />
+    </edge>
+    <edge source="Model.Ponctuelle" target="Model.Tache">
+      <point x="0.0" y="-14.5" />
+      <point x="112.7405701754385" y="138.0" />
+      <point x="250.693201754386" y="138.0" />
+      <point x="-12.599999999999994" y="14.5" />
+    </edge>
+    <edge source="View.MainView" target="View.MenuView">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="View.TacheAuLongCourView" target="View.TacheView">
+      <point x="-1.1368683772161603E-13" y="-14.5" />
+      <point x="993.2932017543858" y="138.0" />
+      <point x="1015.5432017543858" y="138.0" />
+      <point x="-22.0" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9494584837545126" x="821.0" y="210.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
