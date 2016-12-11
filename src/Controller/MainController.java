@@ -1080,8 +1080,7 @@ public class MainController
 
             // Si la taches est achevé et que la date de finissione st inférieur à sa date de fin
 
-            System.out.println(t.getTitle() + " : getAchieve : " + t.getAchieve() + " - getAchieveDate : " + t.getAchieveDate().getTime() + " - end : " + t.getEnd().getTime());
-            if(t.getAchieve() && t.getAchieveDate().compareTo(t.getEnd()) <= 0)
+           if(t.getAchieve() && t.getAchieveDate().compareTo(t.getEnd()) <= 0)
                 realise++;
             else
                 notRealiser++;
