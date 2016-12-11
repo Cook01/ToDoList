@@ -27,7 +27,7 @@ public class AuLongCours extends Tache {
      * @param title titre de la Tache
      * @param end   fin de la Tache
      */
-    public AuLongCours(int id, String title, Calendar end, Categorie categorie) {
+    AuLongCours(int id, String title, Calendar end, Categorie categorie) {
 
         super(id, title,end, categorie);
 
@@ -123,22 +123,18 @@ public class AuLongCours extends Tache {
         long d          = this.end.getTime().getTime() - currentCalendar.getTime().getTime();
 
         if ( (dImpartie - d) >= dImpartie ) {
-            System.out.println("isLate : " + getTitle() + " => this.percentage < 100 : " + (this.percentage < 100));
             return this.percentage < 100;
         }
 
         if ( (dImpartie - d) >= ( 3 * dImpartie / 4) ) {
-            System.out.println("isLate : " + getTitle() + " => this.percentage < 75 : " + (this.percentage < 75));
             return this.percentage < 75;
         }
 
         if ( (dImpartie - d) >=  ( dImpartie / 2) ) {
-            System.out.println("isLate : " + getTitle() + " => this.percentage < 50 " + (this.percentage < 50));
             return this.percentage < 50;
         }
 
         if ( (dImpartie - d) >=  ( dImpartie / 4) ) {
-            System.out.println("isLate : " + getTitle() + " => this.percentage < 25 " + (this.percentage < 25));
             return this.percentage < 25;
         }
 
@@ -153,7 +149,7 @@ public class AuLongCours extends Tache {
      *
      * @return true if Tache is late, false if tache is not late
      */
-    public Boolean isLate(Date todayForTheTest) {
+    Boolean isLate(Date todayForTheTest) {
 
         Calendar currentCalendar = Calendar.getInstance();
 
@@ -213,30 +209,23 @@ public class AuLongCours extends Tache {
 
             c.add(Calendar.DATE, unQuart);
 
-            System.out.println(getTitle() + " : " + c.getTime());
 
         } else if( getPercentage() <= 50) {
 
             c.add(Calendar.DATE, deuxQuart);
 
-            System.out.println(getTitle() + " : " + c.getTime());
 
         } else if( getPercentage() <= 75) {
 
             c.add(Calendar.DATE, troisQuart);
 
-            System.out.println(getTitle() + " : " + c.getTime());
 
         } else if( getPercentage() <= 100) {
 
             c.add(Calendar.DATE, diffDays);
 
-            System.out.println(getTitle() + " : " + c.getTime());
 
         }
-
-
-        //System.out.println("getDateEcheanceIntermediaire : " + c.getTime().getDate());
 
         return c;
 

@@ -62,7 +62,7 @@ public class TacheAuLongCourView extends TacheView{
         super.add(this.progressBar, BorderLayout.SOUTH);
 
         //Changement du label sur le bouton Finish pour "Avancer"
-        super.setFinisButtonText("Avancer");
+        super.setFinisButtonTextToAvancer();
 
 
         //Mise a jour du contenue des composants
