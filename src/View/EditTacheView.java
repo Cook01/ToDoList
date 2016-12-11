@@ -115,6 +115,8 @@ public class EditTacheView extends JPanel
 
         //Creation d'un contour autour de la vue
         this.setBorder(LineBorder.createGrayLineBorder());
+
+        //Definition du layout
         this.setLayout(new BorderLayout());
 
 
@@ -145,7 +147,7 @@ public class EditTacheView extends JPanel
         }
 
 
-        //Placement des 3 Panel dans canvas
+        //Placement des Panels dans canvas
         panelHolder[0][0].add(this.saveButton);     //Ligne 1 - Colone 1
         panelHolder[0][1].add(this.title);          //Ligne 1 - Colone 2
         panelHolder[0][2].add(this.deleteButton);   //Ligne 1 - Colone 3
@@ -262,7 +264,7 @@ public class EditTacheView extends JPanel
     /**
      *  Renvois l'ID de la vue d'edition, egale a l'ID de la Tache edité
      *
-     * @return int : ID de la vue d'edition, egale a l'ID de la Tache edité
+     * @return int : ID de la vue d'edition
      */
     public int getId(){
         return id;
