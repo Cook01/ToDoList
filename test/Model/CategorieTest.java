@@ -43,7 +43,6 @@ public class CategorieTest extends TestCase {
         totalAssertions++ ;
         assertEquals(field.get(testCat), "Nouveau titre");
         bilanAssertions++ ;
-
     }
 
     /**
