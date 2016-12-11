@@ -98,7 +98,7 @@ public class EditTacheView extends JPanel
         this.deleteButton = new JButton("X");
 
 
-        //Appel de la fonction de mise en place du layout de la fenetre
+        //Appel de la fonction de mise en place du layout de la vue
         initEditTacheView(title, categories, idCategorie, isLate);
     }
 
@@ -118,16 +118,16 @@ public class EditTacheView extends JPanel
         this.setLayout(new BorderLayout());
 
 
-        //Definition des parametres du selecteur de date de fin
+        // On crée un nouvelle éditeur pour notre spinner
         JSpinner.DateEditor editor = new JSpinner.DateEditor(this.endDate, "dd/MM/yyyy");
         DateFormatter formatter = (DateFormatter)editor.getTextField().getFormatter();
         formatter.setAllowsInvalid(false);
         formatter.setOverwriteMode(true);
 
-        //Affectation des parametres au selecteur de date de fin
+        // On update l'éditeur
         this.endDate.setEditor(editor);
 
-        //???
+        // On met à jour le nombre de colonne de notre spinner
         JComponent editorDefaut = this.endDate.getEditor();
         JFormattedTextField ftf = ((JSpinner.DefaultEditor) editorDefaut).getTextField();
         ftf.setColumns(8);
