@@ -1,0 +1,55 @@
+@startuml
+
+
+title Diagramme de séquence systeme : clique sur le bouton "Edit" d'une tache
+
+box "Model" #LightSkyBlue
+	participant Tache
+end box
+
+box "Controller" #LightBlue
+	participant MainController
+	participant TacheListener
+end box
+
+box "View" #LightGreen
+    participant TacheView
+	participant EditTacheView
+	participant MainView
+end box
+
+
+
+TacheView -> TacheListener : actionPerformed
+
+TacheListener -> MainController : editTache
+
+MainController -> Tache : isLate
+Tache --> MainController
+
+MainController -> EditTacheView : create
+
+EditTacheView -> EditTacheView : initEditTacheView
+EditTacheView -> EditTacheView : updateView
+EditTacheView -> EditTacheView : setCategorie
+
+EditTacheView --> MainController
+
+MainController -> TacheListener : create
+TacheListener --> MainController
+MainController -> EditTacheView : addListenerOnSuppButton
+EditTacheView --> MainController
+
+MainController -> TacheListener : create
+TacheListener --> MainController
+MainController -> EditTacheView : addListenerOnSaveButton
+EditTacheView --> MainController
+
+MainController -> MainController : updateView
+MainController -> MainView : updateView
+MainView --> MainController
+
+MainController --> TacheListener
+
+
+@enduml

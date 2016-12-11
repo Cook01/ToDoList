@@ -1,0 +1,29 @@
+@startuml
+
+
+title Diagramme de séquence systeme : clique sur le bouton "Générer bilan" de la Vue Bilan
+
+box "Controller" #LightBlue
+	participant MainController
+	participant BilanListener
+end box
+
+box "View" #LightGreen
+	participant BilanView
+end box
+
+BilanView -> BilanListener : actionPerformed
+
+BilanListener -> MainController: generateBilan
+
+MainController -> MainController: getPourcentageRealiserInTime
+MainController -> MainController: getPourcentageRealiserNotInTime
+MainController -> MainController: getPourcentageRealiserNotRealiser
+
+MainController -> BilanView : updateView
+
+BilanView --> MainController
+
+MainController --> BilanListener
+
+@enduml

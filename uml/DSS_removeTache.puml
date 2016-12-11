@@ -1,0 +1,40 @@
+@startuml
+
+
+title Diagramme de séquence systeme : clique sur le bouton "X" d'une tache
+
+box "Model" #LightSkyBlue
+	participant Tache
+end box
+
+box "Controller" #LightBlue
+	participant MainController
+	participant TacheListener
+	participant SortTaches
+end box
+
+box "View" #LightGreen
+    participant TacheView
+	participant MainView
+end box
+
+
+
+TacheView -> TacheListener : actionPerformed
+
+TacheListener -> MainController : removeTache
+
+MainController -> MainController : update
+MainController -> SortTaches : sort
+SortTaches --> MainController
+
+MainController -> MainController : reOrderTacheView
+MainController -> MainController : updateView
+
+MainController -> MainView : updateView
+MainView --> MainController
+
+MainController --> TacheListener
+
+
+@enduml
