@@ -80,7 +80,6 @@ public class BilanView extends JFrame {
         // On définit le modèle du spinner
         SpinnerDateModel modelBegin = new SpinnerDateModel();
         modelBegin.setValue(currentCalendar.getTime());
-        modelBegin.setStart(currentCalendar.getTime());
 
         // On crée notre spinner à partir du modèle
         this.beginDate = new JSpinner(modelBegin);
@@ -105,7 +104,6 @@ public class BilanView extends JFrame {
         // Même chose que pour  beginDate
         SpinnerDateModel modelEnd = new SpinnerDateModel();
         modelEnd.setValue(MainController.currentCalendar.getTime());
-        modelEnd.setStart(MainController.currentCalendar.getTime());
 
         this.endDate = new JSpinner(modelEnd);
 

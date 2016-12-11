@@ -1045,13 +1045,19 @@ public class MainController
     {
         // On ne récuperes que les taches se terminant dans l'interval de temps définit
         ArrayList<Tache> allTachesFilter = allTaches.stream()
-                .filter( tache ->  tache.getEnd().getTime().compareTo(begin) > 0 && tache.getEnd().getTime().compareTo(end) <= 0 && !tache.getAchieve())
+                .filter( tache ->  tache.getEnd().getTime().compareTo(begin) >= 0 && tache.getEnd().getTime().compareTo(end) <= 0 )
                 .collect(Collectors.toCollection(ArrayList::new));
 
         // On récupère les différents pourcentages
         int pourcentageRealiseInTime = getPourcentageRealiserInTime(allTachesFilter);
         int pourcentageRealiseNotInTime = getPourcentageRealiserNotInTime(allTachesFilter);
         int pourcentageNotRealiser = getPourcentageNotRealiser(allTachesFilter);
+
+        // On ne gardent que celles qui ne sont pas achevé
+        allTachesFilter = allTachesFilter.stream()
+                .filter( tache -> !tache.getAchieve())
+                .collect(Collectors.toCollection(ArrayList::new));
+
 
         // On update notre bilanView
         bilan.updateView(allTachesFilter, pourcentageRealiseInTime, pourcentageRealiseNotInTime, pourcentageNotRealiser);
@@ -1073,6 +1079,8 @@ public class MainController
         for (Tache t : taches) {
 
             // Si la taches est achevé et que la date de finissione st inférieur à sa date de fin
+
+            System.out.println(t.getTitle() + " : getAchieve : " + t.getAchieve() + " - getAchieveDate : " + t.getAchieveDate().getTime() + " - end : " + t.getEnd().getTime());
             if(t.getAchieve() && t.getAchieveDate().compareTo(t.getEnd()) <= 0)
                 realise++;
             else
