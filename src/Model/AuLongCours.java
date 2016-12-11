@@ -27,7 +27,8 @@ public class AuLongCours extends Tache {
      * @param title titre de la Tache
      * @param end   fin de la Tache
      */
-    AuLongCours(int id, String title, Calendar end, Categorie categorie) {
+    AuLongCours(int id, String title, Calendar end, Categorie categorie)
+    {
 
         super(id, title,end, categorie);
 
@@ -50,7 +51,8 @@ public class AuLongCours extends Tache {
      * @param begin debut de la Tache
      * @param end   fin de la Tache
      */
-    public AuLongCours(int id, String title,Calendar begin, Calendar end, Categorie categorie) {
+    public AuLongCours(int id, String title,Calendar begin, Calendar end, Categorie categorie)
+    {
         super(id, title,end, categorie);
 
         this.begin      = begin;
