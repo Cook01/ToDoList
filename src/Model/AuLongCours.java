@@ -68,7 +68,8 @@ public class AuLongCours extends Tache {
      *
      * @return {@link Calendar} begin
      */
-    public Calendar getBegin() {
+    public Calendar getBegin()
+    {
         return begin;
     }
 
@@ -77,7 +78,8 @@ public class AuLongCours extends Tache {
      *
      * @return int percentage
      */
-    public int getPercentage() {
+    public int getPercentage()
+    {
         return this.percentage;
     }
 
@@ -86,7 +88,8 @@ public class AuLongCours extends Tache {
      *
      * @param begin nouveau debut de la tache
      */
-    void setBegin(Calendar begin) {
+    void setBegin(Calendar begin)
+    {
         this.begin = begin;
     }
 
@@ -95,7 +98,8 @@ public class AuLongCours extends Tache {
      *
      * @param percentage nouveau avancement de la tache
      */
-    public void setPercentage(int percentage) {
+    public void setPercentage(int percentage)
+    {
 
         if(percentage == 100) {
             this.setAchieve(true);
@@ -112,7 +116,8 @@ public class AuLongCours extends Tache {
      *
      * @return true if Tache is late, false if tache is not late
      */
-    public Boolean isLate() {
+    public Boolean isLate()
+    {
 
         Date today = new Date();
 
@@ -124,9 +129,13 @@ public class AuLongCours extends Tache {
         currentCalendar.set(Calendar.SECOND, 0);
         currentCalendar.set(Calendar.MILLISECOND, 0);
 
-
+        // on récupère le temps impartie
         long dImpartie  = this.end.getTime().getTime() - this.begin.getTime().getTime() ;
+
+        // on récupère le temps depuis ajourdhui à la fin de la tache
         long d          = this.end.getTime().getTime() - currentCalendar.getTime().getTime();
+
+        // On retourne le boolean qui convient selon l'avancement de la tache
 
         if ( (dImpartie - d) >= dImpartie ) {
             return this.percentage < 100;
@@ -210,6 +219,8 @@ public class AuLongCours extends Tache {
         int deuxQuart =  (diffDays * 2 ) / 4;
         int troisQuart =  (diffDays * 3 ) /4;
 
+
+        // On retourne la date correspondante selon le pourcentage d'avancement
 
         if(getPercentage() <= 25) {
 

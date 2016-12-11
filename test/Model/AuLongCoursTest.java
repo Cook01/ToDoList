@@ -169,6 +169,11 @@ public class AuLongCoursTest extends TestCase {
 
     }
 
+    /**
+     * Test de la methode isLate()
+     *
+     * @see AuLongCours#isLate()
+     */
     public void test_isNotLate25Percent() throws Exception {
         Calendar end    = Calendar.getInstance();
         Date endTest    = new Date(System.currentTimeMillis() + (  24 * 60 * 60 * 1000 ));// 25% = 1J
@@ -193,6 +198,11 @@ public class AuLongCoursTest extends TestCase {
 
     }
 
+    /**
+     * Test de la methode isLate()
+     *
+     * @see AuLongCours#isLate()
+     */
     public void test_isLate25Percent() throws Exception {
 
         Calendar end    = Calendar.getInstance();
@@ -217,6 +227,11 @@ public class AuLongCoursTest extends TestCase {
         bilanAssertions++ ;
     }
 
+    /**
+     * Test de la methode isLate()
+     *
+     * @see AuLongCours#isLate()
+     */
     public void test_isNotLate50Percent() throws Exception {
         Calendar end    = Calendar.getInstance();
         Date endTest    = new Date(System.currentTimeMillis() + ( 2 * 24 * 60 * 60 * 1000 ));// 50% = 2J
@@ -241,6 +256,11 @@ public class AuLongCoursTest extends TestCase {
 
     }
 
+    /**
+     * Test de la methode isLate()
+     *
+     * @see AuLongCours#isLate()
+     */
     public void test_isLate50Percent() throws Exception {
 
         Calendar end    = Calendar.getInstance();
@@ -266,6 +286,11 @@ public class AuLongCoursTest extends TestCase {
 
     }
 
+    /**
+     * Test de la methode isLate()
+     *
+     * @see AuLongCours#isLate()
+     */
     public void test_isNotLate75Percent() throws Exception {
         Calendar end    = Calendar.getInstance();
 
@@ -289,6 +314,11 @@ public class AuLongCoursTest extends TestCase {
 
     }
 
+    /**
+     * Test de la methode isLate()
+     *
+     * @see AuLongCours#isLate()
+     */
     public void test_isLate75Percent() throws Exception {
 
         Calendar end    = Calendar.getInstance();
@@ -314,6 +344,11 @@ public class AuLongCoursTest extends TestCase {
 
     }
 
+    /**
+     * Test de la methode isLate()
+     *
+     * @see AuLongCours#isLate()
+     */
     public void test_isNotLate100Percent() throws Exception {
         Calendar end    = Calendar.getInstance();
 
@@ -337,6 +372,11 @@ public class AuLongCoursTest extends TestCase {
 
     }
 
+    /**
+     * Test de la methode isLate()
+     *
+     * @see AuLongCours#isLate()
+     */
     public void test_isLate100Percent() throws Exception {
 
         Calendar end    = Calendar.getInstance();
@@ -358,6 +398,86 @@ public class AuLongCoursTest extends TestCase {
 
         totalAssertions++ ;
         assertTrue( islate );
+        bilanAssertions++ ;
+
+    }
+
+    /**
+     * Test de la methode getDateEcheanceIntermediaire()
+     *
+     * @see AuLongCours#getDateEcheanceIntermediaire()
+     */
+    public void test_getDateEcheanceIntermediaire() {
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+
+        Calendar end    = Calendar.getInstance();
+
+        end.setTime(new Date(System.currentTimeMillis() + (4 * 24 * 60 * 60 * 1000)));
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.set(Calendar.MILLISECOND, 0);
+
+        final AuLongCours testTache = new AuLongCours(1,"Tache de test", end, cat);
+
+
+        Calendar dateEcheanceIntermediaire = testTache.getDateEcheanceIntermediaire();
+
+
+        c.add(Calendar.DATE, 1);
+        totalAssertions ++;
+        assertEquals( c , dateEcheanceIntermediaire);
+        bilanAssertions++ ;
+
+        testTache.setPercentage(26);
+
+        c.setTime(new Date());
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+        c.add(Calendar.DATE, 2);
+
+        dateEcheanceIntermediaire = testTache.getDateEcheanceIntermediaire();
+
+        totalAssertions ++;
+        assertEquals( c , dateEcheanceIntermediaire);
+        bilanAssertions++ ;
+
+        testTache.setPercentage(56);
+
+        c.setTime(new Date());
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+        c.add(Calendar.DATE, 3);
+
+        dateEcheanceIntermediaire = testTache.getDateEcheanceIntermediaire();
+
+        totalAssertions ++;
+        assertEquals( c , dateEcheanceIntermediaire);
+        bilanAssertions++ ;
+
+        testTache.setPercentage(76);
+
+        c.setTime(new Date());
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+        c.add(Calendar.DATE, 4);
+
+        dateEcheanceIntermediaire = testTache.getDateEcheanceIntermediaire();
+
+        totalAssertions ++;
+        assertEquals( c , dateEcheanceIntermediaire);
         bilanAssertions++ ;
 
     }
