@@ -57,3 +57,6 @@ fabric.properties
 
 # doc
 doc/
+
+# Mac
+.DS_Store
