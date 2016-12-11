@@ -6,7 +6,6 @@ import junit.framework.TestSuite;
 import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Calendar;
 
 
 /**
@@ -16,9 +15,9 @@ import java.util.Calendar;
  */
 public class TacheTest extends TestCase {
 
-    public static int totalAssertions = 0;
-    public static int bilanAssertions = 0;
-    public static Categorie cat = new Categorie("test", "tes");
+    private static int totalAssertions = 0;
+    private static int bilanAssertions = 0;
+    private static Categorie cat = new Categorie("test", "tes");
 
 
     /**
@@ -149,7 +148,71 @@ public class TacheTest extends TestCase {
 
     }
 
-     /**
+    /**
+     * Test de la methode setAchieveDate()
+     *
+     * @see Tache#setAchieveDate(java.util.Calendar)
+     * @throws Exception NoSuchFieldException, IllegalAccessException
+     */
+    public void test_setAchieveDate() throws Exception {
+        //given
+        Calendar end    = Calendar.getInstance();
+
+        end.setTime(new Date(System.currentTimeMillis() ));
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.set(Calendar.MILLISECOND, 0);
+
+        final Ponctuelle testTache = new Ponctuelle(1,"Tache de test", end, cat);
+
+        Calendar nouvelleDate    = Calendar.getInstance();
+
+        nouvelleDate.setTime(new Date(System.currentTimeMillis() + (4 * 24 * 60 * 60 * 1000)));
+        nouvelleDate.set(Calendar.HOUR_OF_DAY, 0);
+        nouvelleDate.set(Calendar.MINUTE, 0);
+        nouvelleDate.set(Calendar.SECOND, 0);
+        nouvelleDate.set(Calendar.MILLISECOND, 0);
+        //when
+        testTache.setAchieveDate(nouvelleDate);
+
+        //then
+        final Field field = testTache.getClass().getSuperclass().getDeclaredField("achieveDate");
+        field.setAccessible(true);
+
+        totalAssertions ++;
+        assertEquals(field.get(testTache),nouvelleDate);
+        bilanAssertions++ ;
+
+    }
+
+    /**
+     * Test de la methode getId()
+     *
+     * @see Tache#getId()
+     */
+    public void test_getId() {
+
+        Calendar end    = Calendar.getInstance();
+
+        end.setTime(new Date(System.currentTimeMillis() + (4 * 24 * 60 * 60 * 1000)));
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.set(Calendar.MILLISECOND, 0);
+
+        final Ponctuelle testTache = new Ponctuelle(1,"Tache de test", end, cat);
+
+        int id = testTache.getId();
+
+        totalAssertions ++;
+        assertEquals(id, 1);
+        bilanAssertions++ ;
+
+    }
+
+
+    /**
      * Test de la methode getDateCreation()
      *
      * @see Tache#getDateCreation()
@@ -258,6 +321,51 @@ public class TacheTest extends TestCase {
         assertFalse(achieve);
         bilanAssertions++ ;
 
+        testTache.setAchieve(true);
+
+        achieve = testTache.getAchieve();
+
+        totalAssertions ++;
+        assertTrue(achieve);
+        bilanAssertions++ ;
+
+    }
+
+    /**
+     * Test de la methode getAchieveDate()
+     *
+     * @see Tache#getAchieveDate()
+     */
+    public void test_getAchieveDate() {
+
+        Calendar end    = Calendar.getInstance();
+
+        end.setTime(new Date(System.currentTimeMillis() + (4 * 24 * 60 * 60 * 1000)));
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.set(Calendar.MILLISECOND, 0);
+
+
+        Calendar now    = Calendar.getInstance();
+
+        now.setTime(new Date(System.currentTimeMillis()));
+        now.set(Calendar.HOUR_OF_DAY, 0);
+        now.set(Calendar.MINUTE, 0);
+        now.set(Calendar.SECOND, 0);
+        now.set(Calendar.MILLISECOND, 0);
+
+        final Ponctuelle testTache = new Ponctuelle(1,"Tache de test", end, cat);
+
+
+        testTache.setAchieve(true);
+
+        Calendar achieve = testTache.getAchieveDate();
+
+        totalAssertions ++;
+        assertEquals(achieve, now);
+        bilanAssertions++ ;
+
     }
 
     /**
@@ -289,6 +397,7 @@ public class TacheTest extends TestCase {
         bilanAssertions++ ;
 
     }
+
 
 
     public static void main(String[] args) {
