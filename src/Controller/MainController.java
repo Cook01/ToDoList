@@ -99,7 +99,6 @@ public class MainController
 
 	    //Tris des Taches
 	    allTaches = sortTache.sort(allTaches);
-
         ArrayList<Tache> allTachesFilter =  allTaches.stream()
                 .filter(tache -> !tache.getAchieve()).collect(Collectors.toCollection(ArrayList::new));
 
